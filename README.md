@@ -24,7 +24,7 @@ This application is a PWA (Progressive Web Application) built with Symfony and P
 5. Run `symfony server:ca:install` to install the TLS certificate
 6. Run `symfony server:start` to start the project
 7. Run `symfony console tailwind:build` to build the frontend assets
-8. Open `https://localhost:8000` in your favorite web browser
+8. Run `symfony open:local` to open the app in your default web browser
 9. Run `symfony server:stop` to stop the server
 
 ## License
