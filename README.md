@@ -25,7 +25,7 @@ You can also install the TLS certificates to have HTTPS working out of the box: 
 2. Run `composer install` to install the dependencies
 3. Run `symfony console assets:install` to install the assets
 4. Run `symfony console importmap:install` to install frontend dependencies
-5.Run `symfony console tailwind:build` to build the frontend assets
+5. Run `symfony console tailwind:build` to build the frontend assets
 6. Run `symfony console asset-map:compile` to compile the assets
 7. Run `symfony server:start` to start the project
 8. Run `symfony open:local` to open the app in your default web browser. Alternatively, you can go the http://localhost:8000
