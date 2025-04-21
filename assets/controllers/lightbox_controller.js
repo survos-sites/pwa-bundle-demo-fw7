@@ -6,7 +6,6 @@ export default class extends Controller {
   static targets = ['light', 'fade', 'video'];
 
   watch() {
-    console.log('watch');
     window.scrollTo(0, 0);
     this.lightTarget.classList.remove('hidden');
     this.fadeTarget.classList.remove('hidden');

@@ -38,7 +38,10 @@
     </div>
 </div>' %}
             <pre><code class="language-twig" data-controller="code">{{ button|escape('html')|raw }}</code></pre>
-            <div data-controller="pwa--picture-in-picture">
+            <div
+                data-controller="pwa--picture-in-picture pip"
+                {{ stimulus_action('pip', 'disabled', 'pwa--picture-in-picture:pwa:pip:unsupported') }}
+            >
                 <button
                     type="button"
                     class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
@@ -46,6 +49,21 @@
                 >
                     Toggle Picture-in-Picture
                 </button>
+                <div class="rounded-md bg-yellow-50 p-4 hidden" {{ stimulus_target('pip', 'message')}}>
+                    <div class="flex">
+                        <div class="shrink-0">
+                            <svg class="size-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+                                <path fill-rule="evenodd" d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495ZM10 5a.75.75 0 0 1 .75.75v3.5a.75.75 0 0 1-1.5 0v-3.5A.75.75 0 0 1 10 5Zm0 9a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div class="ml-3">
+                            <h3 class="text-sm font-medium text-yellow-800">Not available</h3>
+                            <div class="mt-2 text-sm text-yellow-700">
+                                <p>This feautre is not available on your platform or not granted.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div data-pwa--picture-in-picture-target="container">
                     <video class="w-full h-auto max-w-full" controls data-pwa--picture-in-picture-target="floating">
                         <source src="{{ asset('videos/BigBuckBunny.mp4') }}" type="video/mp4">

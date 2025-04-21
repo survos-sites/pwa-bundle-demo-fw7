@@ -13,14 +13,15 @@
                 On a device with touch screen, place two fingers in the square below to see a red circle appear. <br>
                 Move your fingers to change the size and position of the circle.
             </p>
-            <canvas
-                id="canvas"
-                class="w-full h-full bg-[#1da1f2]"
-                data-controller="pwa--touch multitouch"
-                {{ stimulus_action('multitouch', 'update', 'pwa--touch:pwa:touch:updated') }}
-            >
-            </canvas>
         </div>
     </section>
+    <div class="h-full">
+        <canvas
+            id="canvas"
+            class="w-full h-[350px] bg-[#1da1f2]"
+            data-controller="pwa--touch multitouch"
+            {{ stimulus_action('multitouch', 'update', 'pwa--touch:pwa:touch:updated') }}
+        ></canvas>
+    </div>
 </turbo-frame>
 {% endblock %}

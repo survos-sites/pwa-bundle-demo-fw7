@@ -1,71 +1,19 @@
-<div
-    data-controller="pwa--device-orientation live"
-    {{ attributes }}
-    class="p-6"
->
+<div{{ attributes }} class="p-6">
+    <div
+        data-controller="pwa--device-orientation orientation"
+        data-pwa--device-orientation-throttle-value="25"
+    {{ stimulus_action('orientation', 'update', 'pwa--device-orientation:pwa:device:orientation') }}
+    >
     <dl>
-        <dt id="alpha" data-geolocation-value="{{ this.alpha }}" class="font-medium text-gray-500 dark:text-gray-400">Alpha</dt>
-        <dd class="text-gray-900 dark:text-white">{{ this.alpha }}</dd>
-        <dt id="beta" data-geolocation-value="{{ this.beta }}" class="font-medium text-gray-500 dark:text-gray-400">Beta</dt>
-        <dd class="text-gray-900 dark:text-white">{{ this.beta }}</dd>
-        <dt id="gamma" data-geolocation-value="{{ this.gamma }}" class="font-medium text-gray-500 dark:text-gray-400">Gamma</dt>
-        <dd class="text-gray-900 dark:text-white">{{ this.gamma }}</dd>
+        <dt id="alpha" class="font-medium text-gray-500 dark:text-gray-400">Alpha</dt>
+        <dd class="text-gray-900 dark:text-white" {{ stimulus_target('orientation', 'alpha') }}>--</dd>
+        <dt id="beta" class="font-medium text-gray-500 dark:text-gray-400">Beta</dt>
+        <dd class="text-gray-900 dark:text-white" {{ stimulus_target('orientation', 'beta') }}>--</dd>
+        <dt id="gamma" class="font-medium text-gray-500 dark:text-gray-400">Gamma</dt>
+        <dd class="text-gray-900 dark:text-white" {{ stimulus_target('orientation', 'gamma') }}>--</dd>
     </dl>
-    <canvas id="myCanvas" class="w-full h-96">
+    <canvas {{ stimulus_target('orientation', 'canvas') }} id="myCanvas" class="w-full h-96">
         Your browser does not support the HTML canvas element.
     </canvas>
-    {% cspscript %}
-        <script type="module">
-            import * as THREE from 'three';
-
-            const scene = new THREE.Scene();
-            const camera = new THREE.PerspectiveCamera(
-                75, (window.innerWidth/2) / (window.innerHeight/2), 0.1, 1000
-            );
-            const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('myCanvas'), antialias: true });
-            renderer.setSize((window.innerWidth/2), (window.innerHeight/2));
-
-            const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-            scene.add(ambientLight);
-
-            const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-            directionalLight.position.set(0, 1, 1).normalize();
-            scene.add(directionalLight);
-
-            const geometry = new THREE.BoxGeometry(1, 1, 1);
-            const material = new THREE.MeshPhongMaterial({ color: 0x00ff00 });
-            const cube = new THREE.Mesh(geometry, material);
-            scene.add(cube);
-
-            camera.position.set(0, 2, 0);
-            camera.lookAt(cube.position);
-
-            function updateCubeRotation(alpha, beta, gamma) {
-                cube.rotation.order = 'ZXY';
-                cube.rotation.x = (beta * Math.PI) / 180;
-                cube.rotation.y = (gamma * Math.PI) / 180;
-                cube.rotation.z = (-alpha * Math.PI) / 180;
-            }
-
-
-            function animate() {
-                requestAnimationFrame(animate);
-                renderer.render(scene, camera);
-            }
-
-            animate();
-
-            window.addEventListener('deviceorientation', function(event) {
-                updateCubeRotation(event.alpha, event.beta, event.gamma);
-            });
-
-            window.addEventListener('resize', function() {
-                const width = (window.innerWidth/2);
-                const height = (window.innerHeight/2);
-                renderer.setSize(width, height);
-                camera.aspect = width / height;
-                camera.updateProjectionMatrix();
-            });
-        </script>
-    {% endcspscript %}
+    </div>
 </div>

@@ -146,4 +146,7 @@ return [
     'core-js' => [
         'version' => '3.41.0',
     ],
+    '@hotwired/hotwire-native-bridge' => [
+        'version' => '1.1.0',
+    ],
 ];

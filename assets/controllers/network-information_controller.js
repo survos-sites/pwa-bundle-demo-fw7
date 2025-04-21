@@ -16,7 +16,6 @@ export default class extends Controller {
 
   updateConnectionStatus = () => {
     const connection = navigator.connection;
-    console.log({bubble: true, details: connection});
     this.dispatch('network-information:change', {bubble: true, details: {connection}});
     this.downlinkTargets.forEach((element) => element.setAttribute('data-network-information-downlink-value', connection.downlink));
     this.downlinkContentTargets.forEach((element) => element.textContent = connection.downlink);

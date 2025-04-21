@@ -84,6 +84,10 @@
             "vibration": {
                 "enabled": true,
                 "fetch": "eager"
+            },
+            "wake-lock": {
+                "enabled": true,
+                "fetch": "eager"
             }
         },
         "@symfony/ux-leaflet-map": {
