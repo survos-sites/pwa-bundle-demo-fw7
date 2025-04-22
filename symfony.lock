@@ -70,6 +70,9 @@
             "config/packages/inspector.yaml"
         ]
     },
+    "knplabs/knp-menu-bundle": {
+        "version": "v3.5.0"
+    },
     "knplabs/knp-time-bundle": {
         "version": "v2.4.0"
     },
@@ -131,6 +134,9 @@
     },
     "survos/deployment-bundle": {
         "version": "1.5.529"
+    },
+    "survos/fw-bundle": {
+        "version": "1.0"
     },
     "symfony/asset-mapper": {
         "version": "7.2",
@@ -419,7 +425,7 @@
         ]
     },
     "symfonycasts/tailwind-bundle": {
-        "version": "0.8",
+        "version": "0.10",
         "recipe": {
             "repo": "github.com/symfony/recipes",
             "branch": "main",
