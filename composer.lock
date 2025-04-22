@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "775f1ac107254295e439e5a69f0542ff",
+    "content-hash": "749ed0dfb4279987d0a7e14842a48966",
     "packages": [
         {
             "name": "api-platform/core",
@@ -2136,6 +2136,144 @@
             "time": "2025-02-24T14:17:36+00:00"
         },
         {
+            "name": "knplabs/knp-menu",
+            "version": "v3.7.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/KnpLabs/KnpMenu.git",
+                "reference": "328bb430a0afad0b6eae2bd4bfea8e15db616fd6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/KnpLabs/KnpMenu/zipball/328bb430a0afad0b6eae2bd4bfea8e15db616fd6",
+                "reference": "328bb430a0afad0b6eae2bd4bfea8e15db616fd6",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.1"
+            },
+            "conflict": {
+                "twig/twig": "<1.42.3 || >=2,<2.9"
+            },
+            "require-dev": {
+                "phpstan/phpstan": "^1.10",
+                "phpunit/phpunit": "^9.6",
+                "psr/container": "^1.0 || ^2.0",
+                "symfony/http-foundation": "^5.4 || ^6.0 || ^7.0",
+                "symfony/phpunit-bridge": "^7.0",
+                "symfony/routing": "^5.4 || ^6.0 || ^7.0",
+                "twig/twig": "^2.16 || ^3.0"
+            },
+            "suggest": {
+                "twig/twig": "for the TwigRenderer and the integration with your templates"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Knp\\Menu\\": "src/Knp/Menu"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "KnpLabs",
+                    "homepage": "https://knplabs.com"
+                },
+                {
+                    "name": "Christophe Coevoet",
+                    "email": "stof@notk.org"
+                },
+                {
+                    "name": "The Community",
+                    "homepage": "https://github.com/KnpLabs/KnpMenu/contributors"
+                }
+            ],
+            "description": "An object oriented menu library",
+            "homepage": "https://knplabs.com",
+            "keywords": [
+                "menu",
+                "tree"
+            ],
+            "support": {
+                "issues": "https://github.com/KnpLabs/KnpMenu/issues",
+                "source": "https://github.com/KnpLabs/KnpMenu/tree/v3.7.0"
+            },
+            "time": "2025-02-28T08:21:46+00:00"
+        },
+        {
+            "name": "knplabs/knp-menu-bundle",
+            "version": "v3.5.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/KnpLabs/KnpMenuBundle.git",
+                "reference": "5f85a4908343c3d6a6009c2f8a74c2d102c0aa80"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/KnpLabs/KnpMenuBundle/zipball/5f85a4908343c3d6a6009c2f8a74c2d102c0aa80",
+                "reference": "5f85a4908343c3d6a6009c2f8a74c2d102c0aa80",
+                "shasum": ""
+            },
+            "require": {
+                "knplabs/knp-menu": "^3.6",
+                "php": "^8.1",
+                "symfony/deprecation-contracts": "^2.5 | ^3.3",
+                "symfony/framework-bundle": "^5.4 | ^6.0 | ^7.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^10.5 | ^11.0.3",
+                "symfony/expression-language": "^5.4 | ^6.0 | ^7.0",
+                "symfony/phpunit-bridge": "^6.0 | ^7.0",
+                "symfony/templating": "^5.4 | ^6.0 | ^7.0"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Knp\\Bundle\\MenuBundle\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Knplabs",
+                    "homepage": "http://knplabs.com"
+                },
+                {
+                    "name": "Christophe Coevoet",
+                    "email": "stof@notk.org"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://github.com/KnpLabs/KnpMenuBundle/contributors"
+                }
+            ],
+            "description": "This bundle provides an integration of the KnpMenu library",
+            "keywords": [
+                "menu"
+            ],
+            "support": {
+                "issues": "https://github.com/KnpLabs/KnpMenuBundle/issues",
+                "source": "https://github.com/KnpLabs/KnpMenuBundle/tree/v3.5.0"
+            },
+            "time": "2024-12-25T16:34:19+00:00"
+        },
+        {
             "name": "knplabs/knp-time-bundle",
             "version": "v2.4.0",
             "source": {
@@ -3299,6 +3437,67 @@
                 }
             ],
             "time": "2025-01-01T23:08:29+00:00"
+        },
+        {
+            "name": "survos/fw-bundle",
+            "version": "1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/survos/fw-bundle.git",
+                "reference": "5af63f44335a064f2e0f001b2bccde7a19c1d800"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/survos/fw-bundle/zipball/5af63f44335a064f2e0f001b2bccde7a19c1d800",
+                "reference": "5af63f44335a064f2e0f001b2bccde7a19c1d800",
+                "shasum": ""
+            },
+            "require": {
+                "knplabs/knp-menu-bundle": "^3.2",
+                "php": "^8.3",
+                "survos/core-bundle": "^1.5",
+                "symfony/config": "^6.4 || ^7.1",
+                "symfony/dependency-injection": "^6.4 || ^7.1",
+                "symfony/event-dispatcher": "^6.4 || ^7.1",
+                "symfony/http-kernel": "^6.4 || ^7.1",
+                "symfony/options-resolver": "^7.2",
+                "symfony/ux-twig-component": "^2.22",
+                "twig/twig": "^3.4"
+            },
+            "require-dev": {
+                "phpstan/phpstan": "^2.0",
+                "symfony/browser-kit": "^6.4 || ^7.1",
+                "symfony/framework-bundle": "^6.4 || ^7.1",
+                "symfony/phpunit-bridge": "^6.4 || ^7.1",
+                "symfony/security-bundle": "^6.4 || ^7.1",
+                "symfony/twig-bundle": "^6.4 || ^7.1",
+                "symfony/var-dumper": "^6.4 || ^7.1"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-4": {
+                    "Survos\\FwBundle\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Bundle with utilities for creating a Symfony-based mobile app with framework7",
+            "keywords": [
+                "symfony-ux"
+            ],
+            "support": {
+                "issues": "https://github.com/survos/fw-bundle/issues",
+                "source": "https://github.com/survos/fw-bundle/tree/1.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/kbond",
+                    "type": "github"
+                }
+            ],
+            "time": "2025-03-08T18:32:57+00:00"
         },
         {
             "name": "symfony/asset",
@@ -8885,16 +9084,16 @@
         },
         {
             "name": "symfonycasts/tailwind-bundle",
-            "version": "v0.9.0",
+            "version": "v0.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/SymfonyCasts/tailwind-bundle.git",
-                "reference": "408c65b9ed0a7a25e17f9f86d5d5d60bbbfcc464"
+                "reference": "380502c39bf403f772d050ff9904932040de8cf1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SymfonyCasts/tailwind-bundle/zipball/408c65b9ed0a7a25e17f9f86d5d5d60bbbfcc464",
-                "reference": "408c65b9ed0a7a25e17f9f86d5d5d60bbbfcc464",
+                "url": "https://api.github.com/repos/SymfonyCasts/tailwind-bundle/zipball/380502c39bf403f772d050ff9904932040de8cf1",
+                "reference": "380502c39bf403f772d050ff9904932040de8cf1",
                 "shasum": ""
             },
             "require": {
@@ -8935,9 +9134,9 @@
             ],
             "support": {
                 "issues": "https://github.com/SymfonyCasts/tailwind-bundle/issues",
-                "source": "https://github.com/SymfonyCasts/tailwind-bundle/tree/v0.9.0"
+                "source": "https://github.com/SymfonyCasts/tailwind-bundle/tree/v0.10.0"
             },
-            "time": "2025-03-22T13:36:15+00:00"
+            "time": "2025-04-09T15:18:46+00:00"
         },
         {
             "name": "twig/extra-bundle",

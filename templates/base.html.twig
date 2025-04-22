@@ -18,8 +18,17 @@
     <body>
     {% block content %}
         <twig:Navbar />
+
+        <div id="app">
+            FW7 app goes here?? {{ _self }}
+        </div>
+
+
         {% block body %}{% endblock %}
         <twig:Footer />
+
+
+
     {% endblock %}
     </body>
 </html>

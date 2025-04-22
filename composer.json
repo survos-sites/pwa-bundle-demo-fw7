@@ -1,6 +1,6 @@
 {
-    "name": "spomky-labs/phpwa-demo",
-    "description": "A Symfony based project to demonstrate the use of PHPWA",
+    "name": "survos-sites/pwa-bundle-demo-fw7",
+    "description": "A Symfony based project to demonstrate the use of pwa-bundle and framework7",
     "type": "project",
     "license": "MIT",
     "minimum-stability": "dev",
@@ -30,6 +30,7 @@
         "spomky-labs/pwa-bundle": "1.3.x@dev",
         "survos/core-bundle": "*",
         "survos/deployment-bundle": "^1.5",
+        "survos/fw-bundle": "*",
         "symfony/asset": "^7.2",
         "symfony/asset-mapper": "^7.2",
         "symfony/console": "^7.2",
@@ -64,7 +65,7 @@
         "symfony/validator": "^7.2",
         "symfony/web-link": "^7.2",
         "symfony/yaml": "^7.2",
-        "symfonycasts/tailwind-bundle": "^0.9",
+        "symfonycasts/tailwind-bundle": "^0.10.0",
         "twig/extra-bundle": "^2.12|^3.0",
         "twig/twig": "^2.12|^3.0"
     },

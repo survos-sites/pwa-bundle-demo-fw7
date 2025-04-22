@@ -152,4 +152,22 @@ return [
     '@hotwired/hotwire-native-bridge' => [
         'version' => '1.1.0',
     ],
+    '@survos-mobile/mobile' => [
+        'path' => '@survos/fw/src/controllers/mobile_controller.js',
+    ],
+    'framework7' => [
+        'version' => '8.3.4',
+    ],
+    'dom7' => [
+        'version' => '4.0.6',
+    ],
+    'ssr-window' => [
+        'version' => '4.0.2',
+    ],
+    'path-to-regexp' => [
+        'version' => '6.3.0',
+    ],
+    'htm' => [
+        'version' => '3.1.1',
+    ],
 ];

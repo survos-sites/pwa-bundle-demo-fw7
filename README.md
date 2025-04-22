@@ -1,14 +1,14 @@
-# PHPWA bundle demo
+# PWA Bundle Demo with Framework7
+
+This is a fork of tacman/phpwa-demo, which itself is a fork of the original phpwa-demo.
+
+The initial difference is that instead of tailwind we're using Framework7.  Underneath it all is pwa-bundle
 
 ## Installation
 
 ```bash
-git clone git@github.com:tacman/phpwa-demo.git 
-cd phpwa-demo
+git clone git@github.com:survos/pwa-bundle-demo-fw7.git pwa-f7 && cd pwa-f7
 composer install
-bin/console tailwind:build
-bin/console d:d:c
-bin/console d:sch:update --force
 symfony server:start -d
 symfony open:local
 ```

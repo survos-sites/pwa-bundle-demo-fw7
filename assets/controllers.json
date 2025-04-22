@@ -90,6 +90,13 @@
                 "fetch": "eager"
             }
         },
+        "@survos/fw-bundle": {
+            "mobile": {
+                "enabled": true,
+                "fetch": "lazy",
+                "autoimport": []
+            }
+        },
         "@symfony/ux-leaflet-map": {
             "map": {
                 "enabled": true,
