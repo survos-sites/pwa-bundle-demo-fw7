@@ -1,0 +1,27 @@
+<template>
+    <div class="page">
+
+        <div class="navbar">
+            <div class="navbar-bg"></div>
+            <div class="navbar-inner">
+                <div class="title">{{ 'app.name' | trans(domain: 'pwa') }}</div>
+            </div>
+        </div>
+
+        <div class="page-content">
+
+            {% block body %}
+            <twig:Hero />
+            <twig:Features />
+            {% endblock %}
+
+        </div>
+
+    </div>
+</template>
+
+<script>
+    export default function(props, {$, $el, $f7, $f7route, $f7router, $h, $on, $store, $theme, $update}) {
+        return $render;
+    }
+</script>

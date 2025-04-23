@@ -1,333 +1,409 @@
-<section {{ attributes }} class="bg-gray-50 py-8 antialiased dark:bg-gray-900 md:py-12">
-    <div class="mx-auto max-w-screen-xl px-4 2xl:px-0">
-        <div class="mb-4 items-end justify-between space-y-4 sm:flex sm:space-y-0 md:mb-8">
-            <div>
-                <h2 class="mt-3 text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl">{{ 'homepage.demo'|trans }}</h2>
-            </div>
-        </div>
-        <div class="mb-4 grid gap-4 sm:grid-cols-2 md:mb-8 lg:grid-cols-3 xl:grid-cols-4">
-            <twig:Feature
-                available="true"
-                link="{{ path('app_feature_installation') }}"
-                title="Installation"
-                description="Using the beforeinstallprompt event, a native dialog can be displayed to install a web app"
-            >
-                <twig:ux:icon name="material-symbols:install-mobile" class="mx-auto h-full text-feature" alt="Install" />
-            </twig:Feature>
+<section {{ attributes }}>
 
-            <twig:Feature
-                available="true"
-                link="{{ path('app_feature_offline_support') }}"
-                title="Offline support"
-                description="The Service Worker enables web apps to work offline"
-            >
-                <twig:ux:icon name="material-symbols:download-for-offline" class="mx-auto h-full text-feature" alt="Offline support" />
-            </twig:Feature>
+    <h2 class="block-title block-title-medium">{{ 'homepage.demo'|trans }}</h2>
+    <div class="list cards-list media-list inset margin-vertical-half">
+        <ul class="row align-items-stretch justify-content-flex-start" style="column-gap: var(--f7-grid-gap);">
 
-            <twig:Feature
-                link="{{ path('app_feature_notifications') }}"
-                title="Notifications"
-                description="The Notifications API enables web apps to display notifications, even when the app is not active."
-            >
-                <twig:ux:icon name="material-symbols:notifications-outline" class="mx-auto h-full text-feature" alt="Notifications" />
-            </twig:Feature>
+            <li class="col-100 medium-50 large-33 theme-color-blue">
+                <twig:Feature
+                    available="true"
+                    link="{{ path('app_feature_installation') }}"
+                    title="Installation"
+                    description="Using the beforeinstallprompt event, a native dialog can be displayed to install a web app"
+                >
+                    <twig:ux:icon name="material-symbols:install-mobile" class="icon size-32 color-white" alt="Install" />
+                </twig:Feature>
+            </li>
 
-            <twig:Feature
-                available="true"
-                link="{{ path('app_feature_shortcuts') }}"
-                title="Shortcuts"
-                description="Shortcuts provide quick access to pages in your app from the app icon."
-            >
-                <twig:ux:icon name="tdesign:mobile-shortcut-filled" class="mx-auto h-full text-feature" alt="Shortcuts" />
-            </twig:Feature>
+            <li class="col-100 medium-50 large-33 theme-color-yellow">
+                <twig:Feature
+                    available="true"
+                    link="{{ path('app_feature_offline_support') }}"
+                    title="Offline support"
+                    description="The Service Worker enables web apps to work offline"
+                >
+                    <twig:ux:icon name="material-symbols:download-for-offline" class="icon size-32 color-white" alt="Offline support" />
+                </twig:Feature>
+            </li>
 
-            <twig:Feature
-                available="true"
-                link="{{ path('app_feature_view_transition') }}"
-                title="View Transitions"
-                description="The View Transitions API enables app-like transitions between pages."
-            >
-                <twig:ux:icon name="material-symbols:auto-awesome-motion" class="mx-auto h-full text-feature" alt="View Transitions" />
-            </twig:Feature>
+            <li class="col-100 medium-50 large-33 theme-color-lime">
+                <twig:Feature
+                    link="{{ path('app_feature_notifications') }}"
+                    title="Notifications"
+                    description="The Notifications API enables web apps to display notifications, even when the app is not active."
+                >
+                    <twig:ux:icon name="material-symbols:notifications-outline" class="icon size-32 color-white" alt="Notifications" />
+                </twig:Feature>
+            </li>
 
-            <twig:Feature
-                available="true"
-                link="{{ path('app_feature_geolocation') }}"
-                title="Geolocation"
-                description="The Geolocation API enables users to share their location with web apps."
-            >
-                <twig:ux:icon name="ic:baseline-gps-fixed" class="mx-auto h-full text-feature" alt="Geolocation" />
-            </twig:Feature>
+            <li class="col-100 medium-50 large-33 theme-color-pink">
+                <twig:Feature
+                    available="true"
+                    link="{{ path('app_feature_shortcuts') }}"
+                    title="Shortcuts"
+                    description="Shortcuts provide quick access to pages in your app from the app icon."
+                >
+                    <twig:ux:icon name="tdesign:mobile-shortcut-filled" class="icon size-32 color-white" alt="Shortcuts" />
+                </twig:Feature>
+            </li>
 
-            <twig:Feature
-                available="true"
-                link="{{ path('app_feature_media_capture') }}"
-                title="Media capture"
-                description="Media capture allows web apps to use the camera and microphone of a device"
-            >
-                <twig:ux:icon name="material-symbols:videocam" class="mx-auto h-full text-feature" alt="Media capture" />
-            </twig:Feature>
+            <li class="col-100 medium-50 large-33 theme-color-lightblue">
+                <twig:Feature
+                    available="true"
+                    link="{{ path('app_feature_view_transition') }}"
+                    title="View Transitions"
+                    description="The View Transitions API enables app-like transitions between pages."
+                >
+                    <twig:ux:icon name="material-symbols:auto-awesome-motion" class="icon size-32 color-white" alt="View Transitions" />
+                </twig:Feature>
+            </li>
 
-            <twig:Feature
-                available="true"
-                link="{{ path('app_feature_picture_in_picture') }}"
-                title="Picture-in-picture"
-                description="The Document Picture-in-Picture API makes it possible to open an always-on-top window that can be populated with arbitrary HTML content."
-            >
-                <twig:ux:icon name="material-symbols:picture-in-picture" class="mx-auto h-full text-feature" alt="Picture-in-picture" />
-            </twig:Feature>
+            <li class="col-100 medium-50 large-33 theme-color-purple">
+                <twig:Feature
+                    available="true"
+                    link="{{ path('app_feature_geolocation') }}"
+                    title="Geolocation"
+                    description="The Geolocation API enables users to share their location with web apps."
+                >
+                    <twig:ux:icon name="ic:baseline-gps-fixed" class="icon size-32 color-white" alt="Geolocation" />
+                </twig:Feature>
+            </li>
 
-            <twig:Feature
-                link="{{ path('app_feature_file_system') }}"
-                title="File System"
-                description="Access to the file system of the user's device"
-            >
-                <twig:ux:icon name="ic:baseline-insert-drive-file" class="mx-auto h-full text-feature" alt="File System" />
-            </twig:Feature>
+            <li class="col-100 medium-50 large-33 theme-color-teal">
+                <twig:Feature
+                    available="true"
+                    link="{{ path('app_feature_media_capture') }}"
+                    title="Media capture"
+                    description="Media capture allows web apps to use the camera and microphone of a device"
+                >
+                    <twig:ux:icon name="material-symbols:videocam" class="icon size-32 color-white" alt="Media capture" />
+                </twig:Feature>
+            </li>
 
-            <twig:Feature
-                link="{{ path('app_feature_authentication') }}"
-                title="Authentication"
-                description="Web Authentication API (WebAuthn) enables passwordless authentication through your device's fingerprint reader or an external USB Security Key."
-            >
-                <twig:ux:icon name="ic:baseline-fingerprint" class="mx-auto h-full text-feature" alt="Authentication" />
-            </twig:Feature>
+            <li class="col-100 medium-50 large-33 theme-color-deeporange">
+                <twig:Feature
+                    available="true"
+                    link="{{ path('app_feature_picture_in_picture') }}"
+                    title="Picture-in-picture"
+                    description="The Document Picture-in-Picture API makes it possible to open an always-on-top window that can be populated with arbitrary HTML content."
+                >
+                    <twig:ux:icon name="material-symbols:picture-in-picture" class="icon size-32 color-white" alt="Picture-in-picture" />
+                </twig:Feature>
+            </li>
 
-            <twig:Feature
-                available="true"
-                link="{{ path('app_feature_protocol_handling') }}"
-                title="Protocol Handling"
-                description="Protocol handling enables web apps to register their ability to open links with particular URL schemes."
-            >
-                <twig:ux:icon name="material-symbols:language" class="mx-auto h-full text-feature" alt="Protocol Handling" />
-            </twig:Feature>
+            <li class="col-100 medium-50 large-33 theme-color-blue">
+                <twig:Feature
+                    link="{{ path('app_feature_file_system') }}"
+                    title="File System"
+                    description="Access to the file system of the user's device"
+                >
+                    <twig:ux:icon name="ic:baseline-insert-drive-file" class="icon size-32 color-white" alt="File System" />
+                </twig:Feature>
+            </li>
 
-            <twig:Feature
-                available="true"
-                link="{{ path('app_feature_file_handling') }}"
-                title="File Handling API"
-                description="The File Handling API enables web apps to register as file handlers with the operating system"
-            >
-                <twig:ux:icon name="material-symbols:folder-open" class="mx-auto h-full text-feature" alt="File Handling API" />
-            </twig:Feature>
+            <li class="col-100 medium-50 large-33 theme-color-yellow">
+                <twig:Feature
+                    link="{{ path('app_feature_authentication') }}"
+                    title="Authentication"
+                    description="Web Authentication API (WebAuthn) enables passwordless authentication through your device's fingerprint reader or an external USB Security Key."
+                >
+                    <twig:ux:icon name="ic:baseline-fingerprint" class="icon size-32 color-white" alt="Authentication" />
+                </twig:Feature>
+            </li>
 
-            <twig:Feature
-                link="{{ path('app_feature_contact_picker') }}"
-                title="Contact picker"
-                description="The Contact Picker API allows web apps to select the user's contacts after permission has been granted."
-            >
-                <twig:ux:icon name="material-symbols:account-box" class="mx-auto h-full text-feature" alt="Contact picker" />
-            </twig:Feature>
+            <li class="col-100 medium-50 large-33 theme-color-lime">
+                <twig:Feature
+                    available="true"
+                    link="{{ path('app_feature_protocol_handling') }}"
+                    title="Protocol Handling"
+                    description="Protocol handling enables web apps to register their ability to open links with particular URL schemes."
+                >
+                    <twig:ux:icon name="material-symbols:language" class="icon size-32 color-white" alt="Protocol Handling" />
+                </twig:Feature>
+            </li>
 
-            <twig:Feature
-                available="true"
-                link="{{ path('app_feature_web_share') }}"
-                title="Web share"
-                description="The Web Share API invokes the native share mechanism of the device and allows users to share text, URLs or files."
-            >
-                <twig:ux:icon name="material-symbols:share" class="mx-auto h-full text-feature" alt="Web share" />
-            </twig:Feature>
+            <li class="col-100 medium-50 large-33 theme-color-pink">
+                <twig:Feature
+                    available="true"
+                    link="{{ path('app_feature_file_handling') }}"
+                    title="File Handling API"
+                    description="The File Handling API enables web apps to register as file handlers with the operating system"
+                >
+                    <twig:ux:icon name="material-symbols:folder-open" class="icon size-32 color-white" alt="File Handling API" />
+                </twig:Feature>
+            </li>
 
-            <twig:Feature
-                link="{{ path('app_feature_barcode_detection') }}"
-                title="Barcode detection"
-                description="The Barcode Detection API detects barcodes and QR codes in images."
-            >
-                <twig:ux:icon name="material-symbols:qr-code-scanner" class="mx-auto h-full text-feature" alt="Barcode detection" />
-            </twig:Feature>
+            <li class="col-100 medium-50 large-33 theme-color-lightblue">
+                <twig:Feature
+                    link="{{ path('app_feature_contact_picker') }}"
+                    title="Contact picker"
+                    description="The Contact Picker API allows web apps to select the user's contacts after permission has been granted."
+                >
+                    <twig:ux:icon name="material-symbols:account-box" class="icon size-32 color-white" alt="Contact picker" />
+                </twig:Feature>
+            </li>
 
-            <twig:Feature
-                link="{{ path('app_feature_face_detection') }}"
-                title="Face detection"
-                description="The Shape Detection API detects faces in images."
-            >
-                <twig:ux:icon name="material-symbols:face" class="mx-auto h-full text-feature" alt="Face detection" />
-            </twig:Feature>
+            <li class="col-100 medium-50 large-33 theme-color-purple">
+                <twig:Feature
+                    available="true"
+                    link="{{ path('app_feature_web_share') }}"
+                    title="Web share"
+                    description="The Web Share API invokes the native share mechanism of the device and allows users to share text, URLs or files."
+                >
+                    <twig:ux:icon name="material-symbols:share" class="icon size-32 color-white" alt="Web share" />
+                </twig:Feature>
+            </li>
 
-            <twig:Feature
-                link="{{ path('app_feature_vibration') }}"
-                title="Vibration"
-                description="The Vibration API enables web apps to make a mobile device vibrate."
-            >
-                <twig:ux:icon name="material-symbols:vibration" class="mx-auto h-full text-feature" alt="Vibration" />
-            </twig:Feature>
+            <li class="col-100 medium-50 large-33 theme-color-teal">
+                <twig:Feature
+                    link="{{ path('app_feature_barcode_detection') }}"
+                    title="Barcode detection"
+                    description="The Barcode Detection API detects barcodes and QR codes in images."
+                >
+                    <twig:ux:icon name="material-symbols:qr-code-scanner" class="icon size-32 color-white" alt="Barcode detection" />
+                </twig:Feature>
+            </li>
 
-            <twig:Feature
-                link="{{ path('app_feature_audio_recording') }}"
-                title="Audio recording"
-                description="Record audio using MediaRecorder and visualize audio using Web Audio API."
-            >
-                <twig:ux:icon name="material-symbols:mic" class="mx-auto h-full text-feature" alt="Audio recording" />
-            </twig:Feature>
+            <li class="col-100 medium-50 large-33 theme-color-orange">
+                <twig:Feature
+                    link="{{ path('app_feature_face_detection') }}"
+                    title="Face detection"
+                    description="The Shape Detection API detects faces in images."
+                >
+                    <twig:ux:icon name="material-symbols:face" class="icon size-32 color-white" alt="Face detection" />
+                </twig:Feature>
+            </li>
 
-            <twig:Feature
-                link="{{ path('app_feature_audio') }}"
-                title="Audio"
-                description="The Media Session API allows web apps to display controls for media playback on a device's lock screen."
-            >
-                <twig:ux:icon name="ic:round-play-circle-filled" class="mx-auto h-full text-feature" alt="Audio" />
-            </twig:Feature>
+            <li class="col-100 medium-50 large-33 theme-color-blue">
+                <twig:Feature
+                    link="{{ path('app_feature_vibration') }}"
+                    title="Vibration"
+                    description="The Vibration API enables web apps to make a mobile device vibrate."
+                >
+                    <twig:ux:icon name="material-symbols:vibration" class="icon size-32 color-white" alt="Vibration" />
+                </twig:Feature>
+            </li>
 
-            <twig:Feature
-                link="{{ path('app_feature_audio_session') }}"
-                title="Audio Session API"
-                description="The Audio Session API configures how audio from web apps should mix with audio from native apps."
-            >
-                <twig:ux:icon name="material-symbols:tune" class="mx-auto h-full text-feature" alt="Audio Session API" />
-            </twig:Feature>
+            <li class="col-100 medium-50 large-33 theme-color-yellow">
+                <twig:Feature
+                    link="{{ path('app_feature_audio_recording') }}"
+                    title="Audio recording"
+                    description="Record audio using MediaRecorder and visualize audio using Web Audio API."
+                >
+                    <twig:ux:icon name="material-symbols:mic" class="icon size-32 color-white" alt="Audio recording" />
+                </twig:Feature>
+            </li>
 
-            <twig:Feature
-                available="true"
-                link="{{ path('app_feature_screen_capture') }}"
-                title="Screen Capturing"
-                description="Capture Handle and Captured Surface Control enable screen capturing web apps to remotely control captured web apps."
-            >
-                <twig:ux:icon name="material-symbols:screen-share" class="mx-auto h-full text-feature" alt="Screen Capturing" />
-            </twig:Feature>
+            <li class="col-100 medium-50 large-33 theme-color-lime">
+                <twig:Feature
+                    link="{{ path('app_feature_audio') }}"
+                    title="Audio"
+                    description="The Media Session API allows web apps to display controls for media playback on a device's lock screen."
+                >
+                    <twig:ux:icon name="ic:round-play-circle-filled" class="icon size-32 color-white" alt="Audio" />
+                </twig:Feature>
+            </li>
 
-            <twig:Feature
-                available="true"
-                link="{{ path('app_feature_element_capture') }}"
-                title="Element Capture"
-                description="Element Capture enables screen capturing web apps to record specific HTML elements."
-            >
-                <img class="mx-auto h-full" src="{{ asset('images/element-capture.svg') }}" alt="Element capture">
-            </twig:Feature>
+            <li class="col-100 medium-50 large-33 theme-color-pink">
+                <twig:Feature
+                    link="{{ path('app_feature_audio_session') }}"
+                    title="Audio Session API"
+                    description="The Audio Session API configures how audio from web apps should mix with audio from native apps."
+                >
+                    <twig:ux:icon name="material-symbols:tune" class="icon size-32 color-white" alt="Audio Session API" />
+                </twig:Feature>
+            </li>
 
-            <twig:Feature
-                link="{{ path('app_feature_background_sync') }}"
-                title="Background Sync API"
-                description="The Background Sync API enables web apps to defer tasks when it's offline so they can be run when the network connection is restored."
-            >
-                <twig:ux:icon name="material-symbols:sync" class="mx-auto h-full text-feature" alt="Background Sync API" />
-            </twig:Feature>
+            <li class="col-100 medium-50 large-33 theme-color-lightblue">
+                <twig:Feature
+                    available="true"
+                    link="{{ path('app_feature_screen_capture') }}"
+                    title="Screen Capturing"
+                    description="Capture Handle and Captured Surface Control enable screen capturing web apps to remotely control captured web apps."
+                >
+                    <twig:ux:icon name="material-symbols:screen-share" class="icon size-32 color-white" alt="Screen Capturing" />
+                </twig:Feature>
+            </li>
 
-            <twig:Feature
-                link="{{ path('app_feature_background_fetch') }}"
-                title="Background Fetch API"
-                description="The Background Fetch API enables web apps to download large files in the background even when the app is not running."
-            >
-                <twig:ux:icon name="material-symbols:downloading" class="mx-auto h-full text-feature" alt="Background Fetch API" />
-            </twig:Feature>
+            <li class="col-100 medium-50 large-33 theme-color-purple">
+                <twig:Feature
+                    available="true"
+                    link="{{ path('app_feature_element_capture') }}"
+                    title="Element Capture"
+                    description="Element Capture enables screen capturing web apps to record specific HTML elements."
+                >
+                    <img src="{{ asset('images/element-capture.svg') }}" alt="Element capture" />
+                </twig:Feature>
+            </li>
 
-            <twig:Feature
-                link="{{ path('app_feature_storage') }}"
-                title="Storage API"
-                description="The Storage API enables web apps to persist structured data in the user's browser."
-            >
-                <twig:ux:icon name="material-symbols:inventory" class="mx-auto h-full text-feature" alt="Storage API" />
-            </twig:Feature>
+            <li class="col-100 medium-50 large-33 theme-color-teal">
+                <twig:Feature
+                    link="{{ path('app_feature_background_sync') }}"
+                    title="Background Sync API"
+                    description="The Background Sync API enables web apps to defer tasks when it's offline so they can be run when the network connection is restored."
+                >
+                    <twig:ux:icon name="material-symbols:sync" class="icon size-32 color-white" alt="Background Sync API" />
+                </twig:Feature>
+            </li>
 
-            <twig:Feature
-                link="{{ path('app_feature_bluetooth') }}"
-                title="Bluetooth"
-                description="The Web Bluetooth API enables web apps to connect to Bluetooth Low Energy (BLE) devices and read values from or write values to it."
-            >
-                <twig:ux:icon name="material-symbols:bluetooth" class="mx-auto h-full text-feature" alt="Bluetooth" />
-            </twig:Feature>
+            <li class="col-100 medium-50 large-33 theme-color-orange">
+                <twig:Feature
+                    link="{{ path('app_feature_background_fetch') }}"
+                    title="Background Fetch API"
+                    description="The Background Fetch API enables web apps to download large files in the background even when the app is not running."
+                >
+                    <twig:ux:icon name="material-symbols:downloading" class="icon size-32 color-white" alt="Background Fetch API" />
+                </twig:Feature>
+            </li>
 
-            <twig:Feature
-                link="{{ path('app_feature_nfc') }}"
-                title="NFC"
-                description="The Web NFC API enables web apps to read and write to NFC tags."
-            >
-                <twig:ux:icon name="material-symbols:nfc" class="mx-auto h-full text-feature" alt="NFC" />
-            </twig:Feature>
+            <li class="col-100 medium-50 large-33 theme-color-blue">
+                <twig:Feature
+                    link="{{ path('app_feature_storage') }}"
+                    title="Storage API"
+                    description="The Storage API enables web apps to persist structured data in the user's browser."
+                >
+                    <twig:ux:icon name="material-symbols:inventory" class="icon size-32 color-white" alt="Storage API" />
+                </twig:Feature>
+            </li>
 
-            <twig:Feature
-                link="{{ path('app_feature_ar_vr') }}"
-                title="AR/VR"
-                description="Augmented reality enables web apps to place virtual objects in reality."
-            >
-                <twig:ux:icon name="material-symbols:layers" class="mx-auto h-full text-feature" alt="AR/VR" />
-            </twig:Feature>
+            <li class="col-100 medium-50 large-33 theme-color-yellow">
+                <twig:Feature
+                    link="{{ path('app_feature_bluetooth') }}"
+                    title="Bluetooth"
+                    description="The Web Bluetooth API enables web apps to connect to Bluetooth Low Energy (BLE) devices and read values from or write values to it."
+                >
+                    <twig:ux:icon name="material-symbols:bluetooth" class="icon size-32 color-white" alt="Bluetooth" />
+                </twig:Feature>
+            </li>
 
-            <twig:Feature
-                link="{{ path('app_feature_payment') }}"
-                title="Payment"
-                description="The Payment Request API provides a browser-based method to enable users to make payments on the web, using a credit card, Apple Pay or Google Pay."
-            >
-                <twig:ux:icon name="material-symbols:credit-card" class="mx-auto h-full text-feature" alt="Payment" />
-            </twig:Feature>
+            <li class="col-100 medium-50 large-33 theme-color-lime">
+                <twig:Feature
+                    link="{{ path('app_feature_nfc') }}"
+                    title="NFC"
+                    description="The Web NFC API enables web apps to read and write to NFC tags."
+                >
+                    <twig:ux:icon name="material-symbols:nfc" class="icon size-32 color-white" alt="NFC" />
+                </twig:Feature>
+            </li>
 
-            <twig:Feature
-                available="true"
-                link="{{ path('app_feature_wake_lock') }}"
-                title="Wake lock"
-                description="The Screen Wake Lock API enables web apps to prevent devices from dimming or locking the screen when the app needs to keep running."
-            >
-                <twig:ux:icon name="material-symbols:screen-lock-portrait" class="mx-auto h-full text-feature" alt="Wake lock" />
-            </twig:Feature>
+            <li class="col-100 medium-50 large-33 theme-color-pink">
+                <twig:Feature
+                    link="{{ path('app_feature_ar_vr') }}"
+                    title="AR/VR"
+                    description="Augmented reality enables web apps to place virtual objects in reality."
+                >
+                    <twig:ux:icon name="material-symbols:layers" class="icon size-32 color-white" alt="AR/VR" />
+                </twig:Feature>
+            </li>
 
-            <twig:Feature
-                available="true"
-                link="{{ path('app_feature_orientation') }}"
-                title="Orientation"
-                description="The DeviceOrientationEvent gives information about the physical orientation of the user's device."
-            >
-                <twig:ux:icon name="material-symbols:screen-rotation" class="mx-auto h-full text-feature" alt="Orientation" />
-            </twig:Feature>
+            <li class="col-100 medium-50 large-33 theme-color-lightblue">
+                <twig:Feature
+                    link="{{ path('app_feature_payment') }}"
+                    title="Payment"
+                    description="The Payment Request API provides a browser-based method to enable users to make payments on the web, using a credit card, Apple Pay or Google Pay."
+                >
+                    <twig:ux:icon name="material-symbols:credit-card" class="icon size-32 color-white" alt="Payment" />
+                </twig:Feature>
+            </li>
 
-            <twig:Feature
-                available="true"
-                link="{{ path('app_feature_device_motion') }}"
-                title="Motion"
-                description="The DeviceMotionEvent gives information about the speed of changes for the position and orientation of the user's device."
-            >
-                <twig:ux:icon name="material-symbols:3d-rotation" class="mx-auto h-full text-feature" alt="Motion" />
-            </twig:Feature>
+            <li class="col-100 medium-50 large-33 theme-color-purple">
+                <twig:Feature
+                    available="true"
+                    link="{{ path('app_feature_wake_lock') }}"
+                    title="Wake lock"
+                    description="The Screen Wake Lock API enables web apps to prevent devices from dimming or locking the screen when the app needs to keep running."
+                >
+                    <twig:ux:icon name="material-symbols:screen-lock-portrait" class="icon size-32 color-white" alt="Wake lock" />
+                </twig:Feature>
+            </li>
 
-            <twig:Feature
-                available="true"
-                link="{{ path('app_feature_network_info') }}"
-                title="Network info"
-                description="The NetworkInformation API provides information about the connection of a device, allowing web apps to adapt functionality based on network quality."
-            >
-                <twig:ux:icon name="material-symbols:network-check" class="mx-auto h-full text-feature" alt="Network info" />
-            </twig:Feature>
+            <li class="col-100 medium-50 large-33 theme-color-teal">
+                <twig:Feature
+                    available="true"
+                    link="{{ path('app_feature_orientation') }}"
+                    title="Orientation"
+                    description="The DeviceOrientationEvent gives information about the physical orientation of the user's device."
+                >
+                    <twig:ux:icon name="material-symbols:screen-rotation" class="icon size-32 color-white" alt="Orientation" />
+                </twig:Feature>
+            </li>
 
-            <twig:Feature
-                link="{{ path('app_feature_speech_synthesis') }}"
-                title="Speech synthesis"
-                description="Speech synthesis provides text-to-speech and allows programs to read out their text content."
-            >
-                <twig:ux:icon name="material-symbols:record-voice-over" class="mx-auto h-full text-feature" alt="Speech synthesis" />
-            </twig:Feature>
+            <li class="col-100 medium-50 large-33 theme-color-orange">
+                <twig:Feature
+                    available="true"
+                    link="{{ path('app_feature_device_motion') }}"
+                    title="Motion"
+                    description="The DeviceMotionEvent gives information about the speed of changes for the position and orientation of the user's device."
+                >
+                    <twig:ux:icon name="material-symbols:3d-rotation" class="icon size-32 color-white" alt="Motion" />
+                </twig:Feature>
+            </li>
 
-            <twig:Feature
-                link="{{ path('app_feature_speech_recognition') }}"
-                title="Speech recognition"
-                description="Speech recognition is part of the Web Speech API and provides the ability to recognize voice context from an audio input."
-            >
-                <twig:ux:icon name="material-symbols:hearing" class="mx-auto h-full text-feature" alt="Speech recognition" />
-            </twig:Feature>
+            <li class="col-100 medium-50 large-33 theme-color-blue">
+                <twig:Feature
+                    available="true"
+                    link="{{ path('app_feature_network_info') }}"
+                    title="Network info"
+                    description="The NetworkInformation API provides information about the connection of a device, allowing web apps to adapt functionality based on network quality."
+                >
+                    <twig:ux:icon name="material-symbols:network-check" class="icon size-32 color-white" alt="Network info" />
+                </twig:Feature>
+            </li>
 
-            <twig:Feature
-                available="true"
-                link="{{ path('app_feature_multi_touch') }}"
-                title="Multi touch"
-                description="Touch events enable web apps to capture complex touch behaviour."
-            >
-                <twig:ux:icon name="material-symbols:touch-app" class="mx-auto h-full text-feature" alt="Multi touch" />
-            </twig:Feature>
+            <li class="col-100 medium-50 large-33 theme-color-yellow">
+                <twig:Feature
+                    link="{{ path('app_feature_speech_synthesis') }}"
+                    title="Speech synthesis"
+                    description="Speech synthesis provides text-to-speech and allows programs to read out their text content."
+                >
+                    <twig:ux:icon name="material-symbols:record-voice-over" class="icon size-32 color-white" alt="Speech synthesis" />
+                </twig:Feature>
+            </li>
 
-            <twig:Feature
-                available="true"
-                link="{{ path('app_feature_i18n') }}"
-                title="i18n"
-                description="Internationalization (i18n) enables web apps to adapt to different languages and regions."
-            >
-                <twig:ux:icon name="fluent-mdl2:locale-language" class="mx-auto h-full text-feature" alt="i18n" />
-            </twig:Feature>
+            <li class="col-100 medium-50 large-33 theme-color-lime">
+                <twig:Feature
+                    link="{{ path('app_feature_speech_recognition') }}"
+                    title="Speech recognition"
+                    description="Speech recognition is part of the Web Speech API and provides the ability to recognize voice context from an audio input."
+                >
+                    <twig:ux:icon name="material-symbols:hearing" class="icon size-32 color-white" alt="Speech recognition" />
+                </twig:Feature>
+            </li>
 
-            <twig:Feature
-                available="true"
-                link="{{ path('app_feature_presentation') }}"
-                title="Presentation"
-                description="The Presentation API enables web apps to display content on external screens."
-            >
-                <twig:ux:icon name="ri:presentation-fill" class="mx-auto h-full text-feature" alt="presentation" />
-            </twig:Feature>
-        </div>
+            <li class="col-100 medium-50 large-33 theme-color-pink">
+                <twig:Feature
+                    available="true"
+                    link="{{ path('app_feature_multi_touch') }}"
+                    title="Multi touch"
+                    description="Touch events enable web apps to capture complex touch behaviour."
+                >
+                    <twig:ux:icon name="material-symbols:touch-app" class="icon size-32 color-white" alt="Multi touch" />
+                </twig:Feature>
+            </li>
+
+            <li class="col-100 medium-50 large-33 theme-color-lightblue">
+                <twig:Feature
+                    available="true"
+                    link="{{ path('app_feature_i18n') }}"
+                    title="i18n"
+                    description="Internationalization (i18n) enables web apps to adapt to different languages and regions."
+                >
+                    <twig:ux:icon name="fluent-mdl2:locale-language" class="icon size-32 color-white" alt="i18n" />
+                </twig:Feature>
+            </li>
+
+            <li class="col-100 medium-50 large-33 theme-color-purple">
+                <twig:Feature
+                    available="true"
+                    link="{{ path('app_feature_presentation') }}"
+                    title="Presentation"
+                    description="The Presentation API enables web apps to display content on external screens."
+                >
+                    <twig:ux:icon name="ri:presentation-fill" class="icon size-32 color-white" alt="presentation" />
+                </twig:Feature>
+            </li>
+
+        </ul>
     </div>
+
 </section>

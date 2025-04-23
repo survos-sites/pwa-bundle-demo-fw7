@@ -66,4 +66,50 @@ class HomepageController extends AbstractController
         return $this->render('app/about.html.twig');
     }
 
+    /* Framework7 JS Files */
+    #[Route('/js/config.js', name: 'f7_app_config_js')]
+    public function f7_app_config_js(): Response
+    {
+        $response = new Response();
+        $response->headers->set('Content-Type', 'application/javascript');
+        return $this->render('js/config.js.twig', [], $response);
+    }
+
+    #[Route('/js/routes.js', name: 'f7_app_routes_js')]
+    public function f7_app_routes_js(): Response
+    {
+        $response = new Response();
+        $response->headers->set('Content-Type', 'application/javascript');
+        return $this->render('js/routes.js.twig', [], $response);
+    }
+
+    #[Route('/js/store.js', name: 'f7_app_store_js')]
+    public function f7_app_store_js(): Response
+    {
+        $response = new Response();
+        $response->headers->set('Content-Type', 'application/javascript');
+        return $this->render('js/store.js.twig', [], $response);
+    }
+
+    #[Route('/js/init.js', name: 'f7_app_init_js')]
+    public function f7_app_init_js(): Response
+    {
+        $response = new Response();
+        $response->headers->set('Content-Type', 'application/javascript');
+        return $this->render('js/init.js.twig', [], $response);
+    }
+
+    /* Framework7 HTML Partials */
+    #[Route('/partials/app.html', name: 'f7_app_partial_root_html')]
+    public function f7_app_partial_root_html(): Response
+    {
+        return $this->render('/partials/app.html.twig');
+    }
+
+    #[Route('/partials/home.html', name: 'f7_app_partial_home_html')]
+    public function f7_app_partial_home_html(): Response
+    {
+        return $this->render('/partials/home.html.twig');
+    }
+
 }

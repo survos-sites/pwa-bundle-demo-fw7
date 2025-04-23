@@ -170,4 +170,8 @@ return [
     'htm' => [
         'version' => '3.1.1',
     ],
+    'framework7/framework7-bundle.min.css' => [
+        'version' => '8.3.4',
+        'type' => 'css',
+    ],
 ];

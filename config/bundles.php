@@ -29,5 +29,4 @@ return [
     Inspector\Symfony\Bundle\InspectorBundle::class => ['all' => true],
     Knp\Bundle\MenuBundle\KnpMenuBundle::class => ['all' => true],
     Survos\FwBundle\SurvosFwBundle::class => ['all' => true],
-    Symfonycasts\TailwindBundle\SymfonycastsTailwindBundle::class => ['all' => true],
 ];

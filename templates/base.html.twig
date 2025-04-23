@@ -1,34 +1,46 @@
 <!DOCTYPE html>
-<html lang="en-US">
+
+<html lang="en-US" dir="ltr">
+
     <head>
-        <meta charset="UTF-8">
+        <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <meta name="description" content="This is a simple demonstration">
+        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+
+        <meta name="description" content="This is a simple demonstration" />
         <meta name="robots" content="all" />
         <meta name="view-transition" content="same-origin" />
-        <title>{% block title %}Welcome!{% endblock %} | What PWA Bundle Can Do Today</title>
+
+        <title>{% block title %}Welcome!{% endblock %} | What PWA-Bundle + FW7 Can Do Today</title>
+
         {% block stylesheets %}
+            {#        <link rel="stylesheet" href="{{asset('/assets/framework7/framework7-bundle.min.css')}}" />#}
+            {#        <link rel="stylesheet" href="{{asset('/assets/framework7/colors.css')}}" />#}
+            {#        <link rel="stylesheet" href="{{asset('/assets/framework7/overrides.css')}}" />#}
         {% endblock %}
+
+
         {% block javascripts %}
             {% block importmap %}{{ importmap('app') }}{% endblock %}
         {% endblock %}
+
         {{ pwa(locale=app.request.locale) }}
+
     </head>
+
     <body>
-    {% block content %}
-        <twig:Navbar />
 
-        <div id="app">
-            FW7 app goes here?? {{ _self }}
-        </div>
+        <div id="app"></div>
 
+{#        <script defer src="{{asset('/assets/framework7/framework7-bundle.min.js')}}"></script>#}
+{#        <script defer src="{{path('f7_app_config_js')}}"></script>#}
+        <script defer src="{{path('f7_app_routes_js')}}"></script>
+        <script defer src="{{path('f7_app_store_js')}}"></script>
+        <script defer src="{{path('f7_app_init_js')}}"></script>
 
-        {% block body %}{% endblock %}
-        <twig:Footer />
+        <script>
+        </script>
 
-
-
-    {% endblock %}
     </body>
+
 </html>

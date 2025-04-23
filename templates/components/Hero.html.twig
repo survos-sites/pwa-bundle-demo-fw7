@@ -1,37 +1,29 @@
-<section {{ attributes }} class="bg-white dark:bg-gray-900">
-    <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6 ">
-        <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">
-            {{ 'app.name'|trans(domain: 'pwa') }}
-        </h2>
-        <p class="mb-3 font-light text-gray-500 dark:text-gray-400 sm:text-xl">
-            A showcase of what is possible with Progressive Web Apps today.
-        </p>
-        <p class="mb-3 font-light text-gray-500 dark:text-gray-400 sm:text-xl">
-            A Progressive Web App (PWA) is a website that can be installed on your device and provide an app-like experience read more.
-        </p>
-        <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">
-            How to use this app
-        </h2>
-        <p class="mb-3 font-light text-gray-500 dark:text-gray-400 sm:text-xl">
-            This app is itself a Progressive Web App which means it can be installed to the home screen of your mobile device or to your desktop.
-        </p>
-        <p class="mb-3 font-light text-gray-500 dark:text-gray-400 sm:text-xl">
-            A Progressive Web App (PWA) is a website that can be installed on your device and provide an app-like experience read more.
-        </p>
-        <p class="mb-4 font-light text-gray-500 dark:text-gray-400 sm:text-xl">
-            When the button below is visible, you can install this app.
-            If is not visible, it means that the app is already installed, or you cannot install it.
-        </p>
-        <button
-            hidden
-            data-controller="pwa--install"
-            data-pwa--install-target="install"
-            data-action="click->pwa--install#install"
-            class="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:ring-blue-800"
-        >
-            Install this app
-        </button>
-        <img src="{{ qr_code_url(url(app.request.get('_route'))) }}" />
-{#        <img style="max-height: 100px" src="/pwademo.svg" />#}
+<section {{ attributes }}>
+
+    <div class="block block-strong no-hairlines no-margin-vertical dark" style="height: 288px;">
+        <div class="flexbox-centered">
+            <div class="shape-container mask mask-squircle padding-half size-80 bg-color-white">
+                <img src="{{ asset('images/pwabundlelogo.svg') }}" alt="Element capture" />
+            </div>
+            <h1 class="font-size-24 font-weight-900 margin-top">{{ 'app.name'|trans(domain: 'pwa') }}</h1>
+            <p class="font-size-16 margin-top-half">A showcase of what is possible with Progressive Web Apps today.</p>
+        </div>
     </div>
+
+    <div class="block block-strong inset margin-vertical">
+        <h2 class="block-title block-title-medium">What is Progressive Web App?</h2>
+        <p>A Progressive Web App (PWA) is a website that can be installed on your device and provide an app-like experience read more.</p>
+        <h2 class="block-title block-title-medium">How to use this app?</h2>
+        <p>This app is itself a Progressive Web App which means it can be installed to the home screen of your mobile device or to your desktop.</p>
+        <p>When the button below is visible, you can install this app. If is not visible, it means that the app is already installed, or you cannot install it.</p>
+        <button hidden data-controller="pwa--install" data-pwa--install-target="install" data-action="click->pwa--install#install" class="button button-fill button-large">Install this app</button>
+    </div>
+
+    <div class="block block-strong inset margin-vertical">
+        <div class="flexbox-centered">
+            <img class="size-128" src="{{ qr_code_url(url(app.request.get('_route'))) }}" alt="" />
+            <div class="font-size-14 text-muted">Scan the QR code on your mobile phone to access the app.</div>
+        </div>
+    </div>
+
 </section>

@@ -1,20 +1,24 @@
-<div {{  attributes }} class="{% if available is defined and available == "true" %}rounded-lg border border-green-200 bg-white p-6 shadow-sm dark:border-green-700 dark:bg-green-800 bg-green-50 hover:bg-green-100{% else %}rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800 bg-gray-50 hover:bg-gray-100{% endif %}">
-    <div class="h-56 w-full">
-        <a data-turbo-action="replace" href="{{ link }}">
-            {% block content %}{% endblock %}
-        </a>
-    </div>
-    <div class="pt-6">
-        <a data-turbo-action="replace" href="{{ link }}" class="{% if available is defined and available == "true" %}text-lg font-semibold leading-tight text-green-900 hover:underline dark:text-white{% else %}text-lg font-semibold leading-tight text-gray-900 hover:underline dark:text-white{% endif %}">
-            {% if available is defined and available == "true" %}
-                <span class="inline-flex items-center justify-center w-4 h-4 ms-2 text-xs font-semibold text-green-800 bg-green-200 rounded-full">✅</span>
-            {% endif %}
-            {{ title }}
-        </a>
-        <div class="mt-2 flex items-center gap-2">
-            <p class="{% if available is defined and available == "true" %}text-sm font-medium text-green-900 dark:text-white{% else %}text-sm font-medium text-gray-900 dark:text-white{% endif %}">
-                {{ description }}
-            </p>
+<a href="{{ link }}" class="item-link height-100">
+    <div class="item-content height-100">
+        <div class="item-inner item-cell height-100">
+            <div class="item-row">
+                <div class="item-cell align-self-flex-start flex-shrink-0 width-auto">
+                    <div class="shape-container mask mask-squircle size-64 bg-color-primary">
+                        {% block content %}{% endblock %}
+                    </div>
+                </div>
+                <div class="item-cell align-self-flex-start">
+                    <div class="font-size-16 font-weight-800">{{ title|raw }}</div>
+                    <div class="font-size-14 text-muted">{{ description|raw }}</div>
+                </div>
+                <div class="item-cell align-self-flex-start flex-shrink-0 width-auto">
+                    {% if available is defined and available == "true" %}
+                    <twig:ux:icon name="material-symbols:check-circle" class="icon size-24 color-green tooltip-init" data-tooltip="Supported" />
+                    {% else %}
+                    <twig:ux:icon name="material-symbols:error" class="icon size-24 color-red tooltip-init" data-tooltip="Not Supported" />
+                    {% endif %}
+                </div>
+            </div>
         </div>
     </div>
-</div>
+</a>

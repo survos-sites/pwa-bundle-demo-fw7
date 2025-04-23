@@ -38,3 +38,5 @@ phpstan.neon
 ###< phpstan/phpstan ###
 
 /.castor.stub.php
+
+.DS_Store
