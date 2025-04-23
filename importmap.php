@@ -174,4 +174,7 @@ return [
         'version' => '8.3.4',
         'type' => 'css',
     ],
+    'framework7/framework7-bundle' => [
+        'version' => '8.3.4',
+    ],
 ];

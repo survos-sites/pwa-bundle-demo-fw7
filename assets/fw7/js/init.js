@@ -5,6 +5,7 @@
 | Initialize Framework7
 |------------------------------------------------------------------------------
 */
+import Framework7 from 'framework7/framework7-bundle';
 
 window.app = new Framework7({
     el: '#app',
