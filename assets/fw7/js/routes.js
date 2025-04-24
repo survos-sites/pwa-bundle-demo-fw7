@@ -1,8 +1,38 @@
+'use strict';
+
+/*
+|------------------------------------------------------------------------------
+| Define Namespace
+|------------------------------------------------------------------------------
+*/
+
+window.routes = window.routes || [];
+
+console.log('routes.js');
+
+/*
+|------------------------------------------------------------------------------
+| Define Routes
+|------------------------------------------------------------------------------
+*/
+
+window.routes.push(
+    {
+        path: '/',
+        componentUrl: '/en_US/partials/home.html'
+    },
+    {
+        path: '/en_US/installation',
+        componentUrl: '/en_US/installation'
+    }
+);
+
+/*
 export default (
     [
         {
             path: '/',
-            url: './',
+            url: '/en_US/partials/home.html',
         },
         {
             path: '/pages/about',
@@ -33,3 +63,4 @@ export default (
             }
         },
     ]);
+*/

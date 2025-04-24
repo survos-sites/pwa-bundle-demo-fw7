@@ -9,7 +9,7 @@ import Framework7 from 'framework7/framework7-bundle';
 
 window.app = new Framework7({
     el: '#app',
-    // componentUrl: '{{path("f7_app_partial_root_html")}}',
+    componentUrl: '/en_US/partials/app.html',
     theme: 'auto',
     routes: window.routes,
     store: window.store,
