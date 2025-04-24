@@ -1,14 +1,13 @@
 <template>
     <div class="page">
+
         <div class="navbar">
             <div class="navbar-bg"></div>
             <div class="navbar-inner">
                 <div class="left">
                     <a href="#" class="link back">
                         <i class="icon icon-back"></i>
-                        <span class="if-not-md">
-                            Back
-                        </span>
+                        <span class="if-not-md">Back</span>
                     </a>
                 </div>
                 <div class="title">{% block title %}Installation{% endblock %}</div>
@@ -16,7 +15,60 @@
         </div>
 
         <div class="page-content">
+            {% block body %}
+            <turbo-frame id="content">
 
+                <div class="block block-strong no-hairlines no-margin-vertical dark bg-color-blue" style="height: 288px;">
+                    <div class="flexbox-centered">
+                        <div class="shape-container mask mask-squircle padding-half size-80 bg-color-white">
+                            <twig:ux:icon name="material-symbols:install-mobile" class="icon size-40 text-color-blue" alt="Install" />
+                        </div>
+                        <h1 class="font-size-24 font-weight-900 margin-top text-color-white">Installation</h1>
+                        <p class="font-size-16 no-margin-top text-color-white">Using the beforeinstallprompt event, a native dialog can be displayed to install a web app</p>
+                    </div>
+                </div>
+
+                <h2 class="block-title block-title-medium">Installation</h2>
+                <div class="block block-strong inset">
+                    <p>
+                        Progressive Web Apps can be installed to the home screen on mobile devices and desktop on laptops and desktop computers.
+                        <br/>
+                        The bundle provides a Symfony UX Controller to ease the use of this feature.
+                    </p>
+                </div>
+
+                <h2 class="block-title block-title-medium">Demo</h2>
+                <div class="block block-strong inset">
+                    {% set button = '
+                    <button
+                        hidden
+                        data-controller="pwa--install"
+                        data-pwa--install-target="install"
+                        data-action="click->pwa--install#install"
+                        class="button button-fill"
+                    >
+                        Install this app
+                    </button>
+                    ' %}
+                    <pre><code class="language-twig" data-controller="code">{{ button|escape('html')|raw }}</code></pre>
+                    <p>
+                        On compatible browsers, a button will be displayed and trigger the installation of the web app.
+                        If the application is already installed, or the browser does not support the feature, the button will be hidden.
+                        Otherwise, a bottom sheet will be displayed with instructions on how to install the web app.
+                    </p>
+                    <button id="install"
+                        hidden
+                        data-controller="pwa--install"
+                        data-pwa--install-target="install"
+                        data-action="click->pwa--install#install"
+                        class="button button-fill"
+                    >
+                        Install this app
+                    </button>
+                </div>
+
+            </turbo-frame>
+            {% endblock %}
         </div>
 
     </div>

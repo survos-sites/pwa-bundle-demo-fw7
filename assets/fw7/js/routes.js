@@ -16,11 +16,34 @@ console.log('routes.js');
 |------------------------------------------------------------------------------
 */
 
+window.routes.push({
+    path: '/',
+    componentUrl: '/en_US/partials/tabbar.html',
+    tabs: [
+        {
+            id: 'tab-working',
+            path: '/',
+            componentUrl: '/en_US/partials/home.html'
+        },
+        {
+            id: 'tab-todo',
+            path: '/en_US/todo',
+            componentUrl: '/en_US/partials/tab-todo.html'
+        },
+        {
+            id: 'tab-info',
+            path: '/en_US/info',
+            componentUrl: '/en_US/partials/tab-info.html'
+        },
+        {
+            id: 'tab-share',
+            path: '/en_US/share',
+            componentUrl: '/en_US/partials/tab-share.html'
+        }
+    ]
+});
+
 window.routes.push(
-    {
-        path: '/',
-        componentUrl: '/en_US/partials/home.html'
-    },
     {
         path: '/en_US/installation',
         componentUrl: '/en_US/installation'

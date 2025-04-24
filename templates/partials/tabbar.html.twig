@@ -1,0 +1,51 @@
+<template>
+    <div class="page">
+
+        <div id="tabbar" class="toolbar toolbar-bottom tabbar tabbar-labels">
+            <div class="toolbar-inner">
+                <a href="/" class="tab-link" data-route-tab-id="tab-working">
+                    <span class="icons">
+                        <twig:ux:icon name="material-symbols:list-alt-check-outline" class="icon size-24" alt="Working" />
+                        <twig:ux:icon name="material-symbols:list-alt-check" class="icon icon-active size-24" alt="Working" />
+                    </span>
+                    <span class="tabbar-label">Working</span>
+                </a>
+                <a href="/en_US/todo" class="tab-link" data-route-tab-id="tab-todo">
+                    <span class="icons">
+                        <twig:ux:icon name="material-symbols:list-alt-add-outline" class="icon size-24" alt="Todo" />
+                        <twig:ux:icon name="material-symbols:list-alt-add" class="icon icon-active size-24" alt="Todo" />
+                    </span>
+                    <span class="tabbar-label">Todo</span>
+                </a>
+                <a href="/en_US/info" class="tab-link" data-route-tab-id="tab-info">
+                    <span class="icons">
+                        <twig:ux:icon name="material-symbols:info-outline" class="icon size-24" alt="Info" />
+                        <twig:ux:icon name="material-symbols:info" class="icon icon-active size-24" alt="Info" />
+                    </span>
+                    <span class="tabbar-label">Info</span>
+                </a>
+                <a href="/en_US/share" class="tab-link" data-route-tab-id="tab-share">
+                    <span class="icons">
+                        <twig:ux:icon name="material-symbols:share-outline" class="icon size-24" alt="Share" />
+                        <twig:ux:icon name="material-symbols:share" class="icon icon-active size-24" alt="Share" />
+                    </span>
+                    <span class="tabbar-label">Share</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="tabs tabs-routable">
+            <div id="tab-working" class="tab"></div>
+            <div id="tab-todo" class="tab"></div>
+            <div id="tab-info" class="tab"></div>
+            <div id="tab-share" class="tab"></div>
+        </div>
+
+    </div>
+</template>
+
+<script>
+    export default function(props, {$, $el, $f7, $f7route, $f7router, $h, $on, $store, $theme, $update}) {
+        return $render;
+    }
+</script>

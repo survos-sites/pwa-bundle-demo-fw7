@@ -112,4 +112,34 @@ class HomepageController extends AbstractController
         return $this->render('/partials/home.html.twig');
     }
 
+    #[Route('/partials/tabbar.html', name: 'f7_app_partial_tabbar_html')]
+    public function f7_app_partial_tabbar_html(): Response
+    {
+        return $this->render('/partials/tabbar.html.twig');
+    }
+
+    #[Route('/partials/tab-working.html', name: 'f7_app_partial_tab_working_html')]
+    public function f7_app_partial_tab_working_html(): Response
+    {
+        return $this->render('/partials/tab-working.html.twig');
+    }
+
+    #[Route('/partials/tab-todo.html', name: 'f7_app_partial_tab_todo_html')]
+    public function f7_app_partial_tab_todo_html(): Response
+    {
+        return $this->render('/partials/tab-todo.html.twig');
+    }
+
+    #[Route('/partials/tab-info.html', name: 'f7_app_partial_tab_info_html')]
+    public function f7_app_partial_tab_info_html(): Response
+    {
+        return $this->render('/partials/tab-info.html.twig');
+    }
+
+    #[Route('/partials/tab-share.html', name: 'f7_app_partial_tab_share_html')]
+    public function f7_app_partial_tab_share_html(): Response
+    {
+        return $this->render('/partials/tab-share.html.twig');
+    }
+
 }
