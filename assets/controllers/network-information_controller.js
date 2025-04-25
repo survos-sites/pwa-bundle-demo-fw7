@@ -16,7 +16,12 @@ export default class extends Controller {
 
   updateConnectionStatus = () => {
     const connection = navigator.connection;
-    this.dispatch('network-information:change', {bubble: true, details: {connection}});
+    /*this.dispatch('network-information:change', {bubbles: true, detail: {connection}});*/ // This is not working, therefore had to dispatch event the native way
+    const event = new CustomEvent('network-information:change', {
+      detail: { connection },
+      bubbles: true
+    });
+    document.dispatchEvent(event);
     this.downlinkTargets.forEach((element) => element.setAttribute('data-network-information-downlink-value', connection.downlink));
     this.downlinkContentTargets.forEach((element) => element.textContent = connection.downlink);
     this.downlinkMaxTargets.forEach((element) => element.setAttribute('data-network-information-downlink-max-value', connection.downlinkMax));

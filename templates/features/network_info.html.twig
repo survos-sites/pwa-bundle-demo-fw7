@@ -1,82 +1,106 @@
-{% extends 'base.html.twig' %}
+<template>
+    <div class="page" data-controller="network-information">
 
-{% block title %}Network info{% endblock %}
+        <div class="navbar">
+            <div class="navbar-bg"></div>
+            <div class="navbar-inner">
+                <div class="left">
+                    <a href="#" class="link back">
+                        <i class="icon icon-back"></i>
+                        <span class="if-not-md">Back</span>
+                    </a>
+                </div>
+                <div class="title">{% block title %}Network info{% endblock %}</div>
+            </div>
+        </div>
 
-{% block body %}
-    <turbo-frame id="content">
-        <section class="bg-white dark:bg-gray-900" data-controller="network-information">
-            <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6 ">
-                <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">
-                    Network info
-                </h2>
-                <p class="mb-3 font-light text-gray-500 dark:text-gray-400 sm:text-xl">
-                    Your network information is:
-                </p>
-                <div class="relative overflow-x-auto">
-                    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+        <div class="page-content">
+
+            {% block body %}
+            <div class="block block-strong no-hairlines no-margin-vertical dark bg-color-blue" style="height: 288px;">
+                <div class="flexbox-centered">
+                    <div class="shape-container mask mask-squircle padding-half size-80 bg-color-white">
+                        <twig:ux:icon name="material-symbols:network-check" class="icon size-40 text-color-blue" alt="Network info" />
+                    </div>
+                    <h1 class="font-size-24 font-weight-900 margin-top text-color-white">Network info</h1>
+                    <p class="font-size-16 no-margin-top text-color-white">The NetworkInformation API provides information about the connection of a device, allowing web apps to adapt functionality based on network quality.</p>
+                </div>
+            </div>
+
+            <h2 class="block-title block-title-medium">Your network information is:</h2>
+            <div class="data-table data-table-init data-table-collapsible collapsible-cards inset margin-vertical">
+                <table>
+                    <thead>
                         <tr>
-                            <th scope="col" class="px-6 py-3">
-                                Property
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                Value
-                            </th>
+                            <th class="label-cell">Property</th>
+                            <th class="label-cell">Value</th>
                         </tr>
-                        </thead>
-                        <tbody>
-                        <tr class="bg-white dark:bg-gray-800">
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                Downlink
-                            </th>
-                            <td class="px-6 py-4">
-                                <span data-network-information-target="downlink downlinkContent">...</span>&nbsp;Mbps
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="label-cell" data-collapsible-title="Property">Downlink</td>
+                            <td class="label-cell" data-collapsible-title="Value">
+                                <span data-network-information-target="downlink downlinkContent">...</span> Mbps
                             </td>
                         </tr>
-                        <tr class="bg-white dark:bg-gray-800">
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                Downlink max
-                            </th>
-                            <td class="px-6 py-4">
-                                <span data-network-information-target="downlinkMax downlinkMaxContent">...</span>&nbsp;Mbps
+                        <tr>
+                            <td class="label-cell" data-collapsible-title="Property">Downlink max</td>
+                            <td class="label-cell" data-collapsible-title="Value">
+                                <span data-network-information-target="downlinkMax downlinkMaxContent">...</span> Mbps
                             </td>
                         </tr>
-                        <tr class="bg-white dark:bg-gray-800">
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                Effective connection type
-                            </th>
-                            <td class="px-6 py-4">
+                        <tr>
+                            <td class="label-cell" data-collapsible-title="Property">Effective connection type</td>
+                            <td class="label-cell" data-collapsible-title="Value">
                                 <span data-network-information-target="effectiveType effectiveTypeContent">...</span>
                             </td>
                         </tr>
-                        <tr class="bg-white dark:bg-gray-800">
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                RTT
-                            </th>
-                            <td class="px-6 py-4">
+                        <tr>
+                            <td class="label-cell" data-collapsible-title="Property">RTT</td>
+                            <td class="label-cell" data-collapsible-title="Value">
                                 <span data-network-information-target="rtt rttContent">...</span>
                             </td>
                         </tr>
-                        <tr class="bg-white dark:bg-gray-800">
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                Save data
-                            </th>
-                            <td class="px-6 py-4">
+                        <tr>
+                            <td class="label-cell" data-collapsible-title="Property">Save data</td>
+                            <td class="label-cell" data-collapsible-title="Value">
                                 <span data-network-information-target="saveData saveDataContent">...</span>
                             </td>
                         </tr>
-                        <tr class="bg-white dark:bg-gray-800">
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                Type
-                            </th>
-                            <td class="px-6 py-4">
+                        <tr>
+                            <td class="label-cell" data-collapsible-title="Property">Type</td>
+                            <td class="label-cell" data-collapsible-title="Value">
                                 <span data-network-information-target="type typeContent">...</span>
                             </td>
                         </tr>
-                        </tbody>
-                    </table>
-                </div>
+                    </tbody>
+                </table>
             </div>
-        </section>
-    </turbo-frame>
-{% endblock %}
+            {% endblock %}
+
+        </div>
+
+    </div>
+</template>
+
+<script>
+    export default function(props, {$, $el, $f7, $f7route, $f7router, $h, $on, $store, $theme, $update}) {
+
+        let onNetworkInformationChange = function(event) {
+            console.log(event.detail.connection);
+            $f7.toast.show({
+                text: 'Network information changed'
+            });
+        }
+
+        $on('pageBeforeIn', function() {
+            document.addEventListener('network-information:change', onNetworkInformationChange);
+        });
+
+        $on('pageBeforeRemove', function() {
+            document.removeEventListener('network-information:change', onNetworkInformationChange);
+        });
+
+        return $render;
+    }
+</script>

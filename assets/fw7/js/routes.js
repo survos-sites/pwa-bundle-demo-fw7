@@ -47,6 +47,10 @@ window.routes.push(
     {
         path: '/en_US/installation',
         componentUrl: '/en_US/installation'
+    },
+    {
+        path: '/en_US/network-info',
+        componentUrl: '/en_US/network-info'
     }
 );
 
