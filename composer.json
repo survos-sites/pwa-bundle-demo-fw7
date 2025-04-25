@@ -6,7 +6,7 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
-        "php": ">=8.2",
+        "php": "^8.3",
         "ext-ctype": "*",
         "ext-gd": "*",
         "ext-iconv": "*",
@@ -33,7 +33,7 @@
         "survos/fw-bundle": "*",
         "symfony/asset": "^7.2",
         "symfony/asset-mapper": "^7.2",
-        "symfony/console": "^7.3.x-dev",
+        "symfony/console": "^7.2",
         "symfony/dependency-injection": "^7.2",
         "symfony/dotenv": "^7.2",
         "symfony/expression-language": "^7.2",
@@ -116,8 +116,8 @@
     },
     "extra": {
         "symfony": {
-            "allow-contrib": false,
-            "require": "^7.3",
+            "allow-contrib": true,
+            "require": "^7.2",
             "docker": true
         }
     },
@@ -136,9 +136,9 @@
         "roave/better-reflection": "^6.57",
         "roave/security-advisories": "dev-latest",
         "shipmonk/composer-dependency-analyser": "^1.8",
-        "shipmonk/dead-code-detector": "^0.10",
+        "shipmonk/dead-code-detector": "^0.11",
         "staabm/phpstan-todo-by": "^0.2.0",
-        "struggle-for-php/sfp-phpstan-psr-log": "^0.23.0",
+        "struggle-for-php/sfp-phpstan-psr-log": "^0.24",
         "symfony/browser-kit": "^7.2",
         "symfony/css-selector": "^7.2",
         "symfony/debug-bundle": "^7.2",

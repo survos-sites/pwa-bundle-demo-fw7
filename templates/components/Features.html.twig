@@ -3,16 +3,6 @@
     <h2 class="block-title block-title-medium">{{ 'homepage.demo'|trans }}</h2>
     <div class="list cards-list media-list inset margin-vertical-half">
         <ul class="row align-items-stretch justify-content-flex-start" style="column-gap: var(--f7-grid-gap);">
-            <li class="col-100 medium-50 large-33 theme-color-blue">
-                <twig:Feature
-                    available="true"
-                    link="{{ path('app_feature_network_info') }}"
-                    title="Network info"
-                    description="The NetworkInformation API provides information about the connection of a device, allowing web apps to adapt functionality based on network quality."
-                >
-                    <twig:ux:icon name="material-symbols:network-check" class="icon size-32 color-white" alt="Network info" />
-                </twig:Feature>
-            </li>
 
 
             <li class="col-100 medium-50 large-33 theme-color-blue">
@@ -23,6 +13,17 @@
                     description="Using the beforeinstallprompt event, a native dialog can be displayed to install a web app"
                 >
                     <twig:ux:icon name="material-symbols:install-mobile" class="icon size-32 color-white" alt="Install" />
+                </twig:Feature>
+            </li>
+
+            <li class="col-100 medium-50 large-33 theme-color-blue">
+                <twig:Feature
+                    available="true"
+                    link="{{ path('app_feature_network_info') }}"
+                    title="Network info"
+                    description="The NetworkInformation API provides information about the connection of a device, allowing web apps to adapt functionality based on network quality."
+                >
+                    <twig:ux:icon name="material-symbols:network-check" class="icon size-32 color-white" alt="Network info" />
                 </twig:Feature>
             </li>
 

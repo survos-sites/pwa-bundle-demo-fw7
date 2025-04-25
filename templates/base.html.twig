@@ -24,7 +24,7 @@
             {% block importmap %}{{ importmap('app') }}{% endblock %}
         {% endblock %}
 
-        {{ pwa(locale=app.request.locale) }}
+{#        {{ pwa(locale=app.request.locale) }}#}
 
     </head>
 
@@ -39,8 +39,8 @@
 {#        <script defer src="{{path('f7_app_store_js')}}"></script>#}
 {#        <script defer src="{{path('f7_app_init_js')}}"></script>#}
 
-        <script>
-        </script>
+{#        <script>#}
+{#        </script>#}
 
     {% endblock %}
     </body>
