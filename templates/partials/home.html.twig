@@ -5,6 +5,21 @@
             <div class="navbar-bg"></div>
             <div class="navbar-inner">
                 <div class="title">{{ 'app.name' | trans(domain: 'pwa') }}</div>
+                <div class="right">
+                    <a href="#" class="link icon-only" @click="${enableSearchbar}">
+                        <twig:ux:icon name="material-symbols:search" class="icon" alt="Search" />
+                    </a>
+                </div>
+                <form class="searchbar searchbar-expandable">
+                    <div class="searchbar-inner">
+                        <div class="searchbar-input-wrap">
+                            <input type="search" placeholder="Search" />
+                            <i class="searchbar-icon"></i>
+                            <span class="input-clear-button"></span>
+                        </div>
+                        <div class="searchbar-disable-button">Cancel</div>
+                    </div>
+                </form>
             </div>
         </div>
 
@@ -12,7 +27,17 @@
 
             {% block body %}
             <twig:Hero />
-            <twig:Features />
+            <div class="searchbar-found">
+                <twig:Features />
+            </div>
+            <div class="searchbar-not-found">
+                <div class="empty-state">
+                    <div class="empty-state-media">
+                        <twig:ux:icon name="tabler:mood-empty" class="icon size-96 text-color-neutral" alt="No Search Results" />
+                    </div>
+                    <div class="empty-state-title font-size-20 no-margin-top text-color-neutral">No Search Results</div>
+                </div>
+            </div>
             {% endblock %}
 
         </div>
@@ -22,6 +47,63 @@
 
 <script>
     export default function(props, {$, $el, $f7, $f7route, $f7router, $h, $on, $store, $theme, $update}) {
+
+        let searchbar = null;
+
+        let initializeSearchbar = function() {
+            let navbarEl = $f7.navbar.getElByPage($el.value);
+            searchbar = $f7.searchbar.create({
+                el: $(navbarEl).find('.searchbar'),
+                searchContainer: $el.value.find('.list'),
+                searchItem: 'li',
+                searchIn: 'a',
+                backdrop: false,
+                removeDiacritics: true,
+                on: {
+                    enable: function(searchbar) {
+                        searchbar.$el.find('input').focus();
+                    }
+                }
+            });
+            if ($f7route.query.search) {
+                searchSearchbar($f7route.query.search);
+            }
+        }
+
+        let enableSearchbar = function() {
+            if (searchbar) {
+                searchbar.enable();
+            }
+        }
+
+        let disableSearchbar = function() {
+            if (searchbar) {
+                searchbar.disable();
+            }
+        }
+
+        let searchSearchbar = function(query) {
+            if (searchbar) {
+                searchbar.search(query);
+            }
+        }
+
+        $on('pageBeforeIn', function() {
+            initializeSearchbar();
+        });
+
+        $on('pageBeforeRemove', function() {
+            disableSearchbar();
+        });
+
+        $on('tabInit', function() {
+            initializeSearchbar();
+        });
+
+        $on('tabBeforeRemove', function() {
+            disableSearchbar();
+        });
+
         return $render;
     }
 </script>
