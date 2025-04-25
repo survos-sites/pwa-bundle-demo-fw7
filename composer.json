@@ -61,7 +61,6 @@
         "symfony/ux-leaflet-map": "^2.22",
         "symfony/ux-live-component": "^2.22",
         "symfony/ux-map": "^2.22",
-        "symfony/ux-turbo": "^2.24",
         "symfony/ux-twig-component": "^2.22",
         "symfony/validator": "^7.2",
         "symfony/web-link": "^7.2",
