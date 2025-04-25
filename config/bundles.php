@@ -29,5 +29,6 @@ return [
     Inspector\Symfony\Bundle\InspectorBundle::class => ['all' => true],
     Knp\Bundle\MenuBundle\KnpMenuBundle::class => ['all' => true],
     Survos\FwBundle\SurvosFwBundle::class => ['all' => true],
-//    Symfony\UX\Turbo\TurboBundle::class => ['all' => true],
+    Survos\CommandBundle\SurvosCommandBundle::class => ['all' => true],
+    Survos\Bundle\MakerBundle\SurvosMakerBundle::class => ['dev' => true, 'test' => true],
 ];

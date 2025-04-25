@@ -50,7 +50,7 @@ import './fw7/js/routes.js';
 import './fw7/js/init.js';
 
 
-window.addEventListener('DOMContentLoaded', function() {
-  console.log('app.init!')
-  app.init();
-});
+// window.addEventListener('DOMContentLoaded', function() {
+//   console.log('app.init!')
+//   app.init();
+// });

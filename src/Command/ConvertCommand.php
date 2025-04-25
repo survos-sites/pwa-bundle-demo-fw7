@@ -18,6 +18,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Roave\BetterReflection\Reflection\ReflectionClass;
+use Zenstruck\Console\RunsCommands;
+use Zenstruck\Console\RunsProcesses;
+
 // ...
 
 #[AsCommand(name: 'app:convert', description: 'Convert Features and Controllers to a database', help: <<<END

@@ -1,6 +1,6 @@
 'use strict';
 
-import { Controller } from '@hotwired/stimulus';
+import {Controller} from '@hotwired/stimulus';
 
 export default class extends Controller {
   static targets = [
@@ -16,9 +16,14 @@ export default class extends Controller {
 
   updateConnectionStatus = () => {
     const connection = navigator.connection;
-    /*this.dispatch('network-information:change', {bubbles: true, detail: {connection}});*/ // This is not working, therefore had to dispatch event the native way
+    // This is not working, therefore had to dispatch event the native way
+
+    console.warn("Dispatching 'network-information:change'");
+    this.dispatch('network-information:change',
+      {bubbles: true, detail: {connection}});
+
     const event = new CustomEvent('network-information:change', {
-      detail: { connection },
+      detail: {connection},
       bubbles: true
     });
     document.dispatchEvent(event);

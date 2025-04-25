@@ -10,6 +10,7 @@ use Symfony\Bridge\Twig\Attribute\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -18,6 +19,7 @@ use Zenstruck\Console\InvokableServiceCommand;
 use Zenstruck\Console\IO;
 use Zenstruck\Console\RunsCommands;
 use Zenstruck\Console\RunsProcesses;
+use function Symfony\Component\String\u;
 
 #[AsCommand('app:process', 'same as app:convert, but with zenstruck')]
 final class AppProcessCommand extends InvokableServiceCommand
@@ -25,33 +27,68 @@ final class AppProcessCommand extends InvokableServiceCommand
     use RunsCommands;
     use RunsProcesses;
 
+    public function __construct(
+        #[AutowireIterator(tag: 'controller.service_arguments')] private $taggedServices,
+    )
+    {
+        parent::__construct();
+
+    }
+
     public function __invoke(
         IO   $io,
 
-        #[Option(description: 'overwrite the commmands even if they exist')]
+        #[Option(description: 'overwrite the commands even if they exist')]
         bool $force = true,
     ): int
     {
-        $io->success($this->getName() . ' success.');
 
-        return self::SUCCESS;
-
+        $methods = [];
         //        $features = $this->getFeaturesFromTwig();
         foreach ($this->taggedServices as $controllerClass) {
             if ($controllerClass::class === Kernel::class) {
                 continue;
             }
-            $r = ReflectionClass::createFromName($controllerClass::class);
-            foreach ($r->getMethods() as $method) {
-                $attributes = $method->getAttributes();
-                $body = $this->getBody($method->getLocatedSource()->getSource(),
-                    $method->getStartLine(), $method->getEndLine());
-                dd($body);
-            }
+//            $body = [];
+//            $r = ReflectionClass::createFromName($controllerClass::class);
+//            foreach ($r->getMethods() as $method) {
+//                dd($method->)
+////                $attributes = $method->getAttributes();
+//
+//                $reflectionClass = new \ReflectionClass($controllerClass::class);
+//                $refMethod  = $reflectionClass->getMethod($method->getName());
+//                dd($refMethod->getStartLine(), $method->getStartLine());
+//                $innerBody = $this->getBody($method->getLocatedSource()->getSource(),
+//                    $refMethod->getStartLine(), $refMethod->getEndLine());
+//
+//
+//                $outerBody = $this->getBody($method->getLocatedSource()->getSource(),
+//                    $method->getStartLine(), $method->getEndLine());
+////                if ($method->getName() === '_invoke') {
+//                    $body[$reflectionClass->getShortName()] = $innerBody;
+////                }
+////                dd($innerBody, $outerBody);
+//            }
+//            dd($body);
+
+            $betterReflectionClass = ReflectionClass::createFromName($controllerClass::class);
             $reflectionClass = new \ReflectionClass($controllerClass);
-            foreach ($reflectionClass->getMethods() as $method) {
+            foreach ($betterReflectionClass->getMethods() as $betterMethod) {
+                // native!
+                $refMethod  = (new \ReflectionClass($controllerClass::class))
+                    ->getMethod($betterMethod->getName());
+                $name = $betterMethod->getName();
+                if ($name === '__invoke') {
+                    $name = u($reflectionClass->getShortName())->before('Controller')->toString();
+                }
+                $innerBody = $this->getBody($betterMethod->getLocatedSource()->getSource(),
+                    $refMethod->getStartLine(), $refMethod->getEndLine());
+//                $name == 'AudioRecording' && dd($innerBody, $refMethod);
+
+//                dd($method->getName(), $innerBody);
+
                 foreach ([Route::class] as $routeClass) {
-                    foreach ($method->getAttributes($routeClass) as $attribute) {
+                    foreach ($refMethod->getAttributes($routeClass) as $attribute) {
                         $instance = $attribute->newInstance();
                         switch ($attribute->getName()) {
                             case Route::class:
@@ -61,21 +98,27 @@ final class AppProcessCommand extends InvokableServiceCommand
                                 dd("@todo: handle " . $attribute->getName());
                         }
                         $args = $attribute->getArguments();
-                        $methodName = $method->getName();
-                        $name = $args['name'] ?? $methodName;
+                        $methodName = $refMethod->getName();
+//                        $name = $args['name'] ?? $methodName;
                         $routes[] = $route;
+                        $methods[$betterReflectionClass->getShortName()] = [
+                            'route' => $instance,
+                            'name' => $name,
+                            'body' => join("\n", $innerBody),
+                        ];
                     }
                 }
             }
         }
-        dd($routes);
+        $controller = $this->generateClass($methods);
+        file_put_contents('src/Controller/FeaturesController.php', "<?php\n\n" . $controller);
+        dd($controller, $methods);
 
         return Command::SUCCESS;
     }
 
     private function getBody($body, $start, $end)
     {
-        dd($body, $start, $end);
         return array_slice(explode("\n", $body), $start, $end - $start);
 
     }
@@ -101,7 +144,7 @@ final class AppProcessCommand extends InvokableServiceCommand
 
     }
 
-    private function generateClass()
+    private function generateClass(array $methods): string
     {
         $ns = "App\\Controller";
         $namespace = new PhpNamespace($ns);
@@ -112,6 +155,7 @@ final class AppProcessCommand extends InvokableServiceCommand
                 Template::class,
                 Request::class,
                 Response::class,
+                AbstractController::class
             ] as $use
         ) {
             $namespace->addUse($use);
@@ -124,23 +168,28 @@ final class AppProcessCommand extends InvokableServiceCommand
 
 
 // create new classes in the namespace
-        $class = $namespace->addClass('FeatureController');
-        foreach (['a'] as $methodName) {
+        $class = $namespace->addClass('FeaturesController');
+        $class->setExtends(AbstractController::class);
+        foreach ($methods as $m) {
+            $methodName = $m['name'];
             $method = $class->addMethod('get' . $methodName)
                 ->setReturnType(Type::union(Response::class, 'array'));
             $parameter = $method
                 ->addParameter('request');
             $parameter
                 ->setType(Request::class);
+            $route = $m['route'];
+            $method->addAttribute(Route::class, ['name' => $route->getName(), 'path' => $route->getPath()]);
+            // trim the {}
 
-            $method->setBody(sprintf(<<<'PHP'
-		/** @var  */ return 'test'
-PHP
-            ));
+            $body = trim($m['body']);
+            $body = trim($body, '{');
+            $body = trim($body, '}');
 
-            $class->addMethod($methodName);
+            $method->setBody($body);
+//            $methodName == 'ArVr' && dd($m, $method, (string)$namespace);
         }
-//        dd((string)$namespace);
+        return (string)$namespace;
 
 
     }
