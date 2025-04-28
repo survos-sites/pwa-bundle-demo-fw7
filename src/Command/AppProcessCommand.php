@@ -45,7 +45,12 @@ final class AppProcessCommand extends InvokableServiceCommand
 
         $methods = [];
         //        $features = $this->getFeaturesFromTwig();
+//        dd(iterator_to_array($this->taggedServices));
         foreach ($this->taggedServices as $controllerClass) {
+            // we're only converting the methods is \\Feature controllers
+            if (!str_contains($controllerClass::class, '\\Feature\\')) {
+                continue;
+            }
             if ($controllerClass::class === Kernel::class) {
                 continue;
             }
@@ -111,6 +116,7 @@ final class AppProcessCommand extends InvokableServiceCommand
             }
         }
         $controller = $this->generateClass($methods);
+        dd($controller);
         file_put_contents('src/Controller/FeaturesController.php', "<?php\n\n" . $controller);
         dd($controller, $methods);
 
@@ -169,22 +175,36 @@ final class AppProcessCommand extends InvokableServiceCommand
 
 // create new classes in the namespace
         $class = $namespace->addClass('FeaturesController');
+        $class->addAttribute(Route::class, [
+            '/{_locale<%app.supported_locales_regex%>}'
+        ]);
         $class->setExtends(AbstractController::class);
         foreach ($methods as $m) {
+            $route = $m['route'];
+
+            $body = trim($m['body']);
+            $body = trim($body, '{');
+            $body = trim($body, '}');
+
+            if (preg_match('|features/(.*?).html.twig|', $body, $urlMatches)) {
+                $twigCode = $urlMatches[1];
+//                assert("/$twigCode" == $route->getPath(), "$twigCode {$route->getPath()} should match");
+//                dd($m, $body, $urlMatches, $route->getPath(), $route->getName(), $twigCode);
+            }
+
             $methodName = $m['name'];
+
+
+            dd($body, $methodName);
             $method = $class->addMethod('get' . $methodName)
                 ->setReturnType(Type::union(Response::class, 'array'));
             $parameter = $method
                 ->addParameter('request');
             $parameter
                 ->setType(Request::class);
-            $route = $m['route'];
-            $method->addAttribute(Route::class, ['name' => $route->getName(), 'path' => $route->getPath()]);
+            $method->addAttribute(Route::class, [ $route->getPath(), $route->getName(), ['options' => ['expose' => true]]]);
             // trim the {}
 
-            $body = trim($m['body']);
-            $body = trim($body, '{');
-            $body = trim($body, '}');
 
             $method->setBody($body);
 //            $methodName == 'ArVr' && dd($m, $method, (string)$namespace);
