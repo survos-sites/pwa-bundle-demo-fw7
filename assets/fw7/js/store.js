@@ -5,7 +5,7 @@
 | Initialize Store
 |------------------------------------------------------------------------------
 */
-import Framework7 from 'framework7/framework7-bundle';
+import Framework7 from 'framework7/bundle';
 
 window.store = Framework7.createStore({
     state: {

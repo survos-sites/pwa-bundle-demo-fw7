@@ -1,19 +1,19 @@
-<div{{ attributes }} class="p-6">
+<div{{ attributes }}>
     <div
+        class="block"
         data-controller="pwa--device-orientation orientation"
         data-pwa--device-orientation-throttle-value="25"
-    {{ stimulus_action('orientation', 'update', 'pwa--device-orientation:pwa:device:orientation') }}
+        {{ stimulus_action('orientation', 'update', 'pwa--device-orientation:pwa:device:orientation') }}
     >
-    <dl>
-        <dt id="alpha" class="font-medium text-gray-500 dark:text-gray-400">Alpha</dt>
-        <dd class="text-gray-900 dark:text-white" {{ stimulus_target('orientation', 'alpha') }}>--</dd>
-        <dt id="beta" class="font-medium text-gray-500 dark:text-gray-400">Beta</dt>
-        <dd class="text-gray-900 dark:text-white" {{ stimulus_target('orientation', 'beta') }}>--</dd>
-        <dt id="gamma" class="font-medium text-gray-500 dark:text-gray-400">Gamma</dt>
-        <dd class="text-gray-900 dark:text-white" {{ stimulus_target('orientation', 'gamma') }}>--</dd>
-    </dl>
-    <canvas {{ stimulus_target('orientation', 'canvas') }} id="myCanvas" class="w-full h-96">
-        Your browser does not support the HTML canvas element.
-    </canvas>
+        <div class="list simple-list">
+            <ul>
+                <li id="alpha">Alpha: <span {{ stimulus_target('orientation', 'alpha') }}>--</span></li>
+                <li id="beta">Beta: <span {{ stimulus_target('orientation', 'beta') }}>--</span></li>
+                <li id="gamma">Gamma: <span {{ stimulus_target('orientation', 'gamma') }}>--</span></li>
+            </ul>
+        </div>
+        <canvas {{ stimulus_target('orientation', 'canvas') }} id="myCanvas" style="width: 100%; height: 384px;">
+            Your browser does not support the HTML canvas element.
+        </canvas>
     </div>
 </div>

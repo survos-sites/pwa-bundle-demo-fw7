@@ -1,27 +1,45 @@
-{% extends 'base.html.twig' %}
+<template>
+    <div class="page">
 
-{% block title %}Multitouch{% endblock %}
-
-{% block body %}
-<turbo-frame id="content">
-    <section class="bg-white dark:bg-gray-900">
-        <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6 ">
-            <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">
-                Multitouch
-            </h2>
-            <p class="mb-3 font-light text-gray-500 dark:text-gray-400 sm:text-xl">
-                On a device with touch screen, place two fingers in the square below to see a red circle appear. <br>
-                Move your fingers to change the size and position of the circle.
-            </p>
+        <div class="navbar">
+            <div class="navbar-bg"></div>
+            <div class="navbar-inner">
+                <div class="left">
+                    <a href="#" class="link back">
+                        <i class="icon icon-back"></i>
+                        <span class="ios-only">Back</span>
+                    </a>
+                </div>
+                <div class="title">Multitouch</div>
+            </div>
         </div>
-    </section>
-    <div class="h-full">
-        <canvas
-            id="canvas"
-            class="w-full h-[350px] bg-[#1da1f2]"
-            data-controller="pwa--touch multitouch"
-            {{ stimulus_action('multitouch', 'update', 'pwa--touch:pwa:touch:updated') }}
-        ></canvas>
+
+        <div class="page-content">
+
+            <div class="block-title block-title-large">Multitouch</div>
+            <div class="block">
+                <p>
+                    On a device with touch screen, place two fingers in the square below to see a red circle appear. <br/>
+                    Move your fingers to change the size and position of the circle.
+                </p>
+            </div>
+
+            <div style="height: 100%;">
+                <canvas
+                    id="canvas"
+                    style="width: 100%; height: 350px; background-color: #1da1f2;"
+                    data-controller="pwa--touch multitouch"
+                    {{ stimulus_action('multitouch', 'update', 'pwa--touch:pwa:touch:updated') }}
+                ></canvas>
+            </div>
+
+        </div>
+
     </div>
-</turbo-frame>
-{% endblock %}
+</template>
+
+<script>
+    export default function(props, {$, $el, $f7, $f7route, $f7router, $h, $on, $store, $theme, $update}) {
+        return $render;
+    }
+</script>

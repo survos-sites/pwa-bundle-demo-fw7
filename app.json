@@ -8,7 +8,7 @@
     "repository": "https://github.com/spomky-labs/phpwa-demo",
     "scripts": {
         "dokku": {
-            "predeploy": "bin/console tailwind:build && bin/console importmap:install && bin/console asset-map:compile && bin/console  secrets:decrypt-to-local --force",
+            "predeploy": "bin/console importmap:install && bin/console asset-map:compile && bin/console secrets:decrypt-to-local --force",
             "postdeploy": "bin/console about"
         }
     },

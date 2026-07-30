@@ -1,40 +1,54 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}Speech recognition{% endblock %}
-
-{% block body %}
-<turbo-frame id="content">
-    <section class="bg-white dark:bg-gray-900"
-             data-controller="speech-recognition"
-             data-speech-recognition-lang-value="en-US"
-             data-speech-recognition-continuous-value=true
-             data-speech-recognition-interim-results-value=false
-             data-speech-recognition-max-alternatives-value=1
+<template>
+    <div class="page"
+        data-controller="speech-recognition"
+        data-speech-recognition-lang-value="en-US"
+        data-speech-recognition-continuous-value=true
+        data-speech-recognition-interim-results-value=false
+        data-speech-recognition-max-alternatives-value=1
     >
-        <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6 ">
-            <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">
-                Speech recognition
-            </h2>
-            <p class="mb-3 font-light text-gray-500 dark:text-gray-400 sm:text-xl">
+
+        <div class="navbar">
+            <div class="navbar-bg"></div>
+            <div class="navbar-inner">
+                <div class="left">
+                    <a href="#" class="link back">
+                        <i class="icon icon-back"></i>
+                        <span class="ios-only">Back</span>
+                    </a>
+                </div>
+                <div class="title">Speech recognition</div>
+            </div>
+        </div>
+
+        <div class="page-content">
+
+            <div class="block-title block-title-large">Speech recognition</div>
+            <div class="block">
                 <button
-                    class="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:ring-blue-800"
+                    class="button button-fill"
                     data-action="click->speech-recognition#start"
                 >
                     Start
                 </button>
                 <button
-                    class="text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-red-300 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-500 dark:hover:bg-red-600 dark:focus:ring-red-800"
+                    class="button button-fill color-red"
                     data-action="click->speech-recognition#stop"
                 >
                     Stop
                 </button>
-            </p>
-            <textarea
-                class="w-full h-64 p-2 text-gray-900 bg-white border border-gray-300 rounded dark:text-gray-100 dark:bg-gray-800"
-                data-speech-recognition-target="contentOutput"
-                readonly
-            ></textarea>
+                <textarea
+                    data-speech-recognition-target="contentOutput"
+                    readonly
+                ></textarea>
+            </div>
+
         </div>
-    </section>
-</turbo-frame>
-{% endblock %}
+
+    </div>
+</template>
+
+<script>
+    export default function(props, {$, $el, $f7, $f7route, $f7router, $h, $on, $store, $theme, $update}) {
+        return $render;
+    }
+</script>

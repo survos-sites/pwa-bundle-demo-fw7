@@ -1,27 +1,27 @@
 <div
     data-controller="pwa--geolocation live"
     {{ attributes }}
-    class="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800 bg-gray-50 hover:bg-gray-100"
+    class="block block-strong inset"
 >
         <button
             data-action="click->pwa--geolocation#watch"
             data-pwa--geolocation-enable-high-accuracy-param=true
             data-pwa--geolocation-maximum-age-param=500
             data-pwa--geolocation-timeout-param=1000
-            class="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:ring-blue-800"
+            class="button button-fill"
         >
             Tell me where I am
         </button>
-        <dl>
-            <dt class="font-medium text-gray-500 dark:text-gray-400">Latitude</dt>
-            <dd class="text-gray-900 dark:text-white">{{ this.latitude }}</dd>
-            <dt class="font-medium text-gray-500 dark:text-gray-400">Longitude</dt>
-            <dd class="text-gray-900 dark:text-white">{{ this.longitude }}</dd>
-        </dl>
+        <div class="list simple-list">
+            <ul>
+                <li>Latitude: <span>{{ this.latitude }}</span></li>
+                <li>Longitude: <span>{{ this.longitude }}</span></li>
+            </ul>
+        </div>
         <twig:ux:map
             :center="[this.latitude, this.longitude]"
             :zoom="this.zoom"
-            class="w-full h-96 mt-4"
+            style="width: 100%; height: 384px; margin-top: 16px;"
             :markers='[{"position": [this.latitude, this.longitude], "title": "Your location"}]'
         />
 </div>

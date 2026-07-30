@@ -15,7 +15,6 @@ return [
     Survos\CoreBundle\SurvosCoreBundle::class => ['all' => true],
     SpomkyLabs\PwaBundle\SpomkyLabsPwaBundle::class => ['all' => true],
     Survos\DeploymentBundle\SurvosDeploymentBundle::class => ['all' => true],
-    Elao\Bundle\JsonHttpFormBundle\ElaoJsonHttpFormBundle::class => ['all' => true],
     Nelmio\SecurityBundle\NelmioSecurityBundle::class => ['all' => true],
     Symfony\UX\TwigComponent\TwigComponentBundle::class => ['all' => true],
     Symfony\UX\Icons\UXIconsBundle::class => ['all' => true],
@@ -29,4 +28,5 @@ return [
     Inspector\Symfony\Bundle\InspectorBundle::class => ['all' => true],
     Knp\Bundle\MenuBundle\KnpMenuBundle::class => ['all' => true],
     Survos\FwBundle\SurvosFwBundle::class => ['all' => true],
+    Survos\Kit\SurvosKitBundle::class => ['all' => true],
 ];

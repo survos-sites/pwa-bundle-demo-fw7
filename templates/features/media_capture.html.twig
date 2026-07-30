@@ -1,48 +1,50 @@
-{% extends 'base.html.twig' %}
+<template>
+    <div class="page" data-controller="pwa--capture">
 
-{% block title %}Media capture{% endblock %}
+        <div class="navbar">
+            <div class="navbar-bg"></div>
+            <div class="navbar-inner">
+                <div class="left">
+                    <a href="#" class="link back">
+                        <i class="icon icon-back"></i>
+                        <span class="ios-only">Back</span>
+                    </a>
+                </div>
+                <div class="title">Media capture</div>
+            </div>
+        </div>
 
-{% block body %}
-<turbo-frame id="content">
-    <section
-        data-controller="pwa--capture"
-        class="bg-white dark:bg-gray-900"
-    >
-        <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6 ">
-            <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">
-                Media capture
-            </h2>
-            <p class="mb-3 font-light text-gray-500 dark:text-gray-400 sm:text-xl">
-            </p>
-            <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">
-                Demo
-            </h2>
-            <p class="mb-3 font-light text-gray-500 dark:text-gray-400 sm:text-xl">
-                Media capture allows apps to use the camera and microphone of a device.<br>
+        <div class="page-content">
+
+            <div class="block-title block-title-large">Media capture</div>
+
+            <div class="block-title block-title-large">Demo</div>
+            <div class="block">
+                <p>
+                    Media capture allows apps to use the camera and microphone of a device.<br/>
                     After recording a video you can play it, download it or record another one.
-            </p>
-            <p class="mb-3 font-light text-gray-500 dark:text-gray-400 sm:text-xl">
+                </p>
                 <button
-                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                    class="button button-fill margin-right"
                     data-action="click->pwa--capture#media"
                 >
-                    <twig:ux:icon name="ix:video-camera-record-filled" class="w-3.5 h-3.5 me-2" fill="currentColor" />
+                    <twig:ux:icon name="ix:video-camera-record-filled" class="icon size-20 margin-right-half" fill="currentColor" />
                     Capture now!
                 </button>
                 <button
-                    class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
+                    class="button button-fill color-red margin-right"
                     data-action="click->pwa--capture#stop"
                 >
-                    <twig:ux:icon name="material-symbols:stop-circle-outline-rounded" class="w-3.5 h-3.5 me-2" fill="currentColor" />
+                    <twig:ux:icon name="material-symbols:stop-circle-outline-rounded" class="icon size-20 margin-right-half" fill="currentColor" />
                     Stop!
                 </button>
                 <a
                     hidden="hidden"
-                    class="text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-800"
+                    class="button button-fill color-purple margin-right"
                     data-pwa--capture-target="download"
                     href="#" download="capture.mp4"
                 >
-                    <twig:ux:icon name="fa6-solid:download" class="w-3.5 h-3.5 me-2" fill="currentColor" />
+                    <twig:ux:icon name="fa6-solid:download" class="icon size-20 margin-right-half" fill="currentColor" />
                     Download
                 </a>
                 <video
@@ -51,8 +53,15 @@
                     autoplay playsinline
                 >
                 </video>
-            </p>
+            </div>
+
         </div>
-    </section>
-</turbo-frame>
-{% endblock %}
+
+    </div>
+</template>
+
+<script>
+    export default function(props, {$, $el, $f7, $f7route, $f7router, $h, $on, $store, $theme, $update}) {
+        return $render;
+    }
+</script>

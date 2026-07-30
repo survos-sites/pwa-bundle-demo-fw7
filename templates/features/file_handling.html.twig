@@ -1,36 +1,49 @@
-{% extends 'base.html.twig' %}
+<template>
+    <div class="page">
 
-{% block title %}File handling{% endblock %}
-
-{% block body %}
-<turbo-frame id="content">
-    <section
-        class="bg-white dark:bg-gray-900"
-        data-controller="image"
-        {{ stimulus_action('image', 'addToList', 'pwa--file-handling:pwa:file:selected') }}
-    >
-        <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6 ">
-            <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">
-                File handling
-            </h2>
-            <p
-                class="mb-3 font-light text-gray-500 dark:text-gray-400 sm:text-xl"
-                data-controller="pwa--file-handling"
-            >
-                The File Handling API enables web apps to register their ability to handle file types with the operating system. <br>
-                This enables the file manager of the OS or other operating system flows to use the web app to open the file, just like with a native app.  <br>
-            </p>
-            <p class="mb-3 font-light text-gray-500 dark:text-gray-400 sm:text-xl">
-                Open the file manager of the OS of your device and select one or multiple files of type .png, .jpg, .jpeg or .webm by right-clicking it and then select this PWA to open it (make sure it's installed as a PWA first).<br>
-                The opened image(s) will then be displayed below.
-            </p>
-            <h2 class="mb-2 text-lg font-semibold text-gray-900 dark:text-white">Received files:</h2>
-            <ul
-                class="space-y-1 text-gray-500 list-disc list-inside dark:text-gray-400"
-                data-image-target="list"
-            >
-            </ul>
+        <div class="navbar">
+            <div class="navbar-bg"></div>
+            <div class="navbar-inner">
+                <div class="left">
+                    <a href="#" class="link back">
+                        <i class="icon icon-back"></i>
+                        <span class="ios-only">Back</span>
+                    </a>
+                </div>
+                <div class="title">File handling</div>
+            </div>
         </div>
-    </section>
-</turbo-frame>
-{% endblock %}
+
+        <div
+            class="page-content"
+            data-controller="image"
+            {{ stimulus_action('image', 'addToList', 'pwa--file-handling:pwa:file:selected') }}
+        >
+
+            <div class="block-title block-title-large">File handling</div>
+            <div class="block" data-controller="pwa--file-handling">
+                <p>
+                    The File Handling API enables web apps to register their ability to handle file types with the operating system. <br/>
+                    This enables the file manager of the OS or other operating system flows to use the web app to open the file, just like with a native app.  <br/>
+                </p>
+                <p>
+                    Open the file manager of the OS of your device and select one or multiple files of type .png, .jpg, .jpeg or .webm by right-clicking it and then select this PWA to open it (make sure it's installed as a PWA first).<br/>
+                    The opened image(s) will then be displayed below.
+                </p>
+            </div>
+
+            <div class="block-title">Received files:</div>
+            <div class="block">
+                <ul data-image-target="list"></ul>
+            </div>
+
+        </div>
+
+    </div>
+</template>
+
+<script>
+    export default function(props, {$, $el, $f7, $f7route, $f7router, $h, $on, $store, $theme, $update}) {
+        return $render;
+    }
+</script>

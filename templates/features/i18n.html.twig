@@ -1,40 +1,57 @@
-{% extends 'base.html.twig' %}
+<template>
+    <div class="page">
 
-{% block title %}i18n{% endblock %}
+        <div class="navbar">
+            <div class="navbar-bg"></div>
+            <div class="navbar-inner">
+                <div class="left">
+                    <a href="#" class="link back">
+                        <i class="icon icon-back"></i>
+                        <span class="ios-only">Back</span>
+                    </a>
+                </div>
+                <div class="title">Internationalization (i18n)</div>
+            </div>
+        </div>
 
-{% block body %}
-<turbo-frame id="content">
-    <section class="bg-white dark:bg-gray-900">
-        <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6 ">
-            <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">
-                Internationalization (i18n)
-            </h2>
-            <p class="mb-3 font-light text-gray-500 dark:text-gray-400 sm:text-xl">
-                The PWA Bundle provides a way to translate your web manifest in multiple languages.
-                This is useful when you want to provide a localized experience to your users.
-            </p>
-            <p class="mb-3 font-light text-gray-500 dark:text-gray-400 sm:text-xl">
-                To enable this feature, you just have to set the <code>enabled</code> option to <code>true</code> and provide a public URL to the manifest file.
-                The public URL should contain a placeholder for the locale that will be replaced by the current locale.
-            </p>
-            {% set yaml = 'pwa:
+        <div class="page-content">
+
+            <div class="block-title block-title-large">Internationalization (i18n)</div>
+            <div class="block">
+                <p>
+                    The PWA Bundle provides a way to translate your web manifest in multiple languages.
+                    This is useful when you want to provide a localized experience to your users.
+                </p>
+                <p>
+                    To enable this feature, you just have to set the <code>enabled</code> option to <code>true</code> and provide a public URL to the manifest file.
+                    The public URL should contain a placeholder for the locale that will be replaced by the current locale.
+                </p>
+                {% set yaml = 'pwa:
     manifest:
         enabled: true
         public_url: \'/pwa/site.{locale}.webmanifest\'' %}
-            <pre><code class="language-yaml" data-controller="code">{{ yaml|raw }}</code></pre>
-            <p class="my-4 font-light text-gray-500 dark:text-gray-400 sm:text-xl">
-                Then in your templates, you can use the <code>pwa</code> Twig function to generate the URL to the manifest file.
-                The <code>locale</code> option will be replaced by the current locale.
-            </p>
-            {% set html = '<!DOCTYPE html>
+                <pre><code class="language-yaml" data-controller="code">{{ yaml|raw }}</code></pre>
+                <p>
+                    Then in your templates, you can use the <code>pwa</code> Twig function to generate the URL to the manifest file.
+                    The <code>locale</code> option will be replaced by the current locale.
+                </p>
+                {% set html = '<!DOCTYPE html>
 <html>
     <head>
         {{ pwa(locale=app.request.locale) }}
     </head>
 </html>
 ' %}
-            <pre><code class="language-html" data-controller="code">{{ html|escape('html')|raw }}</code></pre>
+                <pre><code class="language-html" data-controller="code">{{ html|escape('html')|raw }}</code></pre>
+            </div>
+
         </div>
-    </section>
-</turbo-frame>
-{% endblock %}
+
+    </div>
+</template>
+
+<script>
+    export default function(props, {$, $el, $f7, $f7route, $f7router, $h, $on, $store, $theme, $update}) {
+        return $render;
+    }
+</script>

@@ -1,32 +1,51 @@
-{% extends 'base.html.twig' %}
+<template>
+    <div class="page">
 
-{% block title %}Information{% endblock %}
-
-{% block body %}
-<turbo-frame id="content">
-    <section class="bg-white dark:bg-gray-900">
-        <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6 ">
-            <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">
-                What is a PWA?
-            </h2>
-            <p class="mb-3 font-light text-gray-500 dark:text-gray-400 sm:text-xl">
-                A Progressive Web App (PWA) is basically just a website with some added features, which enable it to provide an app-like user-experience.
-            </p>
-            <p class="mb-3 font-light text-gray-500 dark:text-gray-400 sm:text-xl">
-                A well-designed PWA is indistinguishable from a native app, but it also offers some strong added benefits:
-            </p>
-            <ul class="max-w-md space-y-1 text-gray-500 list-disc list-inside dark:text-gray-400">
-                <li>It is discoverable by search engines</li>
-                <li>It is linkable, so it can be shared via a URL</li>
-                <li>It is responsive, so it works on any device</li>
-                <li>It is installable, so it can be added to the home screen</li>
-                <li>It is network independent, so it works offline</li>
-                <li>It is secure, so it is served via HTTPS</li>
-                <li>It is re-engageable, so it can send push notifications</li>
-                <li>It is fast, so it loads quickly</li>
-                <li>It is engaging, so it feels like a native app</li>
-            </ul>
+        <div class="navbar">
+            <div class="navbar-bg"></div>
+            <div class="navbar-inner">
+                <div class="left">
+                    <a href="#" class="link back">
+                        <i class="icon icon-back"></i>
+                        <span class="ios-only">Back</span>
+                    </a>
+                </div>
+                <div class="title">Information</div>
+            </div>
         </div>
-    </section>
-</turbo-frame>
-{% endblock %}
+
+        <div class="page-content">
+
+            <div class="block-title block-title-large">What is a PWA?</div>
+            <div class="block">
+                <p>
+                    A Progressive Web App (PWA) is basically just a website with some added features, which enable it to provide an app-like user-experience.
+                </p>
+                <p>
+                    A well-designed PWA is indistinguishable from a native app, but it also offers some strong added benefits:
+                </p>
+            </div>
+            <div class="list simple-list">
+                <ul>
+                    <li>It is discoverable by search engines</li>
+                    <li>It is linkable, so it can be shared via a URL</li>
+                    <li>It is responsive, so it works on any device</li>
+                    <li>It is installable, so it can be added to the home screen</li>
+                    <li>It is network independent, so it works offline</li>
+                    <li>It is secure, so it is served via HTTPS</li>
+                    <li>It is re-engageable, so it can send push notifications</li>
+                    <li>It is fast, so it loads quickly</li>
+                    <li>It is engaging, so it feels like a native app</li>
+                </ul>
+            </div>
+
+        </div>
+
+    </div>
+</template>
+
+<script>
+    export default function(props, {$, $el, $f7, $f7route, $f7router, $h, $on, $store, $theme, $update}) {
+        return $render;
+    }
+</script>

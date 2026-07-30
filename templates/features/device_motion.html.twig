@@ -1,19 +1,36 @@
-{% extends 'base.html.twig' %}
+<template>
+    <div class="page">
 
-{% block title %}Device motion{% endblock %}
-
-{% block body %}
-<turbo-frame id="content">
-    <section class="bg-white dark:bg-gray-900">
-        <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6 ">
-            <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">
-                Device motion
-            </h2>
-            <p class="mb-3 font-light text-gray-500 dark:text-gray-400 sm:text-xl">
-                The Device Motion Event gives information about the speed of changes for the position and orientation of the user's device.
-            </p>
-            <twig:DeviceMotion />
+        <div class="navbar">
+            <div class="navbar-bg"></div>
+            <div class="navbar-inner">
+                <div class="left">
+                    <a href="#" class="link back">
+                        <i class="icon icon-back"></i>
+                        <span class="ios-only">Back</span>
+                    </a>
+                </div>
+                <div class="title">Device motion</div>
+            </div>
         </div>
-    </section>
-</turbo-frame>
-{% endblock %}
+
+        <div class="page-content">
+
+            <div class="block-title block-title-large">Device motion</div>
+            <div class="block">
+                <p>
+                    The Device Motion Event gives information about the speed of changes for the position and orientation of the user's device.
+                </p>
+            </div>
+            <twig:DeviceMotion />
+
+        </div>
+
+    </div>
+</template>
+
+<script>
+    export default function(props, {$, $el, $f7, $f7route, $f7router, $h, $on, $store, $theme, $update}) {
+        return $render;
+    }
+</script>

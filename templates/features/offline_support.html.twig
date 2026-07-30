@@ -1,53 +1,72 @@
-{% extends 'base.html.twig' %}
+<template>
+    <div class="page">
 
-{% block title %}Offline support{% endblock %}
+        <div class="navbar">
+            <div class="navbar-bg"></div>
+            <div class="navbar-inner">
+                <div class="left">
+                    <a href="#" class="link back">
+                        <i class="icon icon-back"></i>
+                        <span class="ios-only">Back</span>
+                    </a>
+                </div>
+                <div class="title">Offline support</div>
+            </div>
+        </div>
 
-{% block body %}
-<turbo-frame id="content">
-    <section class="bg-white dark:bg-gray-900">
-        <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6 ">
-            <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">
-                Offline support
-            </h2>
+        <div class="page-content">
+
+            <div class="block-title block-title-large">Offline support</div>
             <div
+                class="block block-strong inset"
                 data-controller="pwa--connection-status"
                 data-pwa--connection-status-target="attribute"
-                class="flex items-center p-4 mb-4 text-sm border rounded-lg online:text-green-800 online:bg-green-50 online:dark:bg-gray-800 online:dark:text-green-400 offline:text-yellow-800 offline:bg-yellow-50 offline:dark:bg-gray-800 offline:dark:text-yellow-300"
                 role="alert"
             >
-                <svg class="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
-                </svg>
-                <div>
-                    <span class="font-medium">Connection status</span>: <span {{ stimulus_target('@pwa/connection-status', 'message') }}>We are trying to guess what is the current status of your Internet connection</span>
+                <div class="display-flex align-items-center">
+                    <twig:ux:icon name="material-symbols:info" class="icon size-20 margin-right-half flex-shrink-0" alt="" />
+                    <div>
+                        <span class="font-weight-600">Connection status</span>: <span {{ stimulus_target('@pwa/connection-status', 'message') }}>We are trying to guess what is the current status of your Internet connection</span>
+                    </div>
                 </div>
             </div>
-            <p class="mb-3 font-light text-gray-500 dark:text-gray-400 sm:text-xl">
-                A Service Worker is a special kind of Web Worker that serves as a proxy for the web app, allowing it to intercept and control network requests.
-                When a request is made while the web app is offline, the Service Worker can intercept it and serve a response from its cache.
-                This cache typically contains static assets like images, stylesheets, JavaScript etc. but it can also contain full HTML pages.
-                In addition to this, it can also defer requests that are made while the user is offline and retry them later when the network is back.
-            </p>
-            <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">
-                Demo
-            </h2>
-            <p class="mt-3 mb-3 font-light text-gray-500 dark:text-gray-400 sm:text-xl">
-                Disconnect your device from the internet by switching off your Wi-Fi or put your device in Airplane Mode.
-                Visit any demo in this app and notice how they keep working (except for demos that require network access like geolocation for example).
-            </p>
-            <p class="mt-3 mb-3 font-light text-gray-500 dark:text-gray-400 sm:text-xl">
-                To implement offline support for your web app with the PWA Bundle, you just have to enable the service worker.<br>
-                You can precache routes by adding them to the configuration file.
-            </p>
-            {% set configuration = 'pwa:
+
+            <div class="block">
+                <p>
+                    A Service Worker is a special kind of Web Worker that serves as a proxy for the web app, allowing it to intercept and control network requests.
+                    When a request is made while the web app is offline, the Service Worker can intercept it and serve a response from its cache.
+                    This cache typically contains static assets like images, stylesheets, JavaScript etc. but it can also contain full HTML pages.
+                    In addition to this, it can also defer requests that are made while the user is offline and retry them later when the network is back.
+                </p>
+            </div>
+
+            <div class="block-title block-title-large">Demo</div>
+            <div class="block">
+                <p>
+                    Disconnect your device from the internet by switching off your Wi-Fi or put your device in Airplane Mode.
+                    Visit any demo in this app and notice how they keep working (except for demos that require network access like geolocation for example).
+                </p>
+                <p>
+                    To implement offline support for your web app with the PWA Bundle, you just have to enable the service worker.<br/>
+                    You can precache routes by adding them to the configuration file.
+                </p>
+                {% set configuration = 'pwa:
     serviceworker: "sw.js"' %}
-            <pre><code class="language-yaml" data-controller="code">{{ configuration|raw }}</code></pre>
-            <p class="mt-3 mb-3 font-light text-gray-500 dark:text-gray-400 sm:text-xl">
-                The service worker also takes care of installing a new version of your web app automatically and as soon as possible.
-                <br>
-                Please refer to the documentation for more advanced features like URL preload.
-            </p>
+                <pre><code class="language-yaml" data-controller="code">{{ configuration|raw }}</code></pre>
+                <p>
+                    The service worker also takes care of installing a new version of your web app automatically and as soon as possible.
+                    <br/>
+                    Please refer to the documentation for more advanced features like URL preload.
+                </p>
+            </div>
+
         </div>
-    </section>
-</turbo-frame>
-{% endblock %}
+
+    </div>
+</template>
+
+<script>
+    export default function(props, {$, $el, $f7, $f7route, $f7router, $h, $on, $store, $theme, $update}) {
+        return $render;
+    }
+</script>

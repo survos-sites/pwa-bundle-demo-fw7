@@ -1,53 +1,71 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}Presentation{% endblock %}
-
-{% block body %}
-<turbo-frame id="content">
-    <section class="bg-white dark:bg-gray-900"
-             data-controller="pwa--presentation spotlight"
-             data-pwa--presentation-urls-value="{{ [url('app_feature_receiver')]|json_encode }}"
+<template>
+    <div
+        class="page"
+        data-controller="pwa--presentation spotlight"
+        data-pwa--presentation-urls-value="{{ [url('app_feature_receiver')]|json_encode }}"
     >
-        <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6 ">
-            <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">
-                Presentation
-            </h2>
-            <p class="mb-3 font-light text-gray-500 dark:text-gray-400 sm:text-xl">
-                The PWA Bundle provides a way to create presentations using the Presentation API.
-                This allows you to display pages on a remote screen or projector. <br>
-                Google ChromeCast, Microsoft Wireless Display Adapter are some of the devices that support this feature.
-            </p>
-            <button
-                class="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600"
-                data-action="click->pwa--presentation#start"
-            >
-                Start
-            </button>
-            <button
-                class="px-4 py-2 text-white bg-red-500 rounded hover:bg-red-600"
-                data-action="click->pwa--presentation#terminate"
-            >
-                Stop
-            </button>
-            <button
-                id="next"
-                class="px-4 py-2 text-white bg-green-500 rounded hover:bg-green-600"
-                data-action="click->pwa--presentation#send"
-                data-pwa--presentation-message-param="next"
-                data-spotlight-target="next"
-            >
-                Next
-            </button>
-            <button
-                id="previous"
-                class="px-4 py-2 text-white bg-yellow-500 rounded hover:bg-yellow-600"
-                data-action="click->pwa--presentation#send"
-                data-pwa--presentation-message-param="previous"
-                data-spotlight-target="previous"
-            >
-                Previous
-            </button>
+
+        <div class="navbar">
+            <div class="navbar-bg"></div>
+            <div class="navbar-inner">
+                <div class="left">
+                    <a href="#" class="link back">
+                        <i class="icon icon-back"></i>
+                        <span class="ios-only">Back</span>
+                    </a>
+                </div>
+                <div class="title">Presentation</div>
+            </div>
         </div>
-    </section>
-</turbo-frame>
-{% endblock %}
+
+        <div class="page-content">
+
+            <div class="block-title block-title-large">Presentation</div>
+            <div class="block">
+                <p>
+                    The PWA Bundle provides a way to create presentations using the Presentation API.
+                    This allows you to display pages on a remote screen or projector. <br/>
+                    Google ChromeCast, Microsoft Wireless Display Adapter are some of the devices that support this feature.
+                </p>
+                <button
+                    class="button button-fill margin-right"
+                    data-action="click->pwa--presentation#start"
+                >
+                    Start
+                </button>
+                <button
+                    class="button button-fill color-red margin-right"
+                    data-action="click->pwa--presentation#terminate"
+                >
+                    Stop
+                </button>
+                <button
+                    id="next"
+                    class="button button-fill color-green margin-right"
+                    data-action="click->pwa--presentation#send"
+                    data-pwa--presentation-message-param="next"
+                    data-spotlight-target="next"
+                >
+                    Next
+                </button>
+                <button
+                    id="previous"
+                    class="button button-fill color-yellow margin-right"
+                    data-action="click->pwa--presentation#send"
+                    data-pwa--presentation-message-param="previous"
+                    data-spotlight-target="previous"
+                >
+                    Previous
+                </button>
+            </div>
+
+        </div>
+
+    </div>
+</template>
+
+<script>
+    export default function(props, {$, $el, $f7, $f7route, $f7router, $h, $on, $store, $theme, $update}) {
+        return $render;
+    }
+</script>

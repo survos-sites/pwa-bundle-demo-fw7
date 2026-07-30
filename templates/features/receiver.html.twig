@@ -1,44 +1,55 @@
-<!doctype html>
-<html lang="{{ app.request.locale }}">
-<head>
-    <meta charset="utf-8">
-    <title>Demo Receiver</title>
-    {% block importmap %}{{ importmap('receiver') }}{% endblock %}
-</head>
-<body
-    data-controller="reveal"
-    data-action="pwa--receiver:pwa:receiver:message->reveal#message"
->
-<div
-    class="reveal"
-    data-controller="pwa--receiver"
->
-    <div
-        class="slides"
-    >
-        <section>
-            <h1>Horizontal Slide</h1>
-        </section>
-        <section>
-            <section>Vertical Slide 1</section>
-            <section>Vertical Slide 2</section>
-            <section data-markdown>
-              <textarea data-template>
-                ## Slide 1
-                A paragraph with some text.
-                ---
-                ## Slide 2
-                ---
-                ## Slide 3
-              </textarea>
-            </section>
-        </section>
-        <section>
-            Some highlighted code here
-            <pre><code class="language-yaml" data-controller="code">foo:
+<template>
+    <div class="page" data-controller="reveal" data-action="pwa--receiver:pwa:receiver:message->reveal#message">
+
+        <div class="navbar">
+            <div class="navbar-bg"></div>
+            <div class="navbar-inner">
+                <div class="left">
+                    <a href="#" class="link back">
+                        <i class="icon icon-back"></i>
+                        <span class="ios-only">Back</span>
+                    </a>
+                </div>
+                <div class="title">Demo Receiver</div>
+            </div>
+        </div>
+
+        <div class="page-content">
+
+            <div class="reveal" data-controller="pwa--receiver">
+                <div class="slides">
+                    <section>
+                        <h1>Horizontal Slide</h1>
+                    </section>
+                    <section>
+                        <section>Vertical Slide 1</section>
+                        <section>Vertical Slide 2</section>
+                        <section data-markdown>
+                          <textarea data-template>
+                            ## Slide 1
+                            A paragraph with some text.
+                            ---
+                            ## Slide 2
+                            ---
+                            ## Slide 3
+                          </textarea>
+                        </section>
+                    </section>
+                    <section>
+                        Some highlighted code here
+                        <pre><code class="language-yaml" data-controller="code">foo:
     bar: baz</code></pre>
-        </section>
+                    </section>
+                </div>
+            </div>
+
+        </div>
+
     </div>
-</div>
-</body>
-</html>
+</template>
+
+<script>
+    export default function(props, {$, $el, $f7, $f7route, $f7router, $h, $on, $store, $theme, $update}) {
+        return $render;
+    }
+</script>

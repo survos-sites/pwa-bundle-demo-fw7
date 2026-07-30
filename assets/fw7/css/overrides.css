@@ -9648,3 +9648,10 @@ html:not(.dark) .if-dark {
 .gap-16 {
     gap: 16px;
 }
+[data-connection-status="OFFLINE"] {
+    background-color: var(--f7-color-yellow-tint, #fff6d8);
+}
+
+[data-connection-status="ONLINE"] {
+    background-color: var(--f7-color-green-tint, #e0f5e4);
+}

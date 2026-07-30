@@ -1,33 +1,50 @@
-{% extends 'base.html.twig' %}
+<template>
+    <div class="page">
 
-{% block title %}View transition{% endblock %}
-
-{% block body %}
-<turbo-frame id="content">
-    <section class="bg-white dark:bg-gray-900">
-        <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6 ">
-            <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">
-                View transition
-            </h2>
-            <p class="mb-3 font-light text-gray-500 dark:text-gray-400 sm:text-xl">
-                🎉 When you install Symfony UX Turbo, it comes with Turbo 8 that supports view transitions. <br>
-                You just have to ensure the following meta tag is present on each page.
-            </p>
-                {% set meta = '<meta name="view-transition" content="same-origin" />' %}
-            <pre><code class="language-twig" data-controller="code">{{ meta|escape('html')|raw }}</code></pre>
-            <p class="mt-3 mb-3 font-light text-gray-500 dark:text-gray-400 sm:text-xl">
-                Next, update your CSS to customize the transition.
-
-            </p>
-            <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">
-                References
-            </h2>
-            <ul>
-                <li><twig:Link target="_blank" rel="noopener noreferrer nofollow" href="https://symfony.com/bundles/ux-turbo/current/index.html">Symfony UX Turbo</twig:Link></li>
-                <li><twig:Link target="_blank" rel="noopener noreferrer nofollow" href="https://turbo.hotwired.dev/handbook/drive#view-transitions">Hotwire Turbo documentation</twig:Link></li>
-                <li><twig:Link target="_blank" rel="noopener noreferrer nofollow" href="https://youtu.be/gdePV0Beihg?si=86BaqHtXNSHLoLGC">Digging into View Transitions with Turbo 8 and Rails</twig:Link></li>
-            </ul>
+        <div class="navbar">
+            <div class="navbar-bg"></div>
+            <div class="navbar-inner">
+                <div class="left">
+                    <a href="#" class="link back">
+                        <i class="icon icon-back"></i>
+                        <span class="ios-only">Back</span>
+                    </a>
+                </div>
+                <div class="title">View transition</div>
+            </div>
         </div>
-    </section>
-</turbo-frame>
-{% endblock %}
+
+        <div class="page-content">
+
+            <div class="block-title block-title-large">View transition</div>
+            <div class="block">
+                <p>
+                    🎉 When you install Symfony UX Turbo, it comes with Turbo 8 that supports view transitions. <br/>
+                    You just have to ensure the following meta tag is present on each page.
+                </p>
+                {% set meta = '<meta name="view-transition" content="same-origin" />' %}
+                <pre><code class="language-twig" data-controller="code">{{ meta|escape('html')|raw }}</code></pre>
+                <p>
+                    Next, update your CSS to customize the transition.
+                </p>
+            </div>
+
+            <div class="block-title block-title-large">References</div>
+            <div class="block">
+                <ul>
+                    <li><twig:Link target="_blank" rel="noopener noreferrer nofollow" href="https://symfony.com/bundles/ux-turbo/current/index.html">Symfony UX Turbo</twig:Link></li>
+                    <li><twig:Link target="_blank" rel="noopener noreferrer nofollow" href="https://turbo.hotwired.dev/handbook/drive#view-transitions">Hotwire Turbo documentation</twig:Link></li>
+                    <li><twig:Link target="_blank" rel="noopener noreferrer nofollow" href="https://youtu.be/gdePV0Beihg?si=86BaqHtXNSHLoLGC">Digging into View Transitions with Turbo 8 and Rails</twig:Link></li>
+                </ul>
+            </div>
+
+        </div>
+
+    </div>
+</template>
+
+<script>
+    export default function(props, {$, $el, $f7, $f7route, $f7router, $h, $on, $store, $theme, $update}) {
+        return $render;
+    }
+</script>

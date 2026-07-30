@@ -38,12 +38,12 @@ function disableInAppInstallPrompt() {
 
 import "@hotwired/hotwire-native-bridge"
 
-// import 'framework7';
-import 'framework7/framework7-bundle.min.css'
+import 'framework7/css/bundle';
+import 'framework7-icons/css/framework7-icons.min.css';
 import './fw7/css/colors.css';
 import './fw7/css/overrides.css';
 
-import Framework7 from 'framework7/framework7-bundle';
+import Framework7 from 'framework7/bundle';
 import './fw7/js/config.js';
 import './fw7/js/store.js';
 import './fw7/js/routes.js';

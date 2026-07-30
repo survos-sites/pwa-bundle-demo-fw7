@@ -1,75 +1,82 @@
-{% extends 'base.html.twig' %}
+<template>
+    <div class="page">
 
-{% block title %}Element capture{% endblock %}
+        <div class="navbar">
+            <div class="navbar-bg"></div>
+            <div class="navbar-inner">
+                <div class="left">
+                    <a href="#" class="link back">
+                        <i class="icon icon-back"></i>
+                        <span class="ios-only">Back</span>
+                    </a>
+                </div>
+                <div class="title">Element capture</div>
+            </div>
+        </div>
 
-{% block body %}
-<turbo-frame id="content">
-    <section
-        data-controller="pwa--capture"
-        class="bg-white dark:bg-gray-900"
-    >
-        <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6 ">
-            <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">
-                Element capture
-            </h2>
-            <p class="mb-3 font-light text-gray-500 dark:text-gray-400 sm:text-xl">
-                The Element Capture is very similar to the <twig:Link href="{{ path('app_feature_screen_capture') }}">Screen Capture feature</twig:Link>.<br>
-                The difference is that you can capture a specific DOM element on a tab instead of the tab or the entire screen.
-            </p>
-            <p class="mb-3 font-light text-gray-500 dark:text-gray-400 sm:text-xl">
-                It is important to note that the Element Capture feature is only available when sharing the current screen
-                and with a unique target region or element.
-            </p>
-            <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">
-                Demo
-            </h2>
-            <p class="mb-3 font-light text-gray-500 dark:text-gray-400 sm:text-xl">
-                <button
-                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                    data-action="click->pwa--capture#capture"
-                    data-pwa--capture-video-constraints-param="{&quot;width&quot;:{&quot;ideal&quot;:3440,&quot;max&quot;:3440},&quot;height&quot;:{&quot;ideal&quot;:1440},&quot;frameRate&quot;:{&quot;max&quot;:60}}"
-                    data-pwa--capture-audio-constraints-param="true"
-                    data-pwa--capture-prefer-current-tab-param="true"
+        <div class="page-content" data-controller="pwa--capture">
+
+            <div class="block-title block-title-large">Element capture</div>
+            <div class="block">
+                <p>
+                    The Element Capture is very similar to the <twig:Link href="{{ path('app_feature_screen_capture') }}">Screen Capture feature</twig:Link>.<br/>
+                    The difference is that you can capture a specific DOM element on a tab instead of the tab or the entire screen.
+                </p>
+                <p>
+                    It is important to note that the Element Capture feature is only available when sharing the current screen
+                    and with a unique target region or element.
+                </p>
+            </div>
+
+            <div class="block-title block-title-large">Demo</div>
+            <div class="block">
+                <p>
+                    <button
+                        class="button button-fill color-blue"
+                        data-action="click->pwa--capture#capture"
+                        data-pwa--capture-video-constraints-param="{&quot;width&quot;:{&quot;ideal&quot;:3440,&quot;max&quot;:3440},&quot;height&quot;:{&quot;ideal&quot;:1440},&quot;frameRate&quot;:{&quot;max&quot;:60}}"
+                        data-pwa--capture-audio-constraints-param="true"
+                        data-pwa--capture-prefer-current-tab-param="true"
+                    >
+                        <twig:ux:icon name="ix:video-camera-record-filled" class="icon size-20 margin-right-half" fill="currentColor" />
+                        Capture now!
+                    </button>
+                    <button
+                        class="button button-fill color-red"
+                        data-action="click->pwa--capture#stop"
+                    >
+                        <twig:ux:icon name="material-symbols:stop-circle-outline-rounded" class="icon size-20 margin-right-half" fill="currentColor" />
+                        Stop!
+                    </button>
+                </p>
+                <a
+                    hidden="hidden"
+                    class="button button-fill color-purple"
+                    data-pwa--capture-target="download"
+                    href="#" download="capture.mp4"
                 >
-                    <twig:ux:icon name="ix:video-camera-record-filled" class="w-3.5 h-3.5 me-2" fill="currentColor" />
-                    Capture now!
-                </button>
-                <button
-                    class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
-                    data-action="click->pwa--capture#stop"
+                    <twig:ux:icon name="fa6-solid:download" class="icon size-20 margin-right-half" fill="currentColor" />
+                    Download
+                </a>
+                <video
+                    hidden="hidden"
+                    data-pwa--capture-target="destination"
+                    autoplay playsinline
                 >
-                    <twig:ux:icon name="material-symbols:stop-circle-outline-rounded" class="w-3.5 h-3.5 me-2" fill="currentColor" />
-                    Stop!
-                </button>
-            </p>
-            <a
-                hidden="hidden"
-                class="text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-800"
-                data-pwa--capture-target="download"
-                href="#" download="capture.mp4"
-            >
-                <twig:ux:icon name="fa6-solid:download" class="w-3.5 h-3.5 me-2" fill="currentColor" />
-                Download
-            </a>
-            <video
-                hidden="hidden"
-                data-pwa--capture-target="destination"
-                autoplay playsinline
-            >
-            </video>
-            <section class="capture" data-pwa--capture-target="region">
-                <label for="element-capture" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Captured area</label>
-                <textarea
-                    id="element-capture"
-                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Write your thoughts here..."
-                    rows="15"
-                ></textarea>
-            </section>
-            <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">
-                Code example
-            </h2>
-            {% set button = '<button
+                </video>
+                <div class="capture" data-pwa--capture-target="region">
+                    <label for="element-capture" class="item-title">Captured area</label>
+                    <textarea
+                        id="element-capture"
+                        placeholder="Write your thoughts here..."
+                        rows="15"
+                    ></textarea>
+                </div>
+            </div>
+
+            <div class="block-title block-title-large">Code example</div>
+            <div class="block">
+                {% set button = '<button
     data-action="click->pwa--capture#capture"
     data-pwa--capture-prefer-current-tab-param="true"
 >
@@ -84,12 +91,20 @@
         rows="15"
     ></textarea>
 </section>' %}
-            <pre><code class="language-twig" data-controller="code">{{ button|escape('html')|raw }}</code></pre>
-            <p class="mt-3 mb-3 font-light text-gray-500 dark:text-gray-400 sm:text-xl">
-                On compatible browsers, when the button is clicked the user will be asked to select the screen to capture. <br>
-                It can be a browser tab, a specific application or an entire screen.
-            </p>
+                <pre><code class="language-twig" data-controller="code">{{ button|escape('html')|raw }}</code></pre>
+                <p>
+                    On compatible browsers, when the button is clicked the user will be asked to select the screen to capture. <br/>
+                    It can be a browser tab, a specific application or an entire screen.
+                </p>
+            </div>
+
         </div>
-    </section>
-</turbo-frame>
-{% endblock %}
+
+    </div>
+</template>
+
+<script>
+    export default function(props, {$, $el, $f7, $f7route, $f7router, $h, $on, $store, $theme, $update}) {
+        return $render;
+    }
+</script>
