@@ -30,7 +30,7 @@ pwa:
         scope: "/"
         display_override: ['fullscreen', 'minimal-ui', 'window-controls-overlay']
         id: "symphone"
-        start_url: "app.start_url"
+        start_url: "app_homepage"
         icons:
             - src: "images/pwabundlelogo.svg"
               format: 'png'
@@ -78,7 +78,7 @@ pwa:
                   path: "app_protocol_handler"
 
     serviceworker:
-        enabled: false
+        enabled: true
         src: "sw.js"
         skip_waiting: true
         workbox:

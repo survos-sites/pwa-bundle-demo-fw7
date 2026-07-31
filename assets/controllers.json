@@ -41,6 +41,10 @@
                 "enabled": true,
                 "fetch": "eager"
             },
+            "service-worker": {
+                "enabled": true,
+                "fetch": "eager"
+            },
             "network-information": {
                 "enabled": true,
                 "fetch": "eager"

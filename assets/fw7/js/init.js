@@ -9,7 +9,8 @@ import Framework7 from 'framework7/bundle';
 
 window.app = new Framework7({
     el: '#app',
-    componentUrl: '/en_US/partials/app.html',
+    name: window.config.app.name,
+    componentUrl: `/${document.documentElement.dataset.locale}/partials/app.html`,
     theme: 'auto',
     routes: window.routes,
     store: window.store,
@@ -21,12 +22,6 @@ window.app = new Framework7({
         closeTimeout: 2500
     }
 });
-
-/*
-|------------------------------------------------------------------------------
-| Extend App Object
-|------------------------------------------------------------------------------
-*/
 
 app.on('init', function() {
     app.utils.extend(app, {config: window.config});

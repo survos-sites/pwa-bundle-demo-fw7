@@ -1,24 +1,8 @@
-<a href="{{ link }}" class="item-link height-100">
-    <div class="item-content height-100">
-        <div class="item-inner item-cell height-100">
-            <div class="item-row">
-                <div class="item-cell align-self-flex-start flex-shrink-0 width-auto">
-                    <div class="shape-container mask mask-squircle size-64 bg-color-primary">
-                        {% block content %}{% endblock %}
-                    </div>
-                </div>
-                <div class="item-cell align-self-flex-start">
-                    <div class="font-size-16 font-weight-800">{{ title|raw }}</div>
-                    <div class="font-size-14 text-muted">{{ description|raw }}</div>
-                </div>
-                <div class="item-cell align-self-flex-start flex-shrink-0 width-auto">
-                    {% if available is defined and available == "true" %}
-                    <twig:ux:icon name="material-symbols:check-circle" class="icon size-24 color-green tooltip-init" data-tooltip="Supported" />
-                    {% else %}
-                    <twig:ux:icon name="material-symbols:error" class="icon size-24 color-red tooltip-init" data-tooltip="Not Supported" />
-                    {% endif %}
-                </div>
-            </div>
+<a href="{{ link }}" class="card feature-card no-margin">
+    <div class="card-content card-content-padding text-align-center">
+        <div class="color-primary">
+            {% block content %}{% endblock %}
         </div>
+        <p class="feature-title">{{ title|raw }}</p>
     </div>
 </a>

@@ -38,31 +38,31 @@
                 <h2 class="block-title block-title-medium">Demo</h2>
                 <div class="block block-strong inset">
                     {% set button = '
-                    <button
-                        hidden
-                        data-controller="pwa--install"
-                        data-pwa--install-target="install"
-                        data-action="click->pwa--install#install"
-                        class="button button-fill"
-                    >
-                        Install this app
-                    </button>
+                    <div data-controller="pwa--install">
+                        <button
+                            type="button"
+                            data-action="click->pwa--install#install"
+                            class="button button-fill"
+                        >
+                            Install this app
+                        </button>
+                    </div>
                     ' %}
                     <pre><code class="language-twig" data-controller="code">{{ button|escape('html')|raw }}</code></pre>
                     <p>
-                        On compatible browsers, a button will be displayed and trigger the installation of the web app.
-                        If the application is already installed, or the browser does not support the feature, the button will be hidden.
-                        Otherwise, a bottom sheet will be displayed with instructions on how to install the web app.
+                        On compatible browsers, the button triggers the browser installation prompt.
+                        If the application is already installed or the browser does not provide an installation prompt, no prompt will be displayed.
                     </p>
-                    <button id="install"
-                        hidden
-                        data-controller="pwa--install"
-                        data-pwa--install-target="install"
-                        data-action="click->pwa--install#install"
-                        class="button button-fill"
-                    >
-                        Install this app
-                    </button>
+                    <div data-controller="pwa--install">
+                        <button
+                            id="install"
+                            type="button"
+                            data-action="click->pwa--install#install"
+                            class="button button-fill"
+                        >
+                            Install this app
+                        </button>
+                    </div>
                 </div>
 
         </div>

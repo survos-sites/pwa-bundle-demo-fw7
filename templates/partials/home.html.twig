@@ -7,7 +7,8 @@
                 <div class="title">{{ 'app.name' | trans(domain: 'pwa') }}</div>
                 <div class="right">
                     <a href="#" class="link icon-only" @click="${enableSearchbar}">
-                        <twig:ux:icon name="material-symbols:search" class="icon" alt="Search" />
+                        <i class="icon f7-icons if-not-md">search</i>
+                        <i class="icon material-icons md-only">search</i>
                     </a>
                 </div>
                 <form class="searchbar searchbar-expandable">
@@ -26,18 +27,17 @@
         <div class="page-content">
 
             {% block body %}
-            <twig:Hero />
-            <div class="searchbar-found">
-                <twig:Features />
-            </div>
-            <div class="searchbar-not-found">
-                <div class="empty-state">
-                    <div class="empty-state-media">
-                        <twig:ux:icon name="tabler:mood-empty" class="icon size-96 text-color-neutral" alt="No Search Results" />
-                    </div>
-                    <div class="empty-state-title font-size-20 no-margin-top text-color-neutral">No Search Results</div>
+                <twig:Hero />
+                <div class="searchbar-found">
+                    <twig:Features />
                 </div>
-            </div>
+                <div class="searchbar-not-found">
+                    <div class="block block-strong inset text-align-center">
+                        <i class="icon f7-icons if-not-md">search</i>
+                        <i class="icon material-icons md-only">search_off</i>
+                        <p>No search results</p>
+                    </div>
+                </div>
             {% endblock %}
 
         </div>
@@ -54,9 +54,9 @@
             let navbarEl = $f7.navbar.getElByPage($el.value);
             searchbar = $f7.searchbar.create({
                 el: $(navbarEl).find('.searchbar'),
-                searchContainer: $el.value.find('.list'),
-                searchItem: 'li',
-                searchIn: 'a',
+                searchContainer: $el.value.find('.features-grid'),
+                searchItem: '.feature-card',
+                searchIn: '.feature-title',
                 backdrop: false,
                 removeDiacritics: true,
                 on: {

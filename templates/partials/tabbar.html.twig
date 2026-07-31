@@ -1,36 +1,28 @@
 <template>
     <div class="page">
 
-        <div id="tabbar" class="toolbar toolbar-bottom tabbar tabbar-labels">
+        <div id="tabbar" class="toolbar tabbar tabbar-icons toolbar-bottom">
             <div class="toolbar-inner">
-                <a href="/" class="tab-link" data-route-tab-id="tab-working">
-                    <span class="icons">
-                        <twig:ux:icon name="material-symbols:list-alt-check-outline" class="icon size-24" alt="Working" />
-                        <twig:ux:icon name="material-symbols:list-alt-check" class="icon icon-active size-24" alt="Working" />
-                    </span>
-                    <span class="tabbar-label">Working</span>
-                </a>
-                <a href="/en_US/todo" class="tab-link" data-route-tab-id="tab-todo">
-                    <span class="icons">
-                        <twig:ux:icon name="material-symbols:list-alt-add-outline" class="icon size-24" alt="Todo" />
-                        <twig:ux:icon name="material-symbols:list-alt-add" class="icon icon-active size-24" alt="Todo" />
-                    </span>
-                    <span class="tabbar-label">Todo</span>
-                </a>
-                <a href="/en_US/info" class="tab-link" data-route-tab-id="tab-info">
-                    <span class="icons">
-                        <twig:ux:icon name="material-symbols:info-outline" class="icon size-24" alt="Info" />
-                        <twig:ux:icon name="material-symbols:info" class="icon icon-active size-24" alt="Info" />
-                    </span>
-                    <span class="tabbar-label">Info</span>
-                </a>
-                <a href="/en_US/share" class="tab-link" data-route-tab-id="tab-share">
-                    <span class="icons">
-                        <twig:ux:icon name="material-symbols:share-outline" class="icon size-24" alt="Share" />
-                        <twig:ux:icon name="material-symbols:share" class="icon icon-active size-24" alt="Share" />
-                    </span>
-                    <span class="tabbar-label">Share</span>
-                </a>
+                    <a href="/" class="tab-link tab-link-active" data-route-tab-id="tab-working">
+                        <i class="icon f7-icons if-not-md">checkmark_circle</i>
+                        <i class="icon material-icons md-only">check_circle_outline</i>
+                        <span class="tabbar-label">Working</span>
+                    </a>
+                    <a href="/{{ app.request.locale }}/todo" class="tab-link" data-route-tab-id="tab-todo">
+                        <i class="icon f7-icons if-not-md">list_bullet</i>
+                        <i class="icon material-icons md-only">format_list_bulleted</i>
+                        <span class="tabbar-label">Todo</span>
+                    </a>
+                    <a href="/{{ app.request.locale }}/info" class="tab-link" data-route-tab-id="tab-info">
+                        <i class="icon f7-icons if-not-md">info_circle</i>
+                        <i class="icon material-icons md-only">info_outline</i>
+                        <span class="tabbar-label">Info</span>
+                    </a>
+                    <a href="/{{ app.request.locale }}/share" class="tab-link" data-route-tab-id="tab-share">
+                        <i class="icon f7-icons if-not-md">square_arrow_up</i>
+                        <i class="icon material-icons md-only">share</i>
+                        <span class="tabbar-label">Share</span>
+                    </a>
             </div>
         </div>
 

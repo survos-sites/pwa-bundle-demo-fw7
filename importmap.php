@@ -79,4 +79,5 @@ return [
     'swiper/bundle' => ['version' => '12.2.0'],
     'swiper/element/bundle' => ['version' => '12.2.0'],
     'idb-keyval' => ['version' => '6.3.0'],
+    'material-icons/iconfont/material-icons.css' => ['version' => '1.13.14', 'type' => 'css'],
 ];
