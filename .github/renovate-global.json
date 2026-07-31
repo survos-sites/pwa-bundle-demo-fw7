@@ -6,5 +6,5 @@
   "onboarding": true,
   "onboardingBranch": "github-renovate/configure",
   "platform": "github",
-  "repositories": ['Spomky-Labs/phpwa-demo']
+  "repositories": ["survos-sites/pwa-bundle-demo-fw7"]
 }

@@ -1,11 +1,11 @@
 {
-    "name": "pwa-demo",
-    "description": "A Symfony based project to demonstrate the use of PHPWA",
+    "name": "Symphone",
+    "description": "A Symfony based project to demonstrate the use of pwa-bundle and fw-bundle.",
     "keywords": [
         "php",
         "symfony"
     ],
-    "repository": "https://github.com/spomky-labs/phpwa-demo",
+    "repository": "https://github.com/survos-sites/pwa-bundle-demo-fw7",
     "scripts": {
         "dokku": {
             "predeploy": "bin/console importmap:install && bin/console asset-map:compile && bin/console secrets:decrypt-to-local --force",

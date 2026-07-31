@@ -18,9 +18,9 @@ console.log('config.js');
 */
 
 window.config.app = {
-    id: 'com.survos.pwabundle',
+    id: 'com.survos.symphone',
     version: '1.0.0',
-    name: 'What PWA Bundle Can Do Today',
+    name: 'Symphone',
     logos: {
         logomarkLight: 'assets/custom/img/logos/logomark-light.svg',
         logomarkDark: 'assets/custom/img/logos/logomark-dark.svg',

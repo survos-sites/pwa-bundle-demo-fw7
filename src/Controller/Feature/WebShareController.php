@@ -26,11 +26,11 @@ class WebShareController extends AbstractController
     {
         return $this->render('features/web_share.html.twig', [
             'link' => [
-                "title" =>"What PWA Bundle Can Do Today",
+                "title" =>"Symphone",
                 "url" => $this->router->generate('app_homepage', [], UrlGeneratorInterface::ABSOLUTE_URL),
             ],
             'text' => [
-                "title" =>"What PWA Bundle Can Do Today",
+                "title" =>"Symphone",
                 "text" =>"Share this page around the world",
             ],
         ]);

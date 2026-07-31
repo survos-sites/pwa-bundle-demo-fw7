@@ -1,7 +1,8 @@
-# PWA Bundle Demo with Framework7
+# Symphone
 
-A Symfony demo app showing [`spomky-labs/pwa-bundle`](https://github.com/Spomky-Labs/pwa-bundle)
-combined with [Framework7](https://framework7.io/) (via `survos/fw-bundle`) instead of Tailwind.
+A Symfony based project to demonstrate the use of pwa-bundle and fw-bundle.
+Symphone combines [`spomky-labs/pwa-bundle`](https://github.com/Spomky-Labs/pwa-bundle)
+with [Framework7](https://framework7.io/) via `survos/fw-bundle`.
 
 Fork lineage: `Spomky-Labs/phpwa-demo` → `tacman/phpwa-demo` → this repo
 (`survos-sites/pwa-bundle-demo-fw7`, `praveen` branch). At this point the app has diverged enough
@@ -74,7 +75,7 @@ in `app.json`'s dokku predeploy script). Styling now comes from Framework7's own
 ## Installation
 
 ```bash
-git clone git@github.com:survos-sites/pwa-bundle-demo-fw7.git pwa-f7 && cd pwa-f7
+git clone git@github.com:survos-sites/pwa-bundle-demo-fw7.git symphone && cd symphone
 composer install
 symfony server:start -d
 symfony open:local

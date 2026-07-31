@@ -32,6 +32,6 @@ class HomepageTest extends WebTestCase
         $crawler = $client->request('GET', '/en_US');
 
         //Then
-        self::assertGreaterThan(0, $crawler->filter('html:contains("app.name")')->count());
+        self::assertGreaterThan(0, $crawler->filter('html:contains("Symphone")')->count());
     }
 }

@@ -25,23 +25,23 @@
                     If a user chooses the web app as the default app to open links with this protocol, the web app will be opened when a link with this protocol is clicked.
                 </p>
                 <ul>
-                    <li><twig:Link href="web+pwabundle://geolocation">Geolocation (web+pwabundle://geolocation)</twig:Link></li>
-                    <li><twig:Link href="web+pwabundle://screen-capturing">Screen Capturing (web+pwabundle://screen-capturing)</twig:Link></li>
+                    <li><twig:Link href="web+symphone://geolocation">Geolocation (web+symphone://geolocation)</twig:Link></li>
+                    <li><twig:Link href="web+symphone://screen-capturing">Screen Capturing (web+symphone://screen-capturing)</twig:Link></li>
                 </ul>
                 {% set yaml = 'pwa:
     manifest:
         enabled: true
         protocol_handlers:
-            - protocol: "web+pwabundle"
+            - protocol: "web+symphone"
               placeholder: "type"
               url:
                   path: "app_protocol_handler"
 ' %}
                 <pre><code class="language-yaml" data-controller="code">{{ yaml|raw }}</code></pre>
                 <p>
-                    This will register the protocol web+pwabundle as the protocol it can handle.
+                    This will register the protocol web+symphone as the protocol it can handle.
                     The final URL will be <code>https://example.com/path/?type=%s</code>.<br/>
-                    The placeholder %s will be replaced by the value of the link (e.g. <code>web+pwabundle://geolocation</code> or <code>web+pwabundle://screen-capturing</code>).
+                    The placeholder %s will be replaced by the value of the link (e.g. <code>web+symphone://geolocation</code> or <code>web+symphone://screen-capturing</code>).
                 </p>
             </div>
 

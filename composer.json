@@ -1,6 +1,6 @@
 {
-    "name": "survos-sites/pwa-bundle-demo-fw7",
-    "description": "A Symfony based project to demonstrate the use of pwa-bundle and framework7",
+    "name": "survos-sites/symphone",
+    "description": "A Symfony based project to demonstrate the use of pwa-bundle and fw-bundle.",
     "type": "project",
     "license": "MIT",
     "minimum-stability": "dev",

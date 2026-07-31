@@ -7,15 +7,15 @@
     <body>
       <trans-unit id="pQWw280" resname="app.name">
         <source>app.name</source>
-        <target>What PWA Can Do Today</target>
+        <target>Symphone</target>
       </trans-unit>
       <trans-unit id="vQzUOUz" resname="app.short_name">
         <source>app.short_name</source>
-        <target>PWA Today</target>
+        <target>Symphone</target>
       </trans-unit>
       <trans-unit id="n7KUaOy" resname="app.description">
         <source>app.description</source>
-        <target>What PWA Bundle Can Do Today is a showcase of what is possible with the Progressive Web App Bundle for Symfony.</target>
+        <target>A Symfony based project to demonstrate the use of pwa-bundle and fw-bundle.</target>
       </trans-unit>
       <trans-unit id="EsH78Fy" resname="app.start_url">
         <source>app.start_url</source>
