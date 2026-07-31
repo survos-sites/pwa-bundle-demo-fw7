@@ -1,13 +1,12 @@
 <template>
     <div class="page">
-
         <div class="navbar">
             <div class="navbar-bg"></div>
             <div class="navbar-inner">
                 <div class="left">
                     <a href="#" class="link back">
                         <i class="icon icon-back"></i>
-                        <span class="ios-only">Back</span>
+                        <span class="if-not-md">Back</span>
                     </a>
                 </div>
                 <div class="title">Offline support</div>
@@ -15,53 +14,90 @@
         </div>
 
         <div class="page-content">
-
-            <div class="block-title block-title-large">Offline support</div>
-            <div
-                class="block block-strong inset"
-                data-controller="pwa--connection-status"
-                data-pwa--connection-status-target="attribute"
-                role="alert"
-            >
-                <div class="display-flex align-items-center">
-                    <twig:ux:icon name="material-symbols:info" class="icon size-20 margin-right-half flex-shrink-0" alt="" />
-                    <div>
-                        <span class="font-weight-600">Connection status</span>: <span {{ stimulus_target('@pwa/connection-status', 'message') }}>We are trying to guess what is the current status of your Internet connection</span>
-                    </div>
-                </div>
+            <div class="block block-strong inset text-align-center">
+                <twig:ux:icon
+                    name="material-symbols:download-for-offline"
+                    class="icon color-primary"
+                    width="80"
+                    height="80"
+                    alt="Offline support"
+                />
+                <h1>Offline support</h1>
+                <p>The Service Worker enables web apps to work offline</p>
             </div>
 
-            <div class="block">
-                <p>
-                    A Service Worker is a special kind of Web Worker that serves as a proxy for the web app, allowing it to intercept and control network requests.
-                    When a request is made while the web app is offline, the Service Worker can intercept it and serve a response from its cache.
-                    This cache typically contains static assets like images, stylesheets, JavaScript etc. but it can also contain full HTML pages.
-                    In addition to this, it can also defer requests that are made while the user is offline and retry them later when the network is back.
+            <div class="block block-strong inset">
+                <p class="no-margin">
+                    A service worker acts as a proxy between a web app and the network. It can intercept requests and return cached responses when the network is unavailable.
                 </p>
             </div>
 
-            <div class="block-title block-title-large">Demo</div>
-            <div class="block">
-                <p>
-                    Disconnect your device from the internet by switching off your Wi-Fi or put your device in Airplane Mode.
-                    Visit any demo in this app and notice how they keep working (except for demos that require network access like geolocation for example).
-                </p>
-                <p>
-                    To implement offline support for your web app with the PWA Bundle, you just have to enable the service worker.<br/>
-                    You can precache routes by adding them to the configuration file.
-                </p>
-                {% set configuration = 'pwa:
-    serviceworker: "sw.js"' %}
-                <pre><code class="language-yaml" data-controller="code">{{ configuration|raw }}</code></pre>
-                <p>
-                    The service worker also takes care of installing a new version of your web app automatically and as soon as possible.
-                    <br/>
-                    Please refer to the documentation for more advanced features like URL preload.
-                </p>
+            <h2 class="block-title block-title-medium">Connection status</h2>
+            <div class="list media-list list-strong list-outline-ios list-dividers-ios inset">
+                <ul>
+                    <li
+                        data-controller="pwa--connection-status"
+                        data-pwa--connection-status-target="attribute"
+                    >
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon f7-icons color-primary">antenna_radiowaves_left_right</i></div>
+                            <div class="item-inner">
+                                <div class="item-title">Connection</div>
+                                <div class="item-text" data-pwa--connection-status-target="message">Checking your connection…</div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
             </div>
 
+            <h2 class="block-title block-title-medium">How Symphone is configured</h2>
+            <div class="list media-list list-strong list-outline-ios list-dividers-ios inset">
+                <ul>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon f7-icons color-primary">gear_alt_fill</i></div>
+                            <div class="item-inner">
+                                <div class="item-title">Generated service worker</div>
+                                <div class="item-text">PWA Bundle generates and registers Symphone’s service worker with Workbox support enabled.</div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon f7-icons color-primary">doc_text_fill</i></div>
+                            <div class="item-inner">
+                                <div class="item-title">Network-first pages</div>
+                                <div class="item-text">Navigation requests try the network first, then fall back to the <code>pages</code> cache after a two-second timeout.</div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon f7-icons color-primary">arrow_down_doc_fill</i></div>
+                            <div class="item-inner">
+                                <div class="item-title">Preloaded Framework7 shell</div>
+                                <div class="item-text">The app shell, tabbar, and homepage partial are preloaded for both locales so Framework7 can assemble the homepage offline.</div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <h2 class="block-title">Try it without a network</h2>
+            <div class="block block-strong inset">
+                <ol>
+                    <li>Open Symphone while connected and wait for the page to finish loading.</li>
+                    <li>Reload once so the installed service worker controls the page.</li>
+                    <li>Switch on airplane mode or disable your network connection.</li>
+                    <li>Reload the homepage, then open any demo listed under Working.</li>
+                    <li>Reconnect when you are finished testing.</li>
+                </ol>
+            </div>
+
+            <div class="block-footer margin-bottom">
+                The connection indicator is a live use of PWA Bundle’s connection-status controller. Browser connectivity is only a hint and cannot guarantee that every remote service is reachable.
+            </div>
         </div>
-
     </div>
 </template>
 

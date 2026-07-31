@@ -1,13 +1,12 @@
 <template>
     <div class="page">
-
         <div class="navbar">
             <div class="navbar-bg"></div>
             <div class="navbar-inner">
                 <div class="left">
                     <a href="#" class="link back">
                         <i class="icon icon-back"></i>
-                        <span class="ios-only">Back</span>
+                        <span class="if-not-md">Back</span>
                     </a>
                 </div>
                 <div class="title">Shortcuts</div>
@@ -15,28 +14,47 @@
         </div>
 
         <div class="page-content">
-
-            <div class="block-title block-title-large">Shortcuts</div>
-            <div class="block">
-                <p>
-                    A PWA can provide shortcuts to pages (URLs) inside the app.
-                    These shortcuts are accessible by long-pressing the app icon or by right-clicking the app icon depending on the platform.
-                </p>
-
-                {% set yaml = 'pwa:
-    manifest:
-        enabled: true
-        shortcuts:
-            - name: "Feature 1" #Translatable key
-              short_name: "Feature 1" #Translatable key
-              description: "This is the feature #1" #Translatable key
-              url: "/feature-1" # Can be a Symfony path name (with parameters)
-' %}
-                <pre><code class="language-yaml" data-controller="code">{{ yaml|raw }}</code></pre>
+            <div class="block block-strong inset text-align-center">
+                <twig:ux:icon
+                    name="tdesign:mobile-shortcut-filled"
+                    class="icon color-primary"
+                    width="80"
+                    height="80"
+                    alt="Shortcuts"
+                />
+                <h1>Shortcuts</h1>
+                <p>Shortcuts provide quick access to pages in your app from the app icon.</p>
             </div>
 
-        </div>
+            <div class="block block-strong inset">
+                <p class="no-margin">
+                    A PWA can provide shortcuts to URLs inside the app. PWA Bundle adds them to the <code>shortcuts</code> member of Symphone’s generated Web App Manifest.
+                </p>
+            </div>
 
+            <h2 class="block-title">Install before testing</h2>
+            <div class="block block-strong inset">
+                <p class="no-margin-top">
+                    Shortcuts belong to the installed app icon, so install Symphone before looking for them on your device.
+                </p>
+                <a href="{{ path('app_feature_installation') }}" class="button button-tonal">
+                    Open Installation demo
+                </a>
+            </div>
+
+            <h2 class="block-title block-title-medium">Try it from your device</h2>
+            <div class="block block-strong inset">
+                <ol>
+                    <li>Find the installed Symphone icon on your home screen, app launcher, taskbar, or dock.</li>
+                    <li>Long-press it on Android, or right-click it on ChromeOS, Windows, or macOS.</li>
+                    <li>Select Working, Todo, Info, or Share to open Symphone.</li>
+                </ol>
+            </div>
+
+            <div class="block-footer margin-bottom">
+                These shortcuts currently use Symphone’s locale-neutral homepage URL. The browser and operating system decide which shortcuts are displayed, their order, and whether they remain available while the app is closed.
+            </div>
+        </div>
     </div>
 </template>
 

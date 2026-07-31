@@ -13,10 +13,12 @@ class ProtocolHandlerController extends AbstractController
     #[Route('/handler', name: 'app_protocol_handler')]
     public function __invoke(Request $request): Response
     {
-        return match (true) {
-            str_starts_with($request->query->get('type'), 'web+symphone://geolocation') => $this->redirectToRoute('app_feature_geolocation'),
-            str_starts_with($request->query->get('type'), 'web+symphone://screen-capturing') => $this->redirectToRoute('app_feature_screen_capture'),
-            default => throw $this->createNotFoundException(),
-        };
+        $type = (string) $request->query->get('type');
+
+        if (!str_starts_with($type, 'web+symphone://')) {
+            throw $this->createNotFoundException();
+        }
+
+        return $this->redirectToRoute('app_root');
     }
 }

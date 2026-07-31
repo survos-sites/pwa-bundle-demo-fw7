@@ -1,57 +1,107 @@
 <template>
     <div class="page">
-
         <div class="navbar">
             <div class="navbar-bg"></div>
             <div class="navbar-inner">
                 <div class="left">
                     <a href="#" class="link back">
                         <i class="icon icon-back"></i>
-                        <span class="ios-only">Back</span>
+                        <span class="if-not-md">Back</span>
                     </a>
                 </div>
-                <div class="title">Protocol handling</div>
+                <div class="title">Protocol Handling</div>
             </div>
         </div>
 
         <div class="page-content">
+            <div class="block block-strong inset text-align-center">
+                <twig:ux:icon
+                    name="material-symbols:language"
+                    class="icon color-primary"
+                    width="80"
+                    height="80"
+                    alt="Protocol Handling"
+                />
+                <h1>Protocol Handling</h1>
+                <p>Protocol handling enables web apps to register their ability to open links with particular URL schemes.</p>
+            </div>
 
-            <div class="block-title block-title-large">Protocol handling</div>
-            <div class="block">
-                <p>
-                    Protocol handling enables web apps to register their ability to open links with particular URL schemes, also known as protocols. <br/>
-                    This means that a web app can for example register itself as an app that will open links like web+foo://bar.
-                    In this case, the app will register the protocol web+foo as the protocol it can handle. <br/>
-                    If a user chooses the web app as the default app to open links with this protocol, the web app will be opened when a link with this protocol is clicked.
-                </p>
-                <ul>
-                    <li><twig:Link href="web+symphone://geolocation">Geolocation (web+symphone://geolocation)</twig:Link></li>
-                    <li><twig:Link href="web+symphone://screen-capturing">Screen Capturing (web+symphone://screen-capturing)</twig:Link></li>
-                </ul>
-                {% set yaml = 'pwa:
-    manifest:
-        enabled: true
-        protocol_handlers:
-            - protocol: "web+symphone"
-              placeholder: "type"
-              url:
-                  path: "app_protocol_handler"
-' %}
-                <pre><code class="language-yaml" data-controller="code">{{ yaml|raw }}</code></pre>
-                <p>
-                    This will register the protocol web+symphone as the protocol it can handle.
-                    The final URL will be <code>https://example.com/path/?type=%s</code>.<br/>
-                    The placeholder %s will be replaced by the value of the link (e.g. <code>web+symphone://geolocation</code> or <code>web+symphone://screen-capturing</code>).
+            <div class="block block-strong inset">
+                <p class="no-margin">
+                    A registered protocol associates a custom URL scheme with an app. When a <code>web+symphone</code> link is opened and Symphone is selected as its handler, the operating system can launch the installed app and pass the link to it.
                 </p>
             </div>
 
-        </div>
+            <h2 class="block-title block-title-medium">Before you test</h2>
+            <div class="block block-strong inset">
+                <p class="no-margin-top">
+                    Install Symphone first so your browser and operating system can register it as a handler for <code>web+symphone</code> links.
+                </p>
+                <a href="{{ path('app_feature_installation') }}" class="button button-tonal button-large">
+                    Check installation
+                </a>
+                <p class="text-color-gray no-margin-bottom">
+                    A regular browser tab cannot reliably determine whether the same PWA is already installed elsewhere on the device. The Installation demo reports the states the browser makes available.
+                </p>
+            </div>
 
+            <h2 class="block-title block-title-medium">Test the protocol handler</h2>
+            <div class="block block-strong inset">
+                <p class="no-margin-top">
+                    Protocol handling is best tested from a browser context outside the installed app. The direct link opens in a new context so the browser or operating system can offer Symphone as its handler.
+                </p>
+
+                <div class="grid grid-cols-1 medium-grid-cols-2 grid-gap">
+                    <a
+                        href="web+symphone://open"
+                        target="_blank"
+                        rel="noopener"
+                        class="external button button-fill button-large"
+                    >
+                        Open with Symphone
+                    </a>
+                    <button type="button" class="button button-tonal button-large" @click="${copyProtocolLink}">
+                        Copy protocol link
+                    </button>
+                </div>
+
+                <ol>
+                    <li>Choose “Open with Symphone”.</li>
+                    <li>Approve the browser or operating-system prompt if one appears.</li>
+                    <li>Symphone should open at its locale-neutral homepage.</li>
+                </ol>
+
+                <p class="text-color-gray no-margin-bottom">
+                    If the button does not show a prompt, copy the protocol link, close or minimize Symphone, and paste it into the address bar of a supported browser.
+                </p>
+
+            </div>
+
+            <h2 class="block-title">How it is registered</h2>
+            <div class="block block-strong inset">
+                <p>
+                    PWA Bundle adds <code>web+symphone</code> to the manifest’s <code>protocol_handlers</code> member. Its <code>%s</code> placeholder receives the encoded protocol URL. Symphone’s handler route validates that URL before redirecting to the locale-neutral homepage.
+                </p>
+            </div>
+
+            <div class="block-footer margin-bottom">
+                Protocol handling requires browser and operating-system support and may require Symphone to be installed. The platform controls the confirmation and app-selection experience.
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
     export default function(props, {$, $el, $f7, $f7route, $f7router, $h, $on, $store, $theme, $update}) {
+        const copyProtocolLink = async function() {
+            try {
+                await navigator.clipboard.writeText('web+symphone://open');
+                $f7.toast.show({text: 'Protocol link copied'});
+            } catch (error) {
+                $f7.dialog.alert('Copy web+symphone://open and paste it into your browser address bar.');
+            }
+        };
+
         return $render;
     }
 </script>

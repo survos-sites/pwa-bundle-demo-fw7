@@ -100,18 +100,24 @@ class HomepageController extends AbstractController
     }
 
     /* Framework7 HTML Partials */
+    #[PreloadUrl('framework7_partials_en', ['_locale' => 'en_US'])]
+    #[PreloadUrl('framework7_partials_fr', ['_locale' => 'fr_FR'])]
     #[Route('/partials/app.html', name: 'f7_app_partial_root_html')]
     public function f7_app_partial_root_html(): Response
     {
         return $this->render('/partials/app.html.twig');
     }
 
+    #[PreloadUrl('framework7_partials_en', ['_locale' => 'en_US'])]
+    #[PreloadUrl('framework7_partials_fr', ['_locale' => 'fr_FR'])]
     #[Route('/partials/home.html', name: 'f7_app_partial_home_html')]
     public function f7_app_partial_home_html(): Response
     {
         return $this->render('/partials/home.html.twig');
     }
 
+    #[PreloadUrl('framework7_partials_en', ['_locale' => 'en_US'])]
+    #[PreloadUrl('framework7_partials_fr', ['_locale' => 'fr_FR'])]
     #[Route('/partials/tabbar.html', name: 'f7_app_partial_tabbar_html')]
     public function f7_app_partial_tabbar_html(): Response
     {

@@ -1,15 +1,113 @@
 <template>
-    <div class="page">
+    <div class="page" data-controller="badge pwa--badge">
         <div class="navbar">
             <div class="navbar-bg"></div>
             <div class="navbar-inner">
-                <div class="left"><a href="#" class="link back"><i class="icon icon-back"></i><span class="ios-only">Back</span></a></div>
-                <div class="title">App Badging</div>
+                <div class="left">
+                    <a href="#" class="link back">
+                        <i class="icon icon-back"></i>
+                        <span class="if-not-md">Back</span>
+                    </a>
+                </div>
+                <div class="title">Badge</div>
             </div>
         </div>
+
         <div class="page-content">
-            <div class="block-title block-title-large">App Badging</div>
-            <div class="block"><p>This PWA Bundle demonstration will be added soon.</p></div>
+            <div class="block block-strong inset text-align-center">
+                <twig:ux:icon
+                    name="fluent:comment-badge-16-regular"
+                    class="icon color-primary"
+                    width="80"
+                    height="80"
+                    alt="Badge"
+                />
+                <h1>Badge</h1>
+                <p>The Badge API allows web apps to display a badge on the home screen icon.</p>
+            </div>
+
+            <h2 class="block-title block-title-medium">App badge</h2>
+            <div class="card card-outline">
+                <div class="card-content card-content-padding">
+                    <div class="display-flex align-items-center">
+                        <i class="icon f7-icons size-32 color-primary margin-right">app_badge</i>
+                        <div>
+                            <div class="font-weight-600" data-badge-target="status">Checking browser support…</div>
+                            <p class="no-margin-bottom margin-top-half text-color-gray" data-badge-target="message">
+                                Choose a numeric value to display on Symphone's installed app icon.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="block block-strong inset">
+                <div class="display-flex align-items-center justify-content-space-between">
+                    <div>
+                        <div class="font-weight-600">Badge value</div>
+                        <div class="text-color-gray">Choose a badge value</div>
+                    </div>
+                    <div
+                        class="stepper stepper-init"
+                        data-min="1"
+                        data-max="4294967295"
+                        data-step="1"
+                        data-autorepeat="true"
+                        data-autorepeat-dynamic="true"
+                        data-manual-input-mode="true"
+                    >
+                        <div class="stepper-button-minus"></div>
+                        <div class="stepper-input-wrap">
+                            <input
+                                type="text"
+                                value="1"
+                                min="1"
+                                max="4294967295"
+                                step="1"
+                                inputmode="numeric"
+                                data-badge-target="count"
+                                data-action="change->badge#normalizeCount blur->badge#normalizeCount"
+                                aria-label="App badge value"
+                            />
+                        </div>
+                        <div class="stepper-button-plus"></div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 grid-gap margin-top">
+                    <button
+                        type="button"
+                        class="button button-fill"
+                        data-badge-target="action"
+                        data-action="click->badge#setBadge"
+                    >Set app badge</button>
+                    <button
+                        type="button"
+                        class="button button-outline color-red"
+                        data-badge-target="action"
+                        data-action="click->pwa--badge#clear"
+                    >Clear app badge</button>
+                </div>
+            </div>
+
+            <div class="block block-strong inset">
+                <p class="no-margin-top">
+                    App badges are generally visible on an installed app's launcher or taskbar icon, rather than inside this page.
+                </p>
+                <a href="{{ path('app_feature_installation') }}" class="button button-tonal">
+                    Open Installation demo
+                </a>
+            </div>
+
+            <div class="block-footer margin-bottom">
+                Support and badge presentation depend on the browser and operating system. The platform may require Symphone to be installed before a badge becomes visible.
+            </div>
         </div>
     </div>
 </template>
+
+<script>
+    export default function(props, {$, $el, $f7, $f7route, $f7router, $h, $on, $store, $theme, $update}) {
+        return $render;
+    }
+</script>

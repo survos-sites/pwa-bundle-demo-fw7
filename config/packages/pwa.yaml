@@ -53,12 +53,36 @@ pwa:
             - "education"
             - "utilities"
         shortcuts:
-            - name: "app.features.geolocation.name"
-              short_name: "app.features.geolocation.short_name"
-              description: "app.features.geolocation.description"
-              url: 'app_feature_geolocation'
+            - name: "Working"
+              short_name: "Working"
+              description: "Open Symphone's working demos"
+              url: '/'
               icons:
-                  - src: "icons/location.svg"
+                  - src: "icons/shortcut-working.svg"
+                    sizes: [48, 96, 128, 144, 192, 256, 384, 512]
+                    format: 'png'
+            - name: "Todo"
+              short_name: "Todo"
+              description: "Browse Symphone's planned demos"
+              url: '/'
+              icons:
+                  - src: "icons/shortcut-todo.svg"
+                    sizes: [48, 96, 128, 144, 192, 256, 384, 512]
+                    format: 'png'
+            - name: "Info"
+              short_name: "Info"
+              description: "Open information about Symphone"
+              url: '/'
+              icons:
+                  - src: "icons/shortcut-info.svg"
+                    sizes: [48, 96, 128, 144, 192, 256, 384, 512]
+                    format: 'png'
+            - name: "Share"
+              short_name: "Share"
+              description: "Share Symphone"
+              url: '/'
+              icons:
+                  - src: "icons/shortcut-share.svg"
                     sizes: [48, 96, 128, 144, 192, 256, 384, 512]
                     format: 'png'
         edge_side_panel:
@@ -84,10 +108,19 @@ pwa:
         workbox:
             enabled: true
             resource_caches:
-                - match_callback: 'startsWith: /videos/'
-                  cache_name: 'videos'
-                  strategy: 'CacheFirst'
-                - match_callback: 'navigate'
+                - match_callback: 'startsWith: /en_US/partials/'
+                  cache_name: 'framework7_partials_en'
+                  strategy: 'NetworkFirst'
+                  network_timeout: 2
+                  preload_urls:
+                      - '@framework7_partials_en'
+                - match_callback: 'startsWith: /fr_FR/partials/'
+                  cache_name: 'framework7_partials_fr'
+                  strategy: 'NetworkFirst'
+                  network_timeout: 2
+                  preload_urls:
+                      - '@framework7_partials_fr'
+                - match_callback: 'navigate-or-localized-page'
                   cache_name: 'pages'
                   strategy: 'NetworkFirst'
                   network_timeout: 2

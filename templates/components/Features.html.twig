@@ -1,8 +1,8 @@
 {% set features = [
-    {route: 'app_feature_installation', title: 'Installation', icon: 'material-symbols:install-mobile'},
-    {route: 'app_feature_offline_support', title: 'Offline support', icon: 'material-symbols:download-for-offline'},
+    {route: 'app_feature_installation', title: 'Installation', icon: 'material-symbols:install-mobile', working: true},
+    {route: 'app_feature_offline_support', title: 'Offline support', icon: 'material-symbols:download-for-offline', working: true},
     {route: 'app_feature_notifications', title: 'Web Push', icon: 'material-symbols:notifications-outline'},
-    {route: 'app_feature_shortcuts', title: 'Shortcuts', icon: 'tdesign:mobile-shortcut-filled'},
+    {route: 'app_feature_shortcuts', title: 'Shortcuts', icon: 'tdesign:mobile-shortcut-filled', working: true},
     {route: 'app_feature_view_transition', title: 'View Transitions', icon: 'material-symbols:auto-awesome-motion'},
     {route: 'app_feature_geolocation', title: 'Geolocation', icon: 'ic:baseline-gps-fixed'},
     {route: 'app_feature_media_capture', title: 'Media capture', icon: 'material-symbols:videocam'},
@@ -10,14 +10,14 @@
     {route: 'app_feature_picture_in_picture', title: 'Picture-in-picture', icon: 'material-symbols:picture-in-picture'},
     {route: 'app_feature_file_system', title: 'File System', icon: 'ic:baseline-insert-drive-file'},
     {route: 'app_feature_authentication', title: 'Authentication', icon: 'material-symbols:fingerprint'},
-    {route: 'app_feature_protocol_handling', title: 'Protocol Handling', icon: 'material-symbols:language'},
+    {route: 'app_feature_protocol_handling', title: 'Protocol Handling', icon: 'material-symbols:language', working: true},
     {route: 'app_feature_file_handling', title: 'File Handling API', icon: 'material-symbols:folder-open'},
     {route: 'app_feature_contact_picker', title: 'Contact picker', icon: 'material-symbols:account-box'},
     {route: 'app_feature_web_share', title: 'Web share', icon: 'material-symbols:share'},
     {route: 'app_feature_share_target', title: 'Share Target', icon: 'material-symbols:share-reviews-outline'},
     {route: 'app_feature_barcode_detection', title: 'Barcode detection', icon: 'material-symbols:qr-code-scanner'},
     {route: 'app_feature_face_detection', title: 'Face detection', icon: 'material-symbols:face'},
-    {route: 'app_feature_vibration', title: 'Vibration', icon: 'material-symbols:vibration'},
+    {route: 'app_feature_vibration', title: 'Vibration', icon: 'material-symbols:vibration', working: true},
     {route: 'app_feature_audio_recording', title: 'Audio recording', icon: 'material-symbols:mic'},
     {route: 'app_feature_audio', title: 'Audio', icon: 'ic:round-play-circle-filled'},
     {route: 'app_feature_audio_session', title: 'Audio Session API', icon: 'material-symbols:tune'},
@@ -30,36 +30,39 @@
     {route: 'app_feature_nfc', title: 'NFC', icon: 'material-symbols:nfc'},
     {route: 'app_feature_ar_vr', title: 'AR/VR', icon: 'material-symbols:layers'},
     {route: 'app_feature_payment', title: 'Payment', icon: 'material-symbols:credit-card'},
-    {route: 'app_feature_battery', title: 'Battery', icon: 'material-symbols:battery-full'},
-    {route: 'app_feature_badge', title: 'Badge', icon: 'material-symbols:notification-add-outline'},
+    {route: 'app_feature_battery', title: 'Battery', icon: 'game-icons:battery-50', working: true},
+    {route: 'app_feature_badge', title: 'Badge', icon: 'fluent:comment-badge-16-regular', working: true},
     {route: 'app_feature_wake_lock', title: 'Wake Lock', icon: 'material-symbols:screen-lock-portrait'},
-    {route: 'app_feature_fullscreen', title: 'Fullscreen', icon: 'material-symbols:fullscreen'},
+    {route: 'app_feature_fullscreen', title: 'Fullscreen', icon: 'subway:fullscreen', working: true},
     {route: 'app_feature_orientation', title: 'Orientation', icon: 'material-symbols:screen-rotation'},
     {route: 'app_feature_device_motion', title: 'Motion', icon: 'material-symbols:3d-rotation'},
-    {route: 'app_feature_network_info', title: 'Network info', icon: 'material-symbols:network-check'},
+    {route: 'app_feature_network_info', title: 'Network info', icon: 'material-symbols:network-check', working: true},
     {route: 'app_feature_speech_synthesis', title: 'Speech synthesis', icon: 'material-symbols:record-voice-over'},
     {route: 'app_feature_speech_recognition', title: 'Speech recognition', icon: 'material-symbols:hearing'},
     {route: 'app_feature_multi_touch', title: 'Multi touch', icon: 'material-symbols:touch-app'},
-    {route: 'app_feature_i18n', title: 'i18n', icon: 'fluent-mdl2:locale-language'},
+    {route: 'app_feature_i18n', title: 'i18n', icon: 'fluent-mdl2:locale-language', working: true},
     {route: 'app_feature_presentation', title: 'Presentation', icon: 'ri:presentation-fill'},
 ] %}
+{% set showWorking = mode|default('working') == 'working' %}
 
 <section {{ attributes }}>
-    <h2 class="block-title block-title-medium">{{ 'homepage.demo'|trans }}</h2>
+    <h2 class="block-title block-title-medium">{{ showWorking ? 'Working demos' : 'Todo demos' }}</h2>
     <div class="grid grid-cols-2 medium-grid-cols-3 large-grid-cols-4 grid-gap features-grid margin-horizontal margin-bottom">
         {% for feature in features %}
-            <twig:Feature
-                link="{{ path(feature.route) }}"
-                title="{{ feature.title }}"
-            >
-                <twig:ux:icon
-                    name="{{ feature.icon }}"
-                    class="icon"
-                    width="48"
-                    height="48"
-                    alt="{{ feature.title }}"
-                />
-            </twig:Feature>
+            {% if (feature.working|default(false)) == showWorking %}
+                <twig:Feature
+                    link="{{ path(feature.route) }}"
+                    title="{{ feature.title }}"
+                >
+                    <twig:ux:icon
+                        name="{{ feature.icon }}"
+                        class="icon"
+                        width="48"
+                        height="48"
+                        alt="{{ feature.title }}"
+                    />
+                </twig:Feature>
+            {% endif %}
         {% endfor %}
     </div>
 </section>

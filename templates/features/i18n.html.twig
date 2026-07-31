@@ -1,52 +1,100 @@
 <template>
     <div class="page">
-
         <div class="navbar">
             <div class="navbar-bg"></div>
             <div class="navbar-inner">
                 <div class="left">
                     <a href="#" class="link back">
                         <i class="icon icon-back"></i>
-                        <span class="ios-only">Back</span>
+                        <span class="if-not-md">Back</span>
                     </a>
                 </div>
-                <div class="title">Internationalization (i18n)</div>
+                <div class="title">i18n</div>
             </div>
         </div>
 
         <div class="page-content">
-
-            <div class="block-title block-title-large">Internationalization (i18n)</div>
-            <div class="block">
-                <p>
-                    The PWA Bundle provides a way to translate your web manifest in multiple languages.
-                    This is useful when you want to provide a localized experience to your users.
-                </p>
-                <p>
-                    To enable this feature, you just have to set the <code>enabled</code> option to <code>true</code> and provide a public URL to the manifest file.
-                    The public URL should contain a placeholder for the locale that will be replaced by the current locale.
-                </p>
-                {% set yaml = 'pwa:
-    manifest:
-        enabled: true
-        public_url: \'/pwa/site.{locale}.webmanifest\'' %}
-                <pre><code class="language-yaml" data-controller="code">{{ yaml|raw }}</code></pre>
-                <p>
-                    Then in your templates, you can use the <code>pwa</code> Twig function to generate the URL to the manifest file.
-                    The <code>locale</code> option will be replaced by the current locale.
-                </p>
-                {% set html = '<!DOCTYPE html>
-<html>
-    <head>
-        {{ pwa(locale=app.request.locale) }}
-    </head>
-</html>
-' %}
-                <pre><code class="language-html" data-controller="code">{{ html|escape('html')|raw }}</code></pre>
+            <div class="block block-strong inset text-align-center">
+                <twig:ux:icon
+                    name="fluent-mdl2:locale-language"
+                    class="icon color-primary"
+                    width="80"
+                    height="80"
+                    alt="i18n"
+                />
+                <h1>i18n</h1>
+                <p>Internationalization (i18n) enables web apps to adapt to different languages and regions.</p>
             </div>
 
-        </div>
+            <div class="block block-strong inset">
+                <p class="no-margin">
+                    The PWA Bundle provides a way to translate your web manifest in multiple languages. This is useful when you want to provide a localized experience to your users.
+                </p>
+            </div>
 
+            <h2 class="block-title block-title-medium">Generated manifests</h2>
+            <div class="block">
+                Symphone currently supports two locales. PWA Bundle generates a separate manifest for each locale, using the same translations as the application for its name, description, and localized URLs.
+            </div>
+            <div class="list media-list list-strong list-outline-ios list-dividers-ios inset">
+                <ul>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon f7-icons color-primary">globe</i></div>
+                            <div class="item-inner">
+                                <div class="item-title-row">
+                                    <div class="item-title">English (United States)</div>
+                                    <div class="item-after">en-US</div>
+                                </div>
+                                <div class="item-subtitle">{{ 'app.name'|trans({}, 'pwa', 'en_US') }}</div>
+                                <div class="item-text">{{ 'app.description'|trans({}, 'pwa', 'en_US') }}</div>
+                            </div>
+                        </div>
+                        <div class="item-content">
+                            <div class="item-inner">
+                                <a
+                                    href="/pwa/site.en_US.webmanifest"
+                                    target="_blank"
+                                    rel="noopener"
+                                    class="external button button-tonal"
+                                >
+                                    View English manifest
+                                </a>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon f7-icons color-primary">globe</i></div>
+                            <div class="item-inner">
+                                <div class="item-title-row">
+                                    <div class="item-title">Français (France)</div>
+                                    <div class="item-after">fr-FR</div>
+                                </div>
+                                <div class="item-subtitle">{{ 'app.name'|trans({}, 'pwa', 'fr_FR') }}</div>
+                                <div class="item-text">{{ 'app.description'|trans({}, 'pwa', 'fr_FR') }}</div>
+                            </div>
+                        </div>
+                        <div class="item-content">
+                            <div class="item-inner">
+                                <a
+                                    href="/pwa/site.fr_FR.webmanifest"
+                                    target="_blank"
+                                    rel="noopener"
+                                    class="external button button-tonal"
+                                >
+                                    View French manifest
+                                </a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="block-footer margin-bottom">
+                The two links above open the real manifests generated by PWA Bundle. Manifest presentation and language selection during installation are controlled by the browser and operating system.
+            </div>
+        </div>
     </div>
 </template>
 

@@ -1,13 +1,12 @@
 <template>
-    <div class="page">
-
+    <div class="page" data-controller="vibration pwa--vibration">
         <div class="navbar">
             <div class="navbar-bg"></div>
             <div class="navbar-inner">
                 <div class="left">
                     <a href="#" class="link back">
                         <i class="icon icon-back"></i>
-                        <span class="ios-only">Back</span>
+                        <span class="if-not-md">Back</span>
                     </a>
                 </div>
                 <div class="title">Vibration</div>
@@ -15,16 +14,149 @@
         </div>
 
         <div class="page-content">
+            <div class="block block-strong inset text-align-center">
+                <twig:ux:icon
+                    name="material-symbols:vibration"
+                    class="icon color-primary"
+                    width="80"
+                    height="80"
+                    alt="Vibration"
+                />
+                <h1>Vibration</h1>
+                <p>The Vibration API enables web apps to make a mobile device vibrate.</p>
+            </div>
 
-            <div class="block-title block-title-large">Vibration</div>
-            <div class="block">
-                <p>
-                    TO BE COMPLETED
+            <div class="block block-strong inset">
+                <p class="no-margin">
+                    A vibration pattern alternates vibration and pause durations in milliseconds. Short patterns can reinforce visual feedback, while repeating patterns should stop as soon as the user acknowledges them.
                 </p>
             </div>
 
-        </div>
+            <h2 class="block-title block-title-medium">Example vibration patterns</h2>
+            <div class="card card-outline">
+                <div class="card-content card-content-padding">
+                    <div class="display-flex align-items-center">
+                        <i class="icon f7-icons size-32 color-primary margin-right" data-vibration-target="statusIcon">waveform_path</i>
+                        <div>
+                            <div class="font-weight-600" data-vibration-target="status">Checking browser support…</div>
+                            <p class="no-margin-bottom margin-top-half text-color-gray" data-vibration-target="message">
+                                Choose a use case to request its vibration pattern.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
+            <div class="list media-list list-strong list-outline-ios list-dividers-ios inset">
+                <ul>
+                    <li>
+                        <a
+                            href="#"
+                            class="item-link item-content"
+                            data-vibration-target="action"
+                            data-action="click->pwa--vibration#vibrate"
+                            data-pwa--vibration-pattern-param="[80]"
+                        >
+                            <div class="item-media"><i class="icon f7-icons color-green">checkmark_circle_fill</i></div>
+                            <div class="item-inner">
+                                <div class="item-title">Successful barcode scan</div>
+                                <div class="item-text">One subtle pulse confirms that an item was captured without making the user look away.</div>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a
+                            href="#"
+                            class="item-link item-content"
+                            data-vibration-target="action"
+                            data-action="click->pwa--vibration#vibrate"
+                            data-pwa--vibration-pattern-param="[100,80,100]"
+                        >
+                            <div class="item-media"><i class="icon f7-icons color-primary">bell_fill</i></div>
+                            <div class="item-inner">
+                                <div class="item-title">New task assigned</div>
+                                <div class="item-text">Two short pulses distinguish an incoming task from a simple confirmation.</div>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a
+                            href="#"
+                            class="item-link item-content"
+                            data-vibration-target="action"
+                            data-action="click->pwa--vibration#vibrate"
+                            data-pwa--vibration-pattern-param="[300,150,300,150,600]"
+                            data-pwa--vibration-interval-param="3000"
+                        >
+                            <div class="item-media"><i class="icon f7-icons color-red">phone_fill</i></div>
+                            <div class="item-inner">
+                                <div class="item-title">Incoming support call</div>
+                                <div class="item-text">A repeating call pattern continues until it is explicitly stopped.</div>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="block">
+                <button
+                    type="button"
+                    class="button button-outline color-red"
+                    data-vibration-target="stopButton"
+                    data-action="click->pwa--vibration#stop"
+                    disabled
+                >
+                    Stop repeating alert
+                </button>
+            </div>
+
+            <h2 class="block-title">Custom pulse duration</h2>
+            <div class="block block-strong inset">
+                <div class="display-flex align-items-center justify-content-space-between">
+                    <div>
+                        <div class="font-weight-600">Duration</div>
+                        <div class="text-color-gray">50–10,000 milliseconds</div>
+                    </div>
+                    <div
+                        class="stepper stepper-init"
+                        data-min="50"
+                        data-max="10000"
+                        data-step="50"
+                        data-autorepeat="true"
+                        data-autorepeat-dynamic="true"
+                        data-manual-input-mode="true"
+                    >
+                        <div class="stepper-button-minus"></div>
+                        <div class="stepper-input-wrap">
+                            <input
+                                type="text"
+                                value="200"
+                                min="50"
+                                max="10000"
+                                step="50"
+                                inputmode="numeric"
+                                data-vibration-target="duration"
+                                data-action="change->vibration#normalizeDuration blur->vibration#normalizeDuration"
+                                aria-label="Vibration duration in milliseconds"
+                            />
+                        </div>
+                        <div class="stepper-button-plus"></div>
+                    </div>
+                </div>
+                <button
+                    type="button"
+                    class="button button-fill margin-top"
+                    data-vibration-target="action"
+                    data-action="click->vibration#vibrateCustom"
+                >
+                    Vibrate once
+                </button>
+            </div>
+
+            <div class="block-footer margin-bottom">
+                Vibration requires a supported device and browser and may be disabled by device settings. Haptic feedback should supplement visible or audible feedback, never replace it.
+            </div>
+        </div>
     </div>
 </template>
 

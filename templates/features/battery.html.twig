@@ -1,15 +1,106 @@
 <template>
-    <div class="page">
+    <div class="page" data-controller="battery">
         <div class="navbar">
             <div class="navbar-bg"></div>
             <div class="navbar-inner">
-                <div class="left"><a href="#" class="link back"><i class="icon icon-back"></i><span class="ios-only">Back</span></a></div>
-                <div class="title">Battery Status</div>
+                <div class="left">
+                    <a href="#" class="link back">
+                        <i class="icon icon-back"></i>
+                        <span class="if-not-md">Back</span>
+                    </a>
+                </div>
+                <div class="title">Battery</div>
             </div>
         </div>
+
         <div class="page-content">
-            <div class="block-title block-title-large">Battery Status</div>
-            <div class="block"><p>This PWA Bundle demonstration will be added soon.</p></div>
+            <div class="block block-strong inset text-align-center">
+                <twig:ux:icon
+                    name="game-icons:battery-50"
+                    class="icon color-primary"
+                    width="80"
+                    height="80"
+                    alt="Battery"
+                />
+                <h1>Battery</h1>
+                <p>The Battery API provides information about the battery status of the device.</p>
+            </div>
+
+            <h2 class="block-title block-title-medium">Current battery</h2>
+            <div class="card card-outline">
+                <div class="card-content card-content-padding">
+                    <div class="display-flex align-items-center justify-content-space-between margin-bottom">
+                        <div>
+                            <div class="font-weight-600" data-battery-target="status">Checking browser support…</div>
+                            <div class="text-color-gray margin-top-half" data-battery-target="levelSummary">Unavailable</div>
+                        </div>
+                        <i class="icon f7-icons size-32 color-primary" data-battery-target="statusIcon">battery_0</i>
+                    </div>
+                    <div class="progressbar" data-battery-target="progress" aria-label="Battery level" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                        <span data-battery-target="progressBar"></span>
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="block-title block-title-medium">Your battery information is:</h2>
+            <div class="list media-list list-strong list-outline-ios list-dividers-ios inset">
+                <ul>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-inner">
+                                <div class="item-title-row">
+                                    <div class="item-title"><code>charging</code></div>
+                                    <div class="item-after" data-battery-target="charging">Unavailable</div>
+                                </div>
+                                <div class="item-text">Whether the battery is currently charging.</div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-inner">
+                                <div class="item-title-row">
+                                    <div class="item-title"><code>level</code></div>
+                                    <div class="item-after" data-battery-target="level">Unavailable</div>
+                                </div>
+                                <div class="item-text">The current charge level expressed as a percentage.</div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-inner">
+                                <div class="item-title-row">
+                                    <div class="item-title"><code>chargingTime</code></div>
+                                    <div class="item-after" data-battery-target="chargingTime">Unavailable</div>
+                                </div>
+                                <div class="item-text">The remaining time until the battery is fully charged.</div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-inner">
+                                <div class="item-title-row">
+                                    <div class="item-title"><code>dischargingTime</code></div>
+                                    <div class="item-after" data-battery-target="dischargingTime">Unavailable</div>
+                                </div>
+                                <div class="item-text">The remaining time until the battery is completely discharged.</div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="block-footer margin-bottom">
+                PWA Bundle listens for charging, level, charging-time, and discharging-time changes. The values therefore update automatically when the browser reports a change, including when charging starts or stops. Some browsers deliberately do not expose this API.
+            </div>
         </div>
     </div>
 </template>
+
+<script>
+    export default function(props, {$, $el, $f7, $f7route, $f7router, $h, $on, $store, $theme, $update}) {
+        return $render;
+    }
+</script>

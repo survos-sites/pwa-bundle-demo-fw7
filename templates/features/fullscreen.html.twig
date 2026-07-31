@@ -1,15 +1,154 @@
 <template>
-    <div class="page">
+    <div class="page" data-controller="fullscreen pwa--fullscreen">
         <div class="navbar">
             <div class="navbar-bg"></div>
             <div class="navbar-inner">
-                <div class="left"><a href="#" class="link back"><i class="icon icon-back"></i><span class="ios-only">Back</span></a></div>
+                <div class="left">
+                    <a href="#" class="link back">
+                        <i class="icon icon-back"></i>
+                        <span class="if-not-md">Back</span>
+                    </a>
+                </div>
                 <div class="title">Fullscreen</div>
             </div>
         </div>
+
         <div class="page-content">
-            <div class="block-title block-title-large">Fullscreen</div>
-            <div class="block"><p>This PWA Bundle demonstration will be added soon.</p></div>
+            <div class="block block-strong inset text-align-center">
+                <twig:ux:icon
+                    name="subway:fullscreen"
+                    class="icon color-primary"
+                    width="80"
+                    height="80"
+                    alt="Fullscreen"
+                />
+                <h1>Fullscreen</h1>
+                <p>The Fullscreen API allows web apps to display content in fullscreen mode, hiding the browser UI.</p>
+            </div>
+
+            <h2 class="block-title block-title-medium">Try fullscreen modes</h2>
+            <div class="card card-outline">
+                <div class="card-content card-content-padding">
+                    <div class="display-flex align-items-center">
+                        <i class="icon f7-icons size-32 color-primary margin-right" data-fullscreen-target="statusIcon">rectangle_expand_vertical</i>
+                        <div>
+                            <div class="font-weight-600" data-fullscreen-target="status">Checking browser support…</div>
+                            <p class="no-margin-bottom margin-top-half text-color-gray" data-fullscreen-target="message">
+                                Choose whether to display an image, a particular element, or the whole app in fullscreen.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="block-title">Fullscreen image</h3>
+            <div
+                id="fullscreen-image-stage"
+                class="block block-strong inset text-align-center"
+            >
+                <img
+                    src="https://picsum.photos/seed/symphone/1200/800"
+                    alt="A landscape photograph used for the fullscreen demonstration"
+                    style="display: block; width: 100%; height: auto;"
+                />
+                <p class="text-color-gray">
+                    Give a photo, diagram, or other visual the entire display.
+                </p>
+                <div class="grid grid-cols-1 medium-grid-cols-2 grid-gap">
+                    <button
+                        type="button"
+                        class="button button-fill"
+                        data-fullscreen-target="enterButton"
+                        data-action="click->pwa--fullscreen#request"
+                        data-pwa--fullscreen-target-param="#fullscreen-image-stage"
+                    >
+                        <i class="icon f7-icons">rectangle_expand_vertical</i>
+                        <span>View image fullscreen</span>
+                    </button>
+                    <button
+                        type="button"
+                        class="button button-outline"
+                        data-fullscreen-target="exitButton"
+                        data-action="click->pwa--fullscreen#exit"
+                        disabled
+                    >
+                        <i class="icon f7-icons">rectangle_compress_vertical</i>
+                        <span>Exit fullscreen</span>
+                    </button>
+                </div>
+            </div>
+
+            <h3 class="block-title">Fullscreen element</h3>
+            <div
+                id="fullscreen-element-stage"
+                class="block block-strong inset text-align-center display-flex flex-direction-column justify-content-center"
+            >
+                <i class="icon f7-icons size-64 color-primary">rectangle_fill</i>
+                <h3>Focused workspace</h3>
+                <p class="text-color-gray">
+                    Only this DOM element fills the display. This is useful for presentations, maps, editors, and focused workflows.
+                </p>
+                <div class="grid grid-cols-1 medium-grid-cols-2 grid-gap">
+                    <button
+                        type="button"
+                        class="button button-fill"
+                        data-fullscreen-target="enterButton"
+                        data-action="click->pwa--fullscreen#request"
+                        data-pwa--fullscreen-target-param="#fullscreen-element-stage"
+                    >
+                        <i class="icon f7-icons">rectangle_expand_vertical</i>
+                        <span>View element fullscreen</span>
+                    </button>
+                    <button
+                        type="button"
+                        class="button button-outline"
+                        data-fullscreen-target="exitButton"
+                        data-action="click->pwa--fullscreen#exit"
+                        disabled
+                    >
+                        <i class="icon f7-icons">rectangle_compress_vertical</i>
+                        <span>Exit fullscreen</span>
+                    </button>
+                </div>
+            </div>
+
+            <h3 class="block-title">Fullscreen app</h3>
+            <div class="block block-strong inset">
+                <p>
+                    Display the entire Symphone document in fullscreen while keeping its navigation and current page available.
+                </p>
+                <div class="grid grid-cols-1 medium-grid-cols-2 grid-gap">
+                    <button
+                        type="button"
+                        class="button button-fill"
+                        data-fullscreen-target="enterButton"
+                        data-action="click->pwa--fullscreen#request"
+                    >
+                        <i class="icon f7-icons">rectangle_expand_vertical</i>
+                        <span>View entire app fullscreen</span>
+                    </button>
+                    <button
+                        type="button"
+                        class="button button-outline"
+                        data-fullscreen-target="exitButton"
+                        data-action="click->pwa--fullscreen#exit"
+                        disabled
+                    >
+                        <i class="icon f7-icons">rectangle_compress_vertical</i>
+                        <span>Exit fullscreen</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="block-footer margin-bottom">
+                Fullscreen must be started by a user action. You can also leave it with your browser's standard Escape gesture or key.
+            </div>
         </div>
     </div>
 </template>
+
+<script>
+    export default function(props, {$, $el, $f7, $f7route, $f7router, $h, $on, $store, $theme, $update}) {
+        return $render;
+    }
+</script>

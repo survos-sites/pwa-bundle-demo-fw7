@@ -1,6 +1,5 @@
 <template>
-    <div class="page">
-
+    <div class="page" data-controller="installation">
         <div class="navbar">
             <div class="navbar-bg"></div>
             <div class="navbar-inner">
@@ -15,58 +14,152 @@
         </div>
 
         <div class="page-content">
+            <div class="block block-strong inset text-align-center">
+                <twig:ux:icon
+                    name="material-symbols:install-mobile"
+                    class="icon color-primary"
+                    width="80"
+                    height="80"
+                    alt="Installation"
+                />
+                <h1>Installation</h1>
+                <p>Using the beforeinstallprompt event, a native dialog can be displayed to install a web app</p>
+            </div>
 
-                <div class="block block-strong no-hairlines no-margin-vertical dark bg-color-blue" style="height: 288px;">
-                    <div class="flexbox-centered">
-                        <div class="shape-container mask mask-squircle padding-half size-80 bg-color-white">
-                            <twig:ux:icon name="material-symbols:install-mobile" class="icon size-40 text-color-blue" alt="Install" />
+            <div class="block block-strong inset">
+                <p class="no-margin">
+                    Progressive Web Apps can be installed on the home screen of mobile devices and on desktop computers. PWA Bundle provides a Stimulus controller that handles the install prompt and its lifecycle events.
+                </p>
+            </div>
+
+            <h2 class="block-title block-title-medium">Installation status</h2>
+            <div class="card card-outline">
+                <div class="card-content card-content-padding">
+                    <div class="display-flex align-items-center">
+                        <i class="icon f7-icons size-32 color-primary margin-right" data-installation-target="statusIcon">ellipsis_circle</i>
+                        <div>
+                            <div class="font-weight-600" data-installation-target="status">Checking installation…</div>
+                            <p class="no-margin-bottom margin-top-half text-color-gray" data-installation-target="message">
+                                Checking whether this browser can install Symphone.
+                            </p>
                         </div>
-                        <h1 class="font-size-24 font-weight-900 margin-top text-color-white">Installation</h1>
-                        <p class="font-size-16 no-margin-top text-color-white">Using the beforeinstallprompt event, a native dialog can be displayed to install a web app</p>
                     </div>
-                </div>
 
-                <h2 class="block-title block-title-medium">Installation</h2>
-                <div class="block block-strong inset">
-                    <p>
-                        Progressive Web Apps can be installed to the home screen on mobile devices and desktop on laptops and desktop computers.
-                        <br/>
-                        The bundle provides a Symfony UX Controller to ease the use of this feature.
-                    </p>
-                </div>
+                    <button
+                        hidden
+                        type="button"
+                        class="button button-fill button-large margin-top"
+                        data-installation-target="button"
+                        data-action="click->pwa--install#install"
+                    >
+                        Install Symphone
+                    </button>
 
-                <h2 class="block-title block-title-medium">Demo</h2>
-                <div class="block block-strong inset">
-                    {% set button = '
-                    <div data-controller="pwa--install">
-                        <button
-                            type="button"
-                            data-action="click->pwa--install#install"
-                            class="button button-fill"
-                        >
-                            Install this app
-                        </button>
-                    </div>
-                    ' %}
-                    <pre><code class="language-twig" data-controller="code">{{ button|escape('html')|raw }}</code></pre>
-                    <p>
-                        On compatible browsers, the button triggers the browser installation prompt.
-                        If the application is already installed or the browser does not provide an installation prompt, no prompt will be displayed.
-                    </p>
-                    <div data-controller="pwa--install">
-                        <button
-                            id="install"
-                            type="button"
-                            data-action="click->pwa--install#install"
-                            class="button button-fill"
-                        >
-                            Install this app
+                    <div hidden class="margin-top" data-installation-target="guidance">
+                        <button type="button" class="button button-tonal" data-action="click->installation#refresh">
+                            Check again
                         </button>
                     </div>
                 </div>
+            </div>
 
+            <h2 class="block-title">Manual installation instructions</h2>
+            <div class="list accordion-list list-strong list-outline-ios list-dividers-ios inset">
+                <ul>
+                    <li class="accordion-item">
+                        <a href="#" class="item-link item-content">
+                            <div class="item-inner">
+                                <div class="item-title">Chrome, Edge, and Chromium browsers</div>
+                            </div>
+                        </a>
+                        <div class="accordion-item-content">
+                            <div class="block">
+                                <p>Use the Install button above when it appears. Otherwise, open the browser menu and choose “Install app” or “Add to Home screen”.</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="accordion-item">
+                        <a href="#" class="item-link item-content">
+                            <div class="item-inner">
+                                <div class="item-title">Safari and other browsers on iPhone or iPad</div>
+                            </div>
+                        </a>
+                        <div class="accordion-item-content">
+                            <div class="block">
+                                <p>Open the Share menu, then choose “Add to Home Screen”.</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="accordion-item">
+                        <a href="#" class="item-link item-content">
+                            <div class="item-inner">
+                                <div class="item-title">Safari on macOS</div>
+                            </div>
+                        </a>
+                        <div class="accordion-item-content">
+                            <div class="block">
+                                <p>Open Safari’s File menu and choose “Add to Dock”.</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="accordion-item">
+                        <a href="#" class="item-link item-content">
+                            <div class="item-inner">
+                                <div class="item-title">Firefox</div>
+                            </div>
+                        </a>
+                        <div class="accordion-item-content">
+                            <div class="block">
+                                <p>On Android, open the Firefox menu and choose “Install” or “Add app to Home screen”. Firefox desktop does not currently install PWAs as desktop applications.</p>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <h2 class="block-title">How installation works</h2>
+            <div class="list media-list list-strong list-outline-ios list-dividers-ios inset">
+                <ul>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media">
+                                <twig:ux:icon name="material-symbols:fact-check-outline" class="icon color-primary" width="28" height="28" />
+                            </div>
+                            <div class="item-inner">
+                                <div class="item-title">The browser checks eligibility</div>
+                                <div class="item-text">Symphone is served over HTTPS and provides the web app manifest and icons required for installation.</div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media">
+                                <twig:ux:icon name="material-symbols:install-mobile" class="icon color-primary" width="28" height="28" />
+                            </div>
+                            <div class="item-inner">
+                                <div class="item-title">The install prompt becomes available</div>
+                                <div class="item-text">In supporting browsers, its install controller defers <code>beforeinstallprompt</code> until you choose the Install button.</div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media">
+                                <twig:ux:icon name="material-symbols:task-alt" class="icon color-primary" width="28" height="28" />
+                            </div>
+                            <div class="item-inner">
+                                <div class="item-title">You confirm the installation</div>
+                                <div class="item-text">The browser owns the native confirmation UI. Symphone then reacts to the accepted, cancelled, or installed state.</div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="block-footer margin-bottom">
+                The installation prompt is controlled by your browser. Symphone uses PWA Bundle’s install controller to request it when available.
+            </div>
         </div>
-
     </div>
 </template>
 

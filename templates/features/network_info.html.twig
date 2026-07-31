@@ -1,6 +1,5 @@
 <template>
     <div class="page" data-controller="network-information">
-
         <div class="navbar">
             <div class="navbar-bg"></div>
             <div class="navbar-inner">
@@ -15,90 +14,88 @@
         </div>
 
         <div class="page-content">
-
-            <div class="block block-strong no-hairlines no-margin-vertical dark bg-color-blue" style="height: 288px;">
-                <div class="flexbox-centered">
-                    <div class="shape-container mask mask-squircle padding-half size-80 bg-color-white">
-                        <twig:ux:icon name="material-symbols:network-check" class="icon size-40 text-color-blue" alt="Network info" />
-                    </div>
-                    <h1 class="font-size-24 font-weight-900 margin-top text-color-white">Network info</h1>
-                    <p class="font-size-16 no-margin-top text-color-white">The NetworkInformation API provides information about the connection of a device, allowing web apps to adapt functionality based on network quality.</p>
-                </div>
+            <div class="block block-strong inset text-align-center">
+                <twig:ux:icon
+                    name="material-symbols:network-check"
+                    class="icon color-primary"
+                    width="80"
+                    height="80"
+                    alt="Network info"
+                />
+                <h1>Network info</h1>
+                <p>The NetworkInformation API provides information about the connection of a device, allowing web apps to adapt functionality based on network quality.</p>
             </div>
 
             <h2 class="block-title block-title-medium">Your network information is:</h2>
-            <div class="data-table data-table-init data-table-collapsible collapsible-cards inset margin-vertical">
-                <table>
-                    <thead>
-                        <tr>
-                            <th class="label-cell">Property</th>
-                            <th class="label-cell">Value</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="label-cell" data-collapsible-title="Property">Downlink</td>
-                            <td class="label-cell" data-collapsible-title="Value">
-                                <span data-network-information-target="downlink downlinkContent">...</span> Mbps
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="label-cell" data-collapsible-title="Property">Downlink max</td>
-                            <td class="label-cell" data-collapsible-title="Value">
-                                <span data-network-information-target="downlinkMax downlinkMaxContent">...</span> Mbps
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="label-cell" data-collapsible-title="Property">Effective connection type</td>
-                            <td class="label-cell" data-collapsible-title="Value">
-                                <span data-network-information-target="effectiveType effectiveTypeContent">...</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="label-cell" data-collapsible-title="Property">RTT</td>
-                            <td class="label-cell" data-collapsible-title="Value">
-                                <span data-network-information-target="rtt rttContent">...</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="label-cell" data-collapsible-title="Property">Save data</td>
-                            <td class="label-cell" data-collapsible-title="Value">
-                                <span data-network-information-target="saveData saveDataContent">...</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="label-cell" data-collapsible-title="Property">Type</td>
-                            <td class="label-cell" data-collapsible-title="Value">
-                                <span data-network-information-target="type typeContent">...</span>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+            <div class="list media-list list-strong list-outline-ios list-dividers-ios inset">
+                <ul>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-inner">
+                                <div class="item-title-row">
+                                    <div class="item-title"><code>type</code></div>
+                                    <div class="item-after" data-network-information-target="type">…</div>
+                                </div>
+                                <div class="item-text">The connection technology used by the device, such as Wi-Fi, cellular, or Ethernet.</div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-inner">
+                                <div class="item-title-row">
+                                    <div class="item-title"><code>effectiveType</code></div>
+                                    <div class="item-after" data-network-information-target="effectiveType">…</div>
+                                </div>
+                                <div class="item-text">The measured connection class: slow-2g, 2g, 3g, or 4g.</div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-inner">
+                                <div class="item-title-row">
+                                    <div class="item-title"><code>downlink</code></div>
+                                    <div class="item-after" data-network-information-target="downlink">…</div>
+                                </div>
+                                <div class="item-text">The estimated effective bandwidth in megabits per second.</div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-inner">
+                                <div class="item-title-row">
+                                    <div class="item-title"><code>rtt</code></div>
+                                    <div class="item-after" data-network-information-target="rtt">…</div>
+                                </div>
+                                <div class="item-text">The estimated effective round-trip time in milliseconds.</div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-inner">
+                                <div class="item-title-row">
+                                    <div class="item-title"><code>saveData</code></div>
+                                    <div class="item-after" data-network-information-target="saveData">…</div>
+                                </div>
+                                <div class="item-text">Whether the user has requested reduced data usage in the browser.</div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
             </div>
 
+            <div class="block-footer margin-bottom">
+                PWA Bundle observes Network Information API changes and notifies this Framework7 view. Values are estimates, may change over time, and are unavailable in some browsers.
+            </div>
         </div>
-
     </div>
 </template>
 
 <script>
     export default function(props, {$, $el, $f7, $f7route, $f7router, $h, $on, $store, $theme, $update}) {
-
-        let onNetworkInformationChange = function(event) {
-            console.log(event.detail.connection);
-            $f7.toast.show({
-                text: 'Network information changed'
-            });
-        }
-
-        $on('pageBeforeIn', function() {
-            document.addEventListener('network-information:change', onNetworkInformationChange);
-        });
-
-        $on('pageBeforeRemove', function() {
-            document.removeEventListener('network-information:change', onNetworkInformationChange);
-        });
-
         return $render;
     }
 </script>

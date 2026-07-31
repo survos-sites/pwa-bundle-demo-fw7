@@ -1,38 +1,61 @@
-'use strict';
-
 import { Controller } from '@hotwired/stimulus';
 
 export default class extends Controller {
-  static targets = [
-    'downlink', 'downlinkMax', 'effectiveType', 'rtt', 'saveData', 'type',
-    'downlinkContent', 'downlinkMaxContent', 'effectiveTypeContent', 'rttContent', 'saveDataContent', 'typeContent',
-  ];
+    static targets = [
+        'downlink',
+        'effectiveType',
+        'rtt',
+        'saveData',
+        'type',
+    ];
 
-  connect() {
-    const connection = navigator.connection;
-    connection.addEventListener('change', this.updateConnectionStatus);
-    this.updateConnectionStatus();
-  }
+    connect() {
+        this.onNetworkChange = () => this.update();
+        this.element.addEventListener('pwa--network-information:change', this.onNetworkChange);
 
-  updateConnectionStatus = () => {
-    const connection = navigator.connection;
-    /*this.dispatch('network-information:change', {bubbles: true, detail: {connection}});*/ // This is not working, therefore had to dispatch event the native way
-    const event = new CustomEvent('network-information:change', {
-      detail: { connection },
-      bubbles: true
-    });
-    document.dispatchEvent(event);
-    this.downlinkTargets.forEach((element) => element.setAttribute('data-network-information-downlink-value', connection.downlink));
-    this.downlinkContentTargets.forEach((element) => element.textContent = connection.downlink);
-    this.downlinkMaxTargets.forEach((element) => element.setAttribute('data-network-information-downlink-max-value', connection.downlinkMax));
-    this.downlinkMaxContentTargets.forEach((element) => element.textContent = connection.downlinkMax ?? '...');
-    this.effectiveTypeTargets.forEach((element) => element.setAttribute('data-network-information-effective-type-value', connection.effectiveType));
-    this.effectiveTypeContentTargets.forEach((element) => element.textContent = connection.effectiveType);
-    this.rttTargets.forEach((element) => element.setAttribute('data-network-information-rtt-value', connection.rtt));
-    this.rttContentTargets.forEach((element) => element.textContent = connection.rtt);
-    this.saveDataTargets.forEach((element) => element.setAttribute('data-network-information-save-data-value', connection.saveData));
-    this.saveDataContentTargets.forEach((element) => element.textContent = connection.saveData ? 'Yes' : 'No');
-    this.typeTargets.forEach((element) => element.setAttribute('data-network-information-type-value', connection.type));
-    this.typeContentTargets.forEach((element) => element.textContent = connection.type ?? '...');
-  }
+        if (!navigator.connection) {
+            this.showUnsupported();
+            return;
+        }
+
+        const controllers = this.element.dataset.controller.split(' ');
+        if (!controllers.includes('pwa--network-information')) {
+            this.element.dataset.controller = `${this.element.dataset.controller} pwa--network-information`;
+        }
+    }
+
+    disconnect() {
+        this.element.removeEventListener('pwa--network-information:change', this.onNetworkChange);
+    }
+
+    update() {
+        const connection = navigator.connection;
+
+        if (!connection) {
+            this.showUnsupported();
+            return;
+        }
+
+        this.effectiveTypeTarget.textContent = connection.effectiveType ?? 'Unavailable';
+        this.downlinkTarget.textContent = Number.isFinite(connection.downlink)
+            ? `${connection.downlink} Mbps`
+            : 'Unavailable';
+        this.rttTarget.textContent = Number.isFinite(connection.rtt)
+            ? `${connection.rtt} ms`
+            : 'Unavailable';
+        this.saveDataTarget.textContent = connection.saveData ? 'true' : 'false';
+        this.typeTarget.textContent = connection.type ?? 'Unavailable';
+    }
+
+    showUnsupported() {
+        for (const target of [
+            this.effectiveTypeTarget,
+            this.downlinkTarget,
+            this.rttTarget,
+            this.saveDataTarget,
+            this.typeTarget,
+        ]) {
+            target.textContent = 'Unavailable';
+        }
+    }
 }

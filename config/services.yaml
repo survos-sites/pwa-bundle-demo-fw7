@@ -32,6 +32,9 @@ services:
     App\PreloadGenerator\StaticPagesUrlPreloadGenerator:
         tags: ['spomky_labs_pwa.preload_urls_generator']
 
+    App\MatchCallbackHandler\LocalizedPageMatchCallbackHandler:
+        tags: ['spomky_labs_pwa.match_callback_handler']
+
 
 when@test:
     services:
