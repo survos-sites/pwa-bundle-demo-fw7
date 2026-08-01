@@ -1,13 +1,16 @@
 <template>
-    <div class="page">
-
+    <div
+        class="page"
+        data-controller="motion"
+        data-action="pwa--device-motion:updated->motion#update pwa--device-motion:unavailable->motion#unavailable pwa--device-motion:permission-granted->motion#permissionGranted pwa--device-motion:permission-denied->motion#permissionDenied"
+    >
         <div class="navbar">
             <div class="navbar-bg"></div>
             <div class="navbar-inner">
                 <div class="left">
                     <a href="#" class="link back">
                         <i class="icon icon-back"></i>
-                        <span class="ios-only">Back</span>
+                        <span class="if-not-md">Back</span>
                     </a>
                 </div>
                 <div class="title">Device motion</div>
@@ -15,17 +18,139 @@
         </div>
 
         <div class="page-content">
-
-            <div class="block-title block-title-large">Device motion</div>
-            <div class="block">
-                <p>
-                    The Device Motion Event gives information about the speed of changes for the position and orientation of the user's device.
-                </p>
+            <div class="block block-strong inset text-align-center">
+                <twig:ux:icon
+                    name="material-symbols:3d-rotation"
+                    class="icon color-primary"
+                    width="80"
+                    height="80"
+                    alt="Device motion"
+                />
+                <h1>Device motion</h1>
+                <p>The DeviceMotionEvent gives information about the speed of changes for the position and orientation of the user's device.</p>
             </div>
-            <twig:DeviceMotion />
 
+            <div class="card card-outline">
+                <div class="card-content card-content-padding">
+                    <div class="display-flex align-items-center">
+                        <i class="icon f7-icons size-32 color-primary margin-right" data-motion-target="statusIcon">move</i>
+                        <div>
+                            <div class="font-weight-600" data-motion-target="status">Checking motion sensors…</div>
+                            <p class="no-margin-bottom margin-top-half text-color-gray" data-motion-target="message">
+                                Move your device to see live acceleration and rotation-rate data.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div data-motion-target="sensor"></div>
+            <div class="block" data-motion-target="permissionBlock" hidden>
+                <button
+                    type="button"
+                    class="button button-fill button-large"
+                    data-motion-target="permissionButton"
+                    data-action="click->motion#enable"
+                >
+                    <twig:ux:icon name="material-symbols:sensors" class="icon" width="24" height="24" alt="Motion sensors" />
+                    <span>Enable motion sensors</span>
+                </button>
+            </div>
+
+            <h2 class="block-title block-title-medium">Motion visualizer</h2>
+            <div class="block block-strong inset">
+                <p class="no-margin-top text-color-gray">
+                    Tilt and move the device. The marker responds to acceleration including gravity, similar to a level or motion-controlled interface.
+                </p>
+                <div
+                    style="position: relative; height: 220px; overflow: hidden; border-radius: 12px; background: var(--f7-bars-bg-color);"
+                    data-motion-target="visualizer"
+                >
+                    <div
+                        style="position: absolute; left: 50%; top: 50%; width: 64px; height: 64px; border-radius: 50%; background: var(--f7-theme-color); box-shadow: 0 4px 16px rgba(0, 0, 0, .25); transform: translate(-50%, -50%);"
+                        data-motion-target="marker"
+                    ></div>
+                </div>
+
+                <div class="margin-top">
+                    <div class="display-flex justify-content-space-between margin-bottom-half">
+                        <span>Movement intensity</span>
+                        <span data-motion-target="intensity">0.00 m/s²</span>
+                    </div>
+                    <div class="progressbar" data-progress="0">
+                        <span data-motion-target="intensityBar"></span>
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="block-title block-title-medium">Live sensor data</h2>
+            <div class="list media-list list-strong-ios list-outline-ios list-dividers-ios inset-ios">
+                <ul>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon f7-icons">move</i></div>
+                            <div class="item-inner">
+                                <div class="item-title-row">
+                                    <div class="item-title">Acceleration</div>
+                                    <div class="item-after" data-motion-target="acceleration">—</div>
+                                </div>
+                                <div class="item-text">Movement acceleration excluding gravity, on the x, y, and z axes in m/s².</div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon f7-icons">arrow_down_to_line</i></div>
+                            <div class="item-inner">
+                                <div class="item-title-row">
+                                    <div class="item-title">Acceleration including gravity</div>
+                                    <div class="item-after" data-motion-target="accelerationIncludingGravity">—</div>
+                                </div>
+                                <div class="item-text">Total acceleration including the effect of gravity, in m/s².</div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon f7-icons">arrow_clockwise</i></div>
+                            <div class="item-inner">
+                                <div class="item-title-row">
+                                    <div class="item-title">Rotation rate</div>
+                                    <div class="item-after" data-motion-target="rotationRate">—</div>
+                                </div>
+                                <div class="item-text">Rotation speed around the alpha, beta, and gamma axes in degrees per second.</div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon f7-icons">timer</i></div>
+                            <div class="item-inner">
+                                <div class="item-title-row">
+                                    <div class="item-title">Interval</div>
+                                    <div class="item-after" data-motion-target="interval">—</div>
+                                </div>
+                                <div class="item-text">Time between device-motion samples, in milliseconds.</div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <h2 class="block-title block-title-medium">Shake detector</h2>
+            <div class="block block-strong inset text-align-center">
+                <i class="icon f7-icons size-48 color-primary">waveform_path</i>
+                <div class="font-weight-600" style="font-size: 32px;" data-motion-target="shakeCount">0</div>
+                <p class="text-color-gray">Strong shakes detected during this session</p>
+                <button type="button" class="button button-outline" data-action="click->motion#resetShakes">
+                    Reset counter
+                </button>
+            </div>
+
+            <div class="block-footer margin-bottom">
+                Sensor values vary by device and may be unavailable on desktop hardware. iPhone and iPad require an explicit permission action before motion data can be read.
+            </div>
         </div>
-
     </div>
 </template>
 

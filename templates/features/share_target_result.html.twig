@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="{{ app.request.locale|replace({'_': '-'}) }}" dir="ltr">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover" />
+        <meta name="robots" content="noindex" />
+        <title>Shared image | Symphone</title>
+        {{ importmap('receiver') }}
+        {{ pwa(locale=app.request.locale) }}
+    </head>
+    <body>
+        <div id="app">
+            <div class="view view-main safe-areas">
+                <div class="page page-current">
+                    <div class="navbar">
+                        <div class="navbar-bg"></div>
+                        <div class="navbar-inner">
+                            <div class="title">Shared image</div>
+                        </div>
+                    </div>
+
+                    <div class="page-content">
+                        {% if error %}
+                            <div class="block block-strong inset text-align-center">
+                                <i class="icon f7-icons size-64 text-color-red">exclamationmark_triangle</i>
+                                <h1>Image could not be received</h1>
+                                <p>{{ error }}</p>
+                            </div>
+                        {% else %}
+                            <div class="block block-strong inset text-align-center">
+                                <i class="icon f7-icons size-64 text-color-green">checkmark_circle</i>
+                                <h1>Image received</h1>
+                                <p>Symphone received this image through the Web Share Target API.</p>
+                            </div>
+
+                            <div class="card card-outline">
+                                <div class="card-content card-content-padding">
+                                    <img
+                                        src="{{ image_data }}"
+                                        alt="Image shared with Symphone"
+                                        style="display: block; width: 100%; height: auto;"
+                                    />
+                                </div>
+                            </div>
+
+                            <div class="list media-list list-strong-ios list-outline-ios list-dividers-ios inset-ios">
+                                <ul>
+                                    <li>
+                                        <div class="item-content">
+                                            <div class="item-media"><i class="icon f7-icons">doc</i></div>
+                                            <div class="item-inner">
+                                                <div class="item-title-row"><div class="item-title">Filename</div></div>
+                                                <div class="item-text">{{ filename }}</div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="item-content">
+                                            <div class="item-media"><i class="icon f7-icons">photo</i></div>
+                                            <div class="item-inner">
+                                                <div class="item-title-row">
+                                                    <div class="item-title">Media type</div>
+                                                    <div class="item-after">{{ media_type }}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="item-content">
+                                            <div class="item-media"><i class="icon f7-icons">archivebox</i></div>
+                                            <div class="item-inner">
+                                                <div class="item-title-row">
+                                                    <div class="item-title">File size</div>
+                                                    <div class="item-after">{{ file_size }}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        {% endif %}
+
+                        <div class="block margin-bottom">
+                            <a href="{{ path('app_homepage') }}" class="button button-fill button-large external">
+                                <i class="icon f7-icons">house</i>
+                                <span>Open Symphone</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

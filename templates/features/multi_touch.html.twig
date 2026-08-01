@@ -1,13 +1,16 @@
 <template>
-    <div class="page">
-
+    <div
+        class="page"
+        data-controller="multi-touch"
+        data-action="pwa--touch:updated->multi-touch#update"
+    >
         <div class="navbar">
             <div class="navbar-bg"></div>
             <div class="navbar-inner">
                 <div class="left">
                     <a href="#" class="link back">
                         <i class="icon icon-back"></i>
-                        <span class="ios-only">Back</span>
+                        <span class="if-not-md">Back</span>
                     </a>
                 </div>
                 <div class="title">Multitouch</div>
@@ -15,26 +18,134 @@
         </div>
 
         <div class="page-content">
+            <div class="block block-strong inset text-align-center">
+                <twig:ux:icon
+                    name="material-symbols:touch-app"
+                    class="icon color-primary"
+                    width="80"
+                    height="80"
+                    alt="Multitouch"
+                />
+                <h1>Multitouch</h1>
+                <p>Touch events enable web apps to capture complex touch behaviour.</p>
+            </div>
 
-            <div class="block-title block-title-large">Multitouch</div>
+            <div class="card card-outline">
+                <div class="card-content card-content-padding">
+                    <div class="display-flex align-items-center">
+                        <i class="icon f7-icons size-32 color-primary margin-right" data-multi-touch-target="statusIcon">hand_draw</i>
+                        <div>
+                            <div class="font-weight-600" data-multi-touch-target="status">Checking touch support…</div>
+                            <p class="no-margin-bottom margin-top-half text-color-gray" data-multi-touch-target="message">
+                                Touch and manipulate the image using one or two fingers.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="block-title block-title-medium">Gesture playground</h2>
+            <div class="block block-strong inset">
+                <div class="list media-list no-margin">
+                    <ul>
+                        <li>
+                            <div class="item-content">
+                                <div class="item-media"><i class="icon f7-icons">hand_point_right_fill</i></div>
+                                <div class="item-inner">
+                                    <div class="item-title-row"><div class="item-title">One finger</div></div>
+                                    <div class="item-text">Drag the image around the canvas.</div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="item-content">
+                                <div class="item-media">
+                                    <twig:ux:icon name="material-symbols:pinch" class="icon" width="24" height="24" alt="Two-finger gesture" />
+                                </div>
+                                <div class="item-inner">
+                                    <div class="item-title-row"><div class="item-title">Two fingers</div></div>
+                                    <div class="item-text">Move together to pan, pinch to zoom, or twist to rotate.</div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div
+                class="block block-strong inset no-padding"
+                style="position: relative; height: 360px; overflow: hidden; touch-action: none; user-select: none;"
+                data-controller="pwa--touch"
+                data-multi-touch-target="stage"
+            >
+                <div
+                    style="position: absolute; left: 50%; top: 50%; width: min(72%, 260px); transform-origin: center;"
+                    data-multi-touch-target="photo"
+                >
+                    <img
+                        src="https://picsum.photos/seed/symphone-touch/800/600"
+                        alt="Landscape photograph for the multitouch demonstration"
+                        draggable="false"
+                        style="display: block; width: 100%; height: auto; border-radius: 12px;"
+                    />
+                </div>
+                <div data-multi-touch-target="markers"></div>
+            </div>
+
+            <div class="list list-strong-ios list-outline-ios list-dividers-ios inset-ios">
+                <ul>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon f7-icons">hand_raised_fill</i></div>
+                            <div class="item-inner">
+                                <div class="item-title">Active touches</div>
+                                <div class="item-after" data-multi-touch-target="touchCount">0</div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media">
+                                <twig:ux:icon name="material-symbols:zoom-out-map" class="icon" width="24" height="24" alt="Scale" />
+                            </div>
+                            <div class="item-inner">
+                                <div class="item-title">Scale</div>
+                                <div class="item-after" data-multi-touch-target="scale">100%</div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon f7-icons">arrow_clockwise</i></div>
+                            <div class="item-inner">
+                                <div class="item-title">Rotation</div>
+                                <div class="item-after" data-multi-touch-target="rotation">0°</div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon f7-icons">move</i></div>
+                            <div class="item-inner">
+                                <div class="item-title">Position</div>
+                                <div class="item-after" data-multi-touch-target="position">0, 0</div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
             <div class="block">
-                <p>
-                    On a device with touch screen, place two fingers in the square below to see a red circle appear. <br/>
-                    Move your fingers to change the size and position of the circle.
-                </p>
+                <button type="button" class="button button-outline" data-action="click->multi-touch#reset">
+                    <i class="icon f7-icons">arrow_counterclockwise</i>
+                    <span>Reset image</span>
+                </button>
             </div>
 
-            <div style="height: 100%;">
-                <canvas
-                    id="canvas"
-                    style="width: 100%; height: 350px; background-color: #1da1f2;"
-                    data-controller="pwa--touch multitouch"
-                    {{ stimulus_action('multitouch', 'update', 'pwa--touch:pwa:touch:updated') }}
-                ></canvas>
+            <div class="block-footer margin-bottom">
+                This demonstration requires a touchscreen that emits Touch Events. A laptop trackpad usually does not expose multiple touch points to a web page.
             </div>
-
         </div>
-
     </div>
 </template>
 

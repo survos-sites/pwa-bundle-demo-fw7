@@ -1,44 +1,107 @@
 <template>
     <div class="page">
-
         <div class="navbar">
             <div class="navbar-bg"></div>
             <div class="navbar-inner">
                 <div class="left">
                     <a href="#" class="link back">
                         <i class="icon icon-back"></i>
-                        <span class="ios-only">Back</span>
+                        <span class="if-not-md">Back</span>
                     </a>
                 </div>
-                <div class="title">File handling</div>
+                <div class="title">File Handling API</div>
             </div>
         </div>
 
-        <div
-            class="page-content"
-            data-controller="image"
-            {{ stimulus_action('image', 'addToList', 'pwa--file-handling:pwa:file:selected') }}
-        >
+        <div class="page-content">
+            <div class="block block-strong inset text-align-center">
+                <twig:ux:icon
+                    name="material-symbols:folder-open"
+                    class="icon color-primary"
+                    width="80"
+                    height="80"
+                    alt="File Handling API"
+                />
+                <h1>File Handling API</h1>
+                <p>The File Handling API enables web apps to register their ability to handle file types with the operating system.</p>
+            </div>
 
-            <div class="block-title block-title-large">File handling</div>
-            <div class="block" data-controller="pwa--file-handling">
+            <div class="card card-outline">
+                <div class="card-content card-content-padding">
+                    <div class="display-flex align-items-center">
+                        <i class="icon f7-icons size-32 color-primary margin-right" data-file-handling-target="statusIcon">folder</i>
+                        <div>
+                            <div class="font-weight-600" data-file-handling-target="status">Checking file-handling support…</div>
+                            <p class="no-margin-bottom margin-top-half text-color-gray" data-file-handling-target="message">
+                                Open a supported image with the installed Symphone app.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="block block-strong inset">
                 <p>
-                    The File Handling API enables web apps to register their ability to handle file types with the operating system. <br/>
-                    This enables the file manager of the OS or other operating system flows to use the web app to open the file, just like with a native app.  <br/>
-                </p>
-                <p>
-                    Open the file manager of the OS of your device and select one or multiple files of type .png, .jpg, .jpeg or .webm by right-clicking it and then select this PWA to open it (make sure it's installed as a PWA first).<br/>
-                    The opened image(s) will then be displayed below.
+                    Once installed, Symphone can appear alongside native applications in your desktop operating system's <em>Open with</em> menu. Images opened this way are delivered through the browser's launch queue and displayed below.
                 </p>
             </div>
 
-            <div class="block-title">Received files:</div>
-            <div class="block">
-                <ul data-image-target="list"></ul>
+            <h2 class="block-title block-title-medium">How to test it</h2>
+            <div class="list media-list list-strong-ios list-outline-ios list-dividers-ios inset-ios">
+                <ul>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon f7-icons color-primary">square_arrow_down</i></div>
+                            <div class="item-inner">
+                                <div class="item-title-row"><div class="item-title">1. Install Symphone</div></div>
+                                <div class="item-text">
+                                    File associations are registered during installation.
+                                    <a href="{{ path('app_feature_installation') }}">Open installation instructions</a>.
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon f7-icons color-primary">photo</i></div>
+                            <div class="item-inner">
+                                <div class="item-title-row"><div class="item-title">2. Find an image</div></div>
+                                <div class="item-text">In Finder or File Explorer, select one or more PNG, JPEG, WebP, or GIF images.</div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon f7-icons color-primary">rectangle_on_rectangle</i></div>
+                            <div class="item-inner">
+                                <div class="item-title-row"><div class="item-title">3. Choose Open with</div></div>
+                                <div class="item-text">Right-click the selected image, choose <em>Open with</em>, then select Symphone. Confirm the browser's permission prompt if one appears.</div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon f7-icons color-primary">eye</i></div>
+                            <div class="item-inner">
+                                <div class="item-title-row"><div class="item-title">4. View the image</div></div>
+                                <div class="item-text">Symphone opens this page and adds each received image to the preview gallery.</div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
             </div>
 
+            <h2 class="block-title block-title-medium">Opened images</h2>
+            <div class="block block-strong inset text-align-center" data-file-handling-target="empty">
+                <i class="icon f7-icons size-48 text-color-gray">photo_on_rectangle</i>
+                <p class="text-color-gray">No images have been opened with Symphone in this session.</p>
+            </div>
+            <div data-file-handling-target="gallery"></div>
+
+            <div class="block-footer margin-bottom">
+                File Handling is a desktop-only capability supported by Chromium-based browsers such as Chrome and Edge. If Symphone is missing from <em>Open with</em>, reinstall it after confirming the generated manifest contains its file handler.
+            </div>
         </div>
-
     </div>
 </template>
 

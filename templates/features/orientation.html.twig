@@ -1,13 +1,16 @@
 <template>
-    <div class="page">
-
+    <div
+        class="page"
+        data-controller="orientation"
+        data-action="pwa--device-orientation:updated->orientation#update"
+    >
         <div class="navbar">
             <div class="navbar-bg"></div>
             <div class="navbar-inner">
                 <div class="left">
                     <a href="#" class="link back">
                         <i class="icon icon-back"></i>
-                        <span class="ios-only">Back</span>
+                        <span class="if-not-md">Back</span>
                     </a>
                 </div>
                 <div class="title">Orientation</div>
@@ -15,17 +18,181 @@
         </div>
 
         <div class="page-content">
-
-            <div class="block-title block-title-large">Orientation</div>
-            <div class="block">
-                <p>
-                    The DeviceOrientationEvent gives information about the physical orientation of the user's device.
-                </p>
+            <div class="block block-strong inset text-align-center">
+                <twig:ux:icon
+                    name="material-symbols:screen-rotation"
+                    class="icon color-primary"
+                    width="80"
+                    height="80"
+                    alt="Orientation"
+                />
+                <h1>Orientation</h1>
+                <p>The DeviceOrientationEvent gives information about the physical orientation of the user's device.</p>
             </div>
-            <twig:DeviceOrientation />
 
+            <div class="card card-outline">
+                <div class="card-content card-content-padding">
+                    <div class="display-flex align-items-center">
+                        <i class="icon f7-icons size-32 color-primary margin-right" data-orientation-target="statusIcon">compass</i>
+                        <div>
+                            <div class="font-weight-600" data-orientation-target="status">Checking orientation sensors…</div>
+                            <p class="no-margin-bottom margin-top-half text-color-gray" data-orientation-target="message">
+                                Rotate and tilt your device to update the visualizations.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div
+                data-orientation-target="sensor"
+                data-pwa--device-orientation-throttle-value="50"
+            ></div>
+            <div class="block" data-orientation-target="permissionBlock" hidden>
+                <button
+                    type="button"
+                    class="button button-fill button-large"
+                    data-orientation-target="permissionButton"
+                    data-action="click->orientation#enable"
+                >
+                    <twig:ux:icon name="material-symbols:sensors" class="icon" width="24" height="24" alt="Orientation sensors" />
+                    <span>Enable orientation sensors</span>
+                </button>
+            </div>
+
+            <h2 class="block-title block-title-medium">Current device orientation</h2>
+            <div class="block block-strong inset">
+                <div class="display-flex align-items-center">
+                    <twig:ux:icon
+                        name="material-symbols:screen-rotation"
+                        class="icon color-primary margin-right"
+                        width="40"
+                        height="40"
+                        alt="Device orientation"
+                    />
+                    <div>
+                        <div class="font-weight-600" data-orientation-target="deviceOrientation">Detecting orientation…</div>
+                        <div class="text-color-gray" data-orientation-target="deviceOrientationDetail">Checking the screen dimensions and rotation.</div>
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="block-title block-title-medium">Orientation visualizers</h2>
+            <div class="grid grid-cols-1 medium-grid-cols-2 grid-gap margin-horizontal">
+                <div class="card card-outline no-margin-horizontal">
+                    <div class="card-header">Alpha rotation and compass heading</div>
+                    <div class="card-content card-content-padding text-align-center">
+                        <div
+                            style="position: relative; width: 180px; height: 180px; margin: 0 auto; border: 2px solid var(--f7-theme-color); border-radius: 50%;"
+                        >
+                            <span style="position: absolute; top: 8px; left: 50%; transform: translateX(-50%);">N</span>
+                            <span style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%);">E</span>
+                            <span style="position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%);">S</span>
+                            <span style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%);">W</span>
+                            <i
+                                class="icon f7-icons size-64 color-primary"
+                                style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%) rotate(0deg); transform-origin: center;"
+                                data-orientation-target="compassNeedle"
+                            >location_north_fill</i>
+                        </div>
+                        <div class="font-weight-600 margin-top" data-orientation-target="compassHeading">Compass heading unavailable</div>
+                        <p class="text-color-gray no-margin-bottom">A north-referenced heading is shown only when the device provides absolute orientation or a compass heading.</p>
+                    </div>
+                </div>
+
+                <div class="card card-outline no-margin-horizontal">
+                    <div class="card-header">Beta and gamma tilt</div>
+                    <div class="card-content card-content-padding text-align-center">
+                        <div style="height: 180px; display: flex; align-items: center; justify-content: center; perspective: 600px;">
+                            <div
+                                style="width: 92px; height: 154px; border: 5px solid var(--f7-theme-color); border-radius: 16px; background: var(--f7-page-bg-color); transform-style: preserve-3d;"
+                                data-orientation-target="device"
+                            >
+                                <div style="width: 28px; height: 4px; margin: 8px auto; border-radius: 4px; background: var(--f7-theme-color);"></div>
+                                <div style="display: flex; align-items: center; justify-content: center; height: 112px;">
+                                    <i class="icon f7-icons size-48 color-primary">move</i>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-color-gray no-margin-bottom">Beta tilts front-to-back; gamma tilts left-to-right.</p>
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="block-title block-title-medium">Live orientation data</h2>
+            <div class="list media-list list-strong-ios list-outline-ios list-dividers-ios inset-ios">
+                <ul>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon f7-icons">arrow_clockwise</i></div>
+                            <div class="item-inner">
+                                <div class="item-title-row">
+                                    <div class="item-title">Alpha</div>
+                                    <div class="item-after" data-orientation-target="alpha">—</div>
+                                </div>
+                                <div class="item-text">Rotation around the z-axis, from 0° to 360°.</div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon f7-icons">arrow_up_arrow_down</i></div>
+                            <div class="item-inner">
+                                <div class="item-title-row">
+                                    <div class="item-title">Beta</div>
+                                    <div class="item-after" data-orientation-target="beta">—</div>
+                                </div>
+                                <div class="item-text">Front-to-back rotation around the x-axis, from −180° to 180°.</div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media">
+                                <twig:ux:icon name="material-symbols:swap-horiz" class="icon" width="24" height="24" alt="Gamma tilt" />
+                            </div>
+                            <div class="item-inner">
+                                <div class="item-title-row">
+                                    <div class="item-title">Gamma</div>
+                                    <div class="item-after" data-orientation-target="gamma">—</div>
+                                </div>
+                                <div class="item-text">Left-to-right rotation around the y-axis, from −90° to 90°.</div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon f7-icons">location_north</i></div>
+                            <div class="item-inner">
+                                <div class="item-title-row">
+                                    <div class="item-title">Absolute</div>
+                                    <div class="item-after" data-orientation-target="absolute">—</div>
+                                </div>
+                                <div class="item-text">Whether the angles use the Earth's coordinate frame instead of an arbitrary device frame.</div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media">
+                                <twig:ux:icon name="material-symbols:screen-rotation" class="icon" width="24" height="24" alt="Screen orientation" />
+                            </div>
+                            <div class="item-inner">
+                                <div class="item-title-row">
+                                    <div class="item-title">Screen orientation</div>
+                                    <div class="item-after" data-orientation-target="screenAngle">0°</div>
+                                </div>
+                                <div class="item-text">The current clockwise rotation of the screen from its natural orientation.</div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="block-footer margin-bottom">
+                Orientation data requires HTTPS and compatible sensors. iPhone and iPad require an explicit permission action. Absolute orientation and compass accuracy vary by browser and device.
+            </div>
         </div>
-
     </div>
 </template>
 

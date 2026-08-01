@@ -3,13 +3,101 @@
         <div class="navbar">
             <div class="navbar-bg"></div>
             <div class="navbar-inner">
-                <div class="left"><a href="#" class="link back"><i class="icon icon-back"></i><span class="ios-only">Back</span></a></div>
+                <div class="left">
+                    <a href="#" class="link back">
+                        <i class="icon icon-back"></i>
+                        <span class="if-not-md">Back</span>
+                    </a>
+                </div>
                 <div class="title">Share Target</div>
             </div>
         </div>
+
         <div class="page-content">
-            <div class="block-title block-title-large">Share Target</div>
-            <div class="block"><p>This PWA Bundle demonstration will be added soon.</p></div>
+            <div class="block block-strong inset text-align-center">
+                <twig:ux:icon
+                    name="material-symbols:share-reviews-outline"
+                    class="icon color-primary"
+                    width="80"
+                    height="80"
+                    alt="Share Target"
+                />
+                <h1>Share Target</h1>
+                <p>The Web Share Target API allows installed web apps to receive content shared from other apps.</p>
+            </div>
+
+            <div class="block block-strong inset">
+                <p>
+                    Symphone is registered as an image-sharing destination through its generated web app manifest. This capability is initiated by another app through the operating system's share sheet, so it cannot be started by a test button on this page.
+                </p>
+            </div>
+
+            <div class="block block-strong inset">
+                <div class="display-flex align-items-center">
+                    <i class="icon f7-icons size-32 text-color-primary margin-right">device_phone_portrait</i>
+                    <div>
+                        <div class="font-weight-600">Recommended test environment</div>
+                        <p class="no-margin-bottom margin-top-half text-color-gray">
+                            Use an installed Symphone PWA on Android with Chrome. Share Target availability on desktop browsers, iOS, and other Android browsers varies by platform.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="block-title block-title-medium">How to test it</h2>
+            <div class="list media-list list-strong-ios list-outline-ios list-dividers-ios inset-ios">
+                <ul>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon f7-icons color-primary">square_arrow_down</i></div>
+                            <div class="item-inner">
+                                <div class="item-title-row"><div class="item-title">1. Install Symphone</div></div>
+                                <div class="item-text">
+                                    Open Symphone in Android Chrome and install it. The operating system registers its share target from the web app manifest during installation.
+                                    <a href="{{ path('app_feature_installation') }}">Open installation instructions</a>.
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon f7-icons color-primary">photo</i></div>
+                            <div class="item-inner">
+                                <div class="item-title-row"><div class="item-title">2. Choose an image</div></div>
+                                <div class="item-text">Open your device's Photos, Gallery, or Files app and select one JPEG, PNG, WebP, or GIF image.</div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon f7-icons color-primary">share</i></div>
+                            <div class="item-inner">
+                                <div class="item-title-row"><div class="item-title">3. Share it to Symphone</div></div>
+                                <div class="item-text">Tap Share, expand the available destinations if necessary, then select Symphone.</div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon f7-icons color-primary">eye</i></div>
+                            <div class="item-inner">
+                                <div class="item-title-row"><div class="item-title">4. Check the preview</div></div>
+                                <div class="item-text">Symphone opens a result screen showing the received image, filename, type, and size.</div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="block-footer margin-bottom">
+                If Symphone is not listed, confirm that the installed app was created from Android Chrome. Reinstall it after manifest changes, then try sharing from Google Photos or Files. A missing entry on another platform does not necessarily indicate a problem with the manifest.
+            </div>
         </div>
     </div>
 </template>
+
+<script>
+    export default function(props, {$, $el, $f7, $f7route, $f7router, $h, $on, $store, $theme, $update}) {
+        return $render;
+    }
+</script>

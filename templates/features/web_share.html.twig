@@ -1,13 +1,12 @@
 <template>
-    <div class="page">
-
+    <div class="page" data-controller="web-share pwa--web-share">
         <div class="navbar">
             <div class="navbar-bg"></div>
             <div class="navbar-inner">
                 <div class="left">
                     <a href="#" class="link back">
                         <i class="icon icon-back"></i>
-                        <span class="ios-only">Back</span>
+                        <span class="if-not-md">Back</span>
                     </a>
                 </div>
                 <div class="title">Web share</div>
@@ -15,43 +14,110 @@
         </div>
 
         <div class="page-content">
-
-            <div class="block-title block-title-large">Web share</div>
-            <div class="block" data-controller="pwa--web-share">
-                <p>
-                    The Web Share API invokes the native share mechanism of the device and allows users to share text, URLs or files.<br/>
-                    This app is itself also a share target which means content can also be shared to it. <br/>
-                    When sharing content, this app will be listed as an app to share to.
-                </p>
-                <button
-                    type="button"
-                    class="button button-fill"
-                    data-action="click->pwa--web-share#share"
-                    data-pwa--web-share-data-param="{{ link|json_encode }}"
-                >
-                    Share link
-                </button>
-                <br/>
-                <button
-                    type="button"
-                    class="button button-fill"
-                    data-action="click->pwa--web-share#share"
-                    data-pwa--web-share-data-param="{{ text|json_encode }}"
-                >
-                    Share text
-                </button>
-                <br/>
-                <button
-                    type="button"
-                    disabled
-                    class="button disabled"
-                >
-                    Share file (to be implemented)
-                </button>
+            <div class="block block-strong inset text-align-center">
+                <twig:ux:icon
+                    name="material-symbols:share"
+                    class="icon color-primary"
+                    width="80"
+                    height="80"
+                    alt="Web share"
+                />
+                <h1>Web share</h1>
+                <p>The Web Share API invokes the native share mechanism of the device and allows users to share text, URLs or files.</p>
             </div>
 
-        </div>
+            <div class="card card-outline">
+                <div class="card-content card-content-padding">
+                    <div class="display-flex align-items-center">
+                        <i class="icon f7-icons size-32 color-primary margin-right" data-web-share-target="statusIcon">share</i>
+                        <div>
+                            <div class="font-weight-600" data-web-share-target="status">Checking sharing support…</div>
+                            <p class="no-margin-bottom margin-top-half text-color-gray" data-web-share-target="message">
+                                Compose content to open in your device's native share sheet.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
+            <h2 class="block-title block-title-medium">Compose a share</h2>
+            <form data-action="submit->web-share#share">
+                <div class="list list-strong-ios list-outline-ios list-dividers-ios inset-ios">
+                    <ul>
+                        <li class="item-content item-input">
+                            <div class="item-media"><i class="icon f7-icons">textformat</i></div>
+                            <div class="item-inner">
+                                <div class="item-title item-label">Title</div>
+                                <div class="item-input-wrap">
+                                    <input
+                                        type="text"
+                                        value="{{ share.title }}"
+                                        placeholder="A title for the shared content"
+                                        data-web-share-target="title"
+                                    />
+                                </div>
+                            </div>
+                        </li>
+                        <li class="item-content item-input">
+                            <div class="item-media"><i class="icon f7-icons">text_quote</i></div>
+                            <div class="item-inner">
+                                <div class="item-title item-label">Text</div>
+                                <div class="item-input-wrap">
+                                    <textarea
+                                        class="resizable"
+                                        placeholder="Write a message to share"
+                                        data-web-share-target="text"
+                                    >{{- share.text -}}</textarea>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="item-content item-input">
+                            <div class="item-media"><i class="icon f7-icons">link</i></div>
+                            <div class="item-inner">
+                                <div class="item-title item-label">URL</div>
+                                <div class="item-input-wrap">
+                                    <input
+                                        type="url"
+                                        value="{{ share.url }}"
+                                        placeholder="https://example.com"
+                                        inputmode="url"
+                                        data-web-share-target="url"
+                                    />
+                                </div>
+                            </div>
+                        </li>
+                        <li class="item-content item-input">
+                            <div class="item-media"><i class="icon f7-icons">doc</i></div>
+                            <div class="item-inner">
+                                <div class="item-title item-label">Files</div>
+                                <div class="item-input-wrap">
+                                    <input
+                                        type="file"
+                                        multiple
+                                        data-web-share-target="files"
+                                        data-action="change->web-share#updateFiles"
+                                    />
+                                </div>
+                                <div class="item-footer" data-web-share-target="fileSummary">
+                                    Optional. Choose one or more files supported by your browser.
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="block">
+                    <button type="submit" class="button button-fill" data-web-share-target="action">
+                        <i class="icon f7-icons">share</i>
+                        <span>Open share sheet</span>
+                    </button>
+                </div>
+            </form>
+
+            <div class="block-footer margin-bottom">
+                All fields are optional, but at least one must contain a value. Available destinations and supported file types depend on your browser, device, and installed apps.
+            </div>
+        </div>
     </div>
 </template>
 

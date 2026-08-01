@@ -17,6 +17,10 @@
                 "enabled": true,
                 "fetch": "eager"
             },
+            "contact": {
+                "enabled": true,
+                "fetch": "eager"
+            },
             "device-motion": {
                 "enabled": true,
                 "fetch": "eager"

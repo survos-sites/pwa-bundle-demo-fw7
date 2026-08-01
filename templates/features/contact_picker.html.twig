@@ -1,13 +1,12 @@
 <template>
-    <div class="page">
-
+    <div class="page" data-controller="contact-picker pwa--contact">
         <div class="navbar">
             <div class="navbar-bg"></div>
             <div class="navbar-inner">
                 <div class="left">
                     <a href="#" class="link back">
                         <i class="icon icon-back"></i>
-                        <span class="ios-only">Back</span>
+                        <span class="if-not-md">Back</span>
                     </a>
                 </div>
                 <div class="title">Contact picker</div>
@@ -15,14 +14,88 @@
         </div>
 
         <div class="page-content">
-
-            <div class="block-title block-title-large">Contact picker</div>
-            <div class="block">
-                <p>TO BE COMPLETED</p>
+            <div class="block block-strong inset text-align-center">
+                <twig:ux:icon
+                    name="material-symbols:account-box"
+                    class="icon color-primary"
+                    width="80"
+                    height="80"
+                    alt="Contact picker"
+                />
+                <h1>Contact picker</h1>
+                <p>The Contact Picker API allows web apps to select the user's contacts after permission has been granted.</p>
             </div>
 
-        </div>
+            <div class="card card-outline">
+                <div class="card-content card-content-padding">
+                    <div class="display-flex align-items-center">
+                        <i class="icon f7-icons size-32 color-primary margin-right" data-contact-picker-target="statusIcon">person_crop_circle_badge_plus</i>
+                        <div>
+                            <div class="font-weight-600" data-contact-picker-target="status">Checking contact-picker support…</div>
+                            <p class="no-margin-bottom margin-top-half text-color-gray" data-contact-picker-target="message">
+                                Available contact details depend on your browser and device.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
+            <div class="block block-strong inset">
+                <p>
+                    Tap the button to browse and search contacts using your device's familiar contact picker. The contacts you select and their available details will appear below.
+                </p>
+            </div>
+
+            <h2 class="block-title block-title-medium">Choose contacts</h2>
+            <div class="list list-strong-ios list-outline-ios list-dividers-ios inset-ios">
+                <ul>
+                    <li>
+                        <label class="item-content">
+                            <div class="item-media"><i class="icon f7-icons">person_2</i></div>
+                            <div class="item-inner">
+                                <div class="item-title">Allow multiple contacts</div>
+                                <div class="item-after">
+                                    <div class="toggle toggle-init">
+                                        <input type="checkbox" checked data-contact-picker-target="multiple" />
+                                        <span class="toggle-icon"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </label>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="block">
+                <button
+                    type="button"
+                    class="button button-fill button-large"
+                    data-contact-picker-target="selectButton"
+                    data-action="click->contact-picker#select"
+                >
+                    <i class="icon f7-icons">person_crop_circle_badge_plus</i>
+                    <span>Open contact picker</span>
+                </button>
+            </div>
+
+            <h3 class="block-title">Contact details supported by this browser</h3>
+            <div class="block block-strong inset">
+                <div class="display-flex flex-wrap" data-contact-picker-target="properties">
+                    <span class="text-color-gray">Checking supported properties…</span>
+                </div>
+            </div>
+
+            <h2 class="block-title block-title-medium">Selected contacts</h2>
+            <div class="block block-strong inset text-align-center" data-contact-picker-target="empty">
+                <i class="icon f7-icons size-48 text-color-gray">person_crop_circle</i>
+                <p class="text-color-gray">No contacts selected yet.</p>
+            </div>
+            <div data-contact-picker-target="contacts"></div>
+
+            <div class="block-footer margin-bottom">
+                Open the contact picker whenever you want to make another selection. Browser support is currently limited, with Android Chrome providing the most reliable test environment.
+            </div>
+        </div>
     </div>
 </template>
 

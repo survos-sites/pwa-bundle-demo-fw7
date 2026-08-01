@@ -1,139 +1,151 @@
-'use strict';
-
 import { Controller } from '@hotwired/stimulus';
-import * as THREE from 'three';
 
 export default class extends Controller {
-  static targets = ['acceleration', 'accelerationIncludingGravity', 'rotationRate', 'interval', 'canvas', 'message'];
+    static targets = [
+        'acceleration',
+        'accelerationIncludingGravity',
+        'intensity',
+        'intensityBar',
+        'interval',
+        'marker',
+        'message',
+        'permissionBlock',
+        'permissionButton',
+        'rotationRate',
+        'sensor',
+        'shakeCount',
+        'status',
+        'statusIcon',
+    ];
 
-  connect() {
-    // Scene & camera
-    this.scene = new THREE.Scene();
-    this.camera = new THREE.PerspectiveCamera(
-      75,
-      this.canvasTarget.clientWidth / this.canvasTarget.clientHeight,
-      0.1,
-      1000
-    );
+    connect() {
+        this.lastRender = 0;
+        this.lastShake = 0;
+        this.shakes = 0;
 
-    const pixelRatio = window.devicePixelRatio || 1;
-    const width = this.canvasTarget.clientWidth;
-    const height = this.canvasTarget.clientHeight;
+        if (typeof DeviceMotionEvent === 'undefined') {
+            this.unavailable();
+            return;
+        }
 
-    this.canvasTarget.width = width * pixelRatio;
-    this.canvasTarget.height = height * pixelRatio;
+        if (typeof DeviceMotionEvent.requestPermission === 'function') {
+            this.statusTarget.textContent = 'Motion permission required';
+            this.messageTarget.textContent = 'Tap Enable motion sensors to show the system permission prompt.';
+            this.permissionBlockTarget.hidden = false;
+            return;
+        }
 
-    this.renderer = new THREE.WebGLRenderer({ canvas: this.canvasTarget, antialias: true });
-    this.renderer.setSize(width, height, false);
-    this.renderer.setPixelRatio(pixelRatio);
-
-    // Objet central : sphère
-    const geometry = new THREE.SphereGeometry(0.3, 32, 32);
-    const material = new THREE.MeshStandardMaterial({ color: 0x8888ff, metalness: 0.3, roughness: 0.6 });
-    this.centerObject = new THREE.Mesh(geometry, material);
-    this.scene.add(this.centerObject);
-
-    // Lumière
-    this.scene.add(new THREE.AmbientLight(0xffffff, 0.8));
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.6);
-    directionalLight.position.set(5, 5, 5);
-    this.scene.add(directionalLight);
-
-    // Caméra
-    this.camera.position.set(0, 0, 5);
-
-    // Accélération et flèche
-    this.acceleration = new THREE.Vector3(0, 0, 0);
-    this.deviceQuaternion = new THREE.Quaternion();
-
-    this.arrow = new THREE.ArrowHelper(
-      new THREE.Vector3(1, 0, 0),
-      new THREE.Vector3(0, 0, 0),
-      1,
-      0xffff00
-    );
-    this.scene.add(this.arrow);
-
-    // Orientation de l'appareil → quaternion
-    window.addEventListener('deviceorientation', (event) => {
-      const alpha = THREE.MathUtils.degToRad(event.alpha || 0); // Z
-      const beta = THREE.MathUtils.degToRad(event.beta || 0);   // X'
-      const gamma = THREE.MathUtils.degToRad(event.gamma || 0); // Y''
-
-      const euler = new THREE.Euler(beta, gamma, alpha, 'ZYX');
-      this.deviceQuaternion.setFromEuler(euler);
-    }, true);
-
-    this.animate();
-  }
-
-  animate = () => {
-    requestAnimationFrame(this.animate);
-
-    // Mise à jour de la flèche si l’accélération est significative
-    if (this.acceleration.length() > 0.01) {
-      const direction = this.acceleration.clone().normalize();
-      const length = Math.min(3, this.acceleration.length());
-      const color = this.getColorFromAcceleration(this.acceleration.length());
-      this.arrow.setColor(color);
-
-      this.arrow.setDirection(direction);
-      this.arrow.setLength(length);
-    } else {
-      this.arrow.setLength(0.01);
+        this.attachBundleController();
+        this.statusTarget.textContent = 'Waiting for motion data…';
     }
 
-    this.renderer.render(this.scene, this.camera);
-  }
-
-  update({ detail }) {
-    if (detail.acceleration.x === null) {
-      this.disable();
-      return;
+    enable() {
+        this.permissionButtonTarget.disabled = true;
+        this.statusTarget.textContent = 'Requesting motion permission…';
+        this.attachBundleController();
     }
-    this.accelerationTarget.innerHTML =
-      `<strong>X:</strong> ${(detail.acceleration.x).toFixed(2)} m/s²` +
-      `<br><strong>Y:</strong> ${(detail.acceleration.y).toFixed(2)} m/s²` +
-      `<br><strong>Z:</strong> ${(detail.acceleration.z).toFixed(2)} m/s²`;
 
-    this.accelerationIncludingGravityTarget.innerHTML =
-      `<strong>X:</strong> ${(detail.accelerationIncludingGravity.x).toFixed(2)} m/s²` +
-      `<br><strong>Y:</strong> ${(detail.accelerationIncludingGravity.y).toFixed(2)} m/s²` +
-      `<br><strong>Z:</strong> ${(detail.accelerationIncludingGravity.z).toFixed(2)} m/s²`;
+    attachBundleController() {
+        const controllers = this.sensorTarget.getAttribute('data-controller')?.split(/\s+/).filter(Boolean) || [];
+        if (!controllers.includes('pwa--device-motion')) {
+            this.sensorTarget.setAttribute('data-controller', [...controllers, 'pwa--device-motion'].join(' '));
+        }
+    }
 
-    // Rotation (avec unités °/s)
-    this.rotationRateTarget.innerHTML =
-      `<strong>Alpha:</strong> ${(detail.rotationRate.alpha).toFixed(2)}°/s` +
-      `<br><strong>Beta:</strong> ${(detail.rotationRate.beta).toFixed(2)}°/s` +
-      `<br><strong>Gamma:</strong> ${(detail.rotationRate.gamma).toFixed(2)}°/s`;
+    permissionGranted() {
+        this.permissionBlockTarget.hidden = true;
+        this.statusTarget.textContent = 'Motion sensors active';
+        this.messageTarget.textContent = 'Move your device to update the visualizer and sensor values.';
+        this.statusIconTarget.textContent = 'checkmark_circle';
+    }
 
-    // Interval (en ms)
-    this.intervalTarget.innerHTML = `<strong>Interval:</strong> ${detail.interval} ms`;
+    permissionDenied() {
+        this.statusTarget.textContent = 'Motion permission denied';
+        this.messageTarget.textContent = 'Allow motion access in the browser settings, then reload this page.';
+        this.statusIconTarget.textContent = 'xmark_circle';
+        this.permissionButtonTarget.disabled = false;
+    }
 
-    // Vecteur d’accélération transformé dans le référentiel de l’écran
-    const rawAcceleration = new THREE.Vector3(
-      detail.acceleration.x || 0,
-      detail.acceleration.y || 0,
-      detail.acceleration.z || 0
-    );
+    unavailable() {
+        this.statusTarget.textContent = 'Device Motion API unavailable';
+        this.messageTarget.textContent = 'This browser or device does not expose motion sensor data.';
+        this.statusIconTarget.textContent = 'xmark_circle';
+        this.permissionBlockTarget.hidden = true;
+    }
 
-    this.acceleration.copy(rawAcceleration.applyQuaternion(this.deviceQuaternion));
-  }
+    update({ detail }) {
+        const now = performance.now();
+        const acceleration = this.vector(detail.acceleration);
+        const gravity = this.vector(detail.accelerationIncludingGravity);
+        const rotation = this.rotation(detail.rotationRate);
 
-  getColorFromAcceleration(intensity) {
-    // Limite max à 10 m/s²
-    const clamped = Math.min(intensity, 10);
-    const t = clamped / 10;
+        this.detectShake(acceleration, now);
+        if (now - this.lastRender < 100) {
+            return;
+        }
+        this.lastRender = now;
 
-    // Gradient vert → jaune → rouge
-    const r = t < 0.5 ? t * 2 * 255 : 255;
-    const g = t < 0.5 ? 255 : (1 - (t - 0.5) * 2) * 255;
-    const b = 0;
+        this.permissionBlockTarget.hidden = true;
+        this.statusTarget.textContent = 'Motion sensors active';
+        this.messageTarget.textContent = 'Live readings are updating from this device.';
+        this.statusIconTarget.textContent = 'checkmark_circle';
 
-    return new THREE.Color(r / 255, g / 255, b / 255);
-  }
+        this.accelerationTarget.textContent = this.formatVector(acceleration, ['x', 'y', 'z'], 'm/s²');
+        this.accelerationIncludingGravityTarget.textContent = this.formatVector(gravity, ['x', 'y', 'z'], 'm/s²');
+        this.rotationRateTarget.textContent = this.formatVector(rotation, ['α', 'β', 'γ'], '°/s');
+        this.intervalTarget.textContent = Number.isFinite(detail.interval) ? `${detail.interval.toFixed(1)} ms` : 'Unavailable';
 
-  disable = () => {
-      this.messageTarget.classList.remove('hidden');
-  }
+        const intensity = Math.hypot(acceleration.x || 0, acceleration.y || 0, acceleration.z || 0);
+        this.intensityTarget.textContent = `${intensity.toFixed(2)} m/s²`;
+        this.intensityBarTarget.style.transform = `translate3d(-${100 - Math.min(intensity / 20 * 100, 100)}%, 0, 0)`;
+
+        const x = this.clamp((gravity.x || 0) * 8, -90, 90);
+        const y = this.clamp(-(gravity.y || 0) * 8, -70, 70);
+        this.markerTarget.style.transform = `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`;
+    }
+
+    detectShake(acceleration, now) {
+        const intensity = Math.hypot(acceleration.x || 0, acceleration.y || 0, acceleration.z || 0);
+        if (intensity >= 12 && now - this.lastShake >= 800) {
+            this.lastShake = now;
+            this.shakes += 1;
+            this.shakeCountTarget.textContent = String(this.shakes);
+        }
+    }
+
+    resetShakes() {
+        this.shakes = 0;
+        this.lastShake = 0;
+        this.shakeCountTarget.textContent = '0';
+    }
+
+    vector(value = {}) {
+        return {
+            x: this.numberOrNull(value.x),
+            y: this.numberOrNull(value.y),
+            z: this.numberOrNull(value.z),
+        };
+    }
+
+    rotation(value = {}) {
+        return {
+            x: this.numberOrNull(value.alpha),
+            y: this.numberOrNull(value.beta),
+            z: this.numberOrNull(value.gamma),
+        };
+    }
+
+    formatVector(vector, labels, unit) {
+        return [vector.x, vector.y, vector.z]
+            .map((value, index) => `${labels[index]} ${value === null ? '—' : value.toFixed(2)}`)
+            .join(' · ') + ` ${unit}`;
+    }
+
+    numberOrNull(value) {
+        return Number.isFinite(value) ? value : null;
+    }
+
+    clamp(value, minimum, maximum) {
+        return Math.min(Math.max(value, minimum), maximum);
+    }
 }
