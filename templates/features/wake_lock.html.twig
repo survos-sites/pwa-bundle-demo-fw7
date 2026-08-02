@@ -1,44 +1,136 @@
 <template>
-    <div class="page" data-controller="pwa--wake-lock">
-
+    <div
+        class="page"
+        data-controller="wake-lock pwa--wake-lock"
+        data-action="pwa--wake-lock:updated->wake-lock#updated"
+    >
         <div class="navbar">
             <div class="navbar-bg"></div>
             <div class="navbar-inner">
                 <div class="left">
                     <a href="#" class="link back">
                         <i class="icon icon-back"></i>
-                        <span class="ios-only">Back</span>
+                        <span class="if-not-md">Back</span>
                     </a>
                 </div>
-                <div class="title">Wake lock</div>
+                <div class="title">Wake Lock</div>
             </div>
         </div>
 
         <div class="page-content">
+            <div class="block block-strong inset text-align-center">
+                <twig:ux:icon
+                    name="material-symbols:screen-lock-portrait"
+                    class="icon color-primary"
+                    width="80"
+                    height="80"
+                    alt="Wake Lock"
+                />
+                <h1>Wake Lock</h1>
+                <p>The Screen Wake Lock API enables web apps to prevent devices from dimming or locking the screen when the app needs to keep running.</p>
+            </div>
 
-            <div class="block-title block-title-large">Wake lock</div>
+            <h2 class="block-title block-title-medium">Keep this screen awake</h2>
+            <div class="card card-outline">
+                <div class="card-content card-content-padding">
+                    <div class="display-flex align-items-center">
+                        <i class="icon f7-icons size-48 color-primary margin-right" data-wake-lock-target="statusIcon">moon_zzz</i>
+                        <div>
+                            <div class="font-weight-600" data-wake-lock-target="status">Checking Wake Lock support…</div>
+                            <p class="no-margin-bottom margin-top-half text-color-gray" data-wake-lock-target="message">
+                                The screen can use its normal timeout.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="display-flex align-items-center justify-content-space-between margin-top padding-top hairline-top">
+                        <div class="display-flex align-items-center">
+                            <i class="icon f7-icons color-primary margin-right-half">timer</i>
+                            <span>Active duration</span>
+                        </div>
+                        <strong data-wake-lock-target="duration">00:00</strong>
+                    </div>
+                </div>
+            </div>
+
             <div class="block">
-                <p>
-                    The Screen Wake Lock API enables web apps to prevent devices from dimming or locking the screen when the app needs to keep running.
-                </p>
                 <button
-                    class="button button-fill"
-                    data-action="click->pwa--wake-lock#lock"
+                    type="button"
+                    class="button button-fill button-large"
+                    data-wake-lock-target="enableButton"
+                    data-action="click->wake-lock#enable"
                 >
-                    <twig:ux:icon name="material-symbols:lock-outline" class="icon size-20 margin-right-half" fill="currentColor" />
-                    Lock
+                    <i class="icon f7-icons">sun_max_fill</i>
+                    <span>Keep screen awake</span>
                 </button>
                 <button
-                    class="button button-fill color-red"
-                    data-action="click->pwa--wake-lock#release"
+                    type="button"
+                    class="button button-outline button-large color-red margin-top"
+                    data-wake-lock-target="releaseButton"
+                    data-action="click->wake-lock#release"
+                    hidden
                 >
-                    <twig:ux:icon name="material-symbols:lock-open-outline" class="icon size-20 margin-right-half" fill="currentColor" />
-                    Release
+                    <i class="icon f7-icons">lock_open</i>
+                    <span>Allow screen to sleep</span>
                 </button>
             </div>
 
-        </div>
+            <div class="block block-strong inset">
+                <div class="display-flex align-items-center margin-bottom">
+                    <i class="icon f7-icons size-32 color-primary margin-right">rectangle_stack_person_crop</i>
+                    <div class="font-weight-600">When to use it</div>
+                </div>
+                <p class="no-margin-bottom">
+                    Wake locks are useful while users view navigation, media controls, live dashboards, presentations, recipes, or step-by-step workflows. Request one only while the content needs to remain visible, and release it when that requirement ends.
+                </p>
+            </div>
 
+            <h2 class="block-title block-title-medium">How to test it</h2>
+            <div class="list media-list list-strong list-outline-ios list-dividers-ios inset">
+                <ul>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon f7-icons color-primary">gear</i></div>
+                            <div class="item-inner">
+                                <div class="item-title-row"><div class="item-title">1. Configure a short display timeout</div></div>
+                                <div class="item-text">Set the test device's automatic display timeout to 30 seconds, or another interval that is easy to verify.</div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon f7-icons color-primary">sun_max_fill</i></div>
+                            <div class="item-inner">
+                                <div class="item-title-row"><div class="item-title">2. Keep the screen awake</div></div>
+                                <div class="item-text">Tap Keep screen awake and leave this page visible without interacting with the device.</div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon f7-icons color-primary">timer</i></div>
+                            <div class="item-inner">
+                                <div class="item-title-row"><div class="item-title">3. Wait beyond the timeout</div></div>
+                                <div class="item-text">The display should remain on after its normal timeout while the active-duration counter continues.</div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon f7-icons color-primary">lock_open</i></div>
+                            <div class="item-inner">
+                                <div class="item-title-row"><div class="item-title">4. Release and compare</div></div>
+                                <div class="item-text">Tap Allow screen to sleep and wait again. The device's normal display timeout should now apply.</div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="block-footer margin-bottom">
+                The API requires a secure context. Browsers automatically release the wake lock when the page is no longer active or visible, and may also release it because of device power-management conditions. Switch apps and return to observe the state update, then enable it again if needed.
+            </div>
+        </div>
     </div>
 </template>
 

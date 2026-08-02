@@ -1,13 +1,21 @@
 <template>
-    <div class="page">
-
+    <div
+        class="page"
+        data-controller="geolocation pwa--geolocation"
+        data-action="
+            pwa--geolocation:position->geolocation#position
+            pwa--geolocation:error->geolocation#error
+            pwa--geolocation:unsupported->geolocation#unsupported
+            pwa--geolocation:watch:cleared->geolocation#watchCleared
+        "
+    >
         <div class="navbar">
             <div class="navbar-bg"></div>
             <div class="navbar-inner">
                 <div class="left">
                     <a href="#" class="link back">
                         <i class="icon icon-back"></i>
-                        <span class="ios-only">Back</span>
+                        <span class="if-not-md">Back</span>
                     </a>
                 </div>
                 <div class="title">Geolocation</div>
@@ -15,17 +23,184 @@
         </div>
 
         <div class="page-content">
+            <div class="block block-strong inset text-align-center">
+                <twig:ux:icon
+                    name="ic:baseline-gps-fixed"
+                    class="icon color-primary"
+                    width="80"
+                    height="80"
+                    alt="Geolocation"
+                />
+                <h1>Geolocation</h1>
+                <p>The Geolocation API enables users to share their location with a web app.</p>
+            </div>
 
-            <div class="block-title block-title-large">Geolocation</div>
-            <div class="block">
-                <p>
-                    The Geolocation API enables users to share their location with a web app. Below you will see your current location on a Google Map.
+            <div class="block block-strong inset">
+                <div class="display-flex align-items-center">
+                    <i class="icon f7-icons size-32 color-primary margin-right" data-geolocation-target="statusIcon">location_circle</i>
+                    <div>
+                        <div class="font-weight-600" data-geolocation-target="status">Ready to request a position</div>
+                        <p class="no-margin-bottom margin-top-half text-color-gray" data-geolocation-target="message">
+                            The browser may request geolocation permission before returning coordinates.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="block grid grid-cols-1 medium-grid-cols-2 grid-gap">
+                <button
+                    type="button"
+                    class="button button-fill button-large"
+                    data-geolocation-target="locateButton"
+                    data-action="click->geolocation#locating click->pwa--geolocation#locate"
+                    data-pwa--geolocation-enable-high-accuracy-param="true"
+                    data-pwa--geolocation-maximum-age-param="0"
+                    data-pwa--geolocation-timeout-param="15000"
+                >
+                    <i class="icon f7-icons">location_fill</i>
+                    <span>Request current position</span>
+                </button>
+                <button
+                    type="button"
+                    class="button button-tonal button-large"
+                    data-geolocation-target="watchButton"
+                    data-action="click->geolocation#watching click->pwa--geolocation#watch"
+                    data-pwa--geolocation-enable-high-accuracy-param="true"
+                    data-pwa--geolocation-maximum-age-param="1000"
+                    data-pwa--geolocation-timeout-param="15000"
+                >
+                    <i class="icon f7-icons">dot_radiowaves_left_right</i>
+                    <span>Start position watch</span>
+                </button>
+            </div>
+
+            <div class="block" data-geolocation-target="stopBlock" hidden>
+                <button
+                    type="button"
+                    class="button button-outline button-large color-red"
+                    data-action="click->pwa--geolocation#clearWatch"
+                >
+                    <i class="icon f7-icons">stop_circle</i>
+                    <span>Clear position watch</span>
+                </button>
+            </div>
+
+            <div class="card card-outline" data-geolocation-target="result" hidden>
+                <div class="card-header">
+                    <div>
+                        <div class="font-weight-600">Latest reported position</div>
+                        <div class="text-color-gray" data-geolocation-target="updated">No position has been reported yet.</div>
+                    </div>
+                    <i class="icon f7-icons size-32 color-primary">location_circle_fill</i>
+                </div>
+                <div class="card-content card-content-padding">
+                    <div data-geolocation-target="map" style="height: 280px; border-radius: var(--f7-card-border-radius); overflow: hidden;"></div>
+                    <div class="margin-top display-flex align-items-center">
+                        <i class="icon f7-icons color-primary margin-right">scope</i>
+                        <span data-geolocation-target="accuracySummary">Accuracy unavailable</span>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button type="button" class="button" data-action="click->geolocation#copy">
+                        <i class="icon f7-icons">doc_on_doc</i>
+                        <span>Copy coordinates</span>
+                    </button>
+                    <a href="#" class="button external" target="_blank" rel="noopener" data-geolocation-target="mapLink">
+                        <i class="icon f7-icons">map</i>
+                        <span>Open map</span>
+                    </a>
+                </div>
+            </div>
+
+            <h2 class="block-title block-title-medium">Position details</h2>
+            <div class="list media-list list-strong list-outline-ios list-dividers-ios inset">
+                <ul>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon f7-icons color-primary">location_north_fill</i></div>
+                            <div class="item-inner">
+                                <div class="item-title-row">
+                                    <div class="item-title"><code>latitude</code></div>
+                                    <div class="item-after" data-geolocation-target="latitude">Unavailable</div>
+                                </div>
+                                <div class="item-text">The position north or south of the Equator, measured in decimal degrees.</div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon f7-icons color-primary">location_fill</i></div>
+                            <div class="item-inner">
+                                <div class="item-title-row">
+                                    <div class="item-title"><code>longitude</code></div>
+                                    <div class="item-after" data-geolocation-target="longitude">Unavailable</div>
+                                </div>
+                                <div class="item-text">The position east or west of the prime meridian, measured in decimal degrees.</div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon f7-icons color-primary">scope</i></div>
+                            <div class="item-inner">
+                                <div class="item-title-row">
+                                    <div class="item-title"><code>accuracy</code></div>
+                                    <div class="item-after" data-geolocation-target="accuracy">Unavailable</div>
+                                </div>
+                                <div class="item-text">The radius of uncertainty around the reported coordinates, in metres.</div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon f7-icons color-primary">arrow_up_to_line</i></div>
+                            <div class="item-inner">
+                                <div class="item-title-row">
+                                    <div class="item-title"><code>altitude</code></div>
+                                    <div class="item-after" data-geolocation-target="altitude">Unavailable</div>
+                                </div>
+                                <div class="item-text">The height above the reference ellipsoid in metres, when available.</div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon f7-icons color-primary">compass</i></div>
+                            <div class="item-inner">
+                                <div class="item-title-row">
+                                    <div class="item-title"><code>heading</code></div>
+                                    <div class="item-after" data-geolocation-target="heading">Unavailable</div>
+                                </div>
+                                <div class="item-text">The direction of travel clockwise from true north, in degrees.</div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon f7-icons color-primary">speedometer</i></div>
+                            <div class="item-inner">
+                                <div class="item-title-row">
+                                    <div class="item-title"><code>speed</code></div>
+                                    <div class="item-after" data-geolocation-target="speed">Unavailable</div>
+                                </div>
+                                <div class="item-text">The device's ground speed in metres per second, when available.</div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="block block-strong inset">
+                <div class="font-weight-600 margin-bottom-half">Request configuration</div>
+                <p class="no-margin">
+                    Both requests use <code>enableHighAccuracy: true</code> with a 15-second timeout. The one-time request uses <code>maximumAge: 0</code>; the position watch accepts a cached position up to one second old.
                 </p>
             </div>
-            <twig:Geolocation />
 
+            <div class="block-footer margin-bottom">
+                <code>watchPosition()</code> continues reporting positions until <code>clearWatch()</code> is called or this Framework7 page disconnects. Accuracy and optional coordinate values depend on the device, browser, available sensors, signal, and environment.
+            </div>
         </div>
-
     </div>
 </template>
 

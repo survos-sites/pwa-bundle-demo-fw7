@@ -1,13 +1,12 @@
 <template>
-    <div class="page">
-
+    <div class="page" data-controller="speech-synthesis pwa--speech-synthesis">
         <div class="navbar">
             <div class="navbar-bg"></div>
             <div class="navbar-inner">
                 <div class="left">
                     <a href="#" class="link back">
                         <i class="icon icon-back"></i>
-                        <span class="ios-only">Back</span>
+                        <span class="if-not-md">Back</span>
                     </a>
                 </div>
                 <div class="title">Speech synthesis</div>
@@ -15,61 +14,225 @@
         </div>
 
         <div class="page-content">
-
-            <div class="block-title block-title-large">Speech synthesis</div>
-            <div class="block">
-                <p>
-                    Click on the button below to hear a synthesized voice.
-                </p>
-                <p>
-                    TO BE COMPLETED
-                </p>
-                <input
-                    type="text"
-                    id="text"
-                    name="text"
-                    placeholder="Enter text to speak"
+            <div class="block block-strong inset text-align-center">
+                <twig:ux:icon
+                    name="material-symbols:record-voice-over"
+                    class="icon color-primary"
+                    width="80"
+                    height="80"
+                    alt="Speech synthesis"
                 />
-                <select
-                    id="voice"
-                    name="voice"
-                >
-                    <option value="Google français">Google français</option>
-                </select>
-                <select
-                    id="locale"
-                    name="locale"
-                >
-                </select>
-                <input
-                    type="number"
-                    id="rate"
-                    name="rate"
-                    placeholder="Rate"
-                />
-                <input
-                    type="number"
-                    id="pitch"
-                    name="pitch"
-                    placeholder="Pitch"
-                />
-
-                <button
-                    class="button button-fill"
-                    data-controller="speech"
-                    {{ stimulus_action('speech', 'speak', 'click', {
-                        text: 'Hi developers! Welcome to the PWA Bundle. This is a demo of the Speech Synthesis API.',
-                        voice: 'Google English',
-                        locale: 'en-US',
-                        rate: 1,
-                        pitch: 0.7
-                    }) }}
-                >Listen
-                </button>
+                <h1>Speech synthesis</h1>
+                <p>The Speech Synthesis API converts text into spoken audio using voices provided by the operating system or browser.</p>
             </div>
 
-        </div>
+            <div class="block block-strong inset">
+                <div class="display-flex align-items-center">
+                    <i class="icon f7-icons size-32 color-primary margin-right" data-speech-synthesis-target="statusIcon">waveform</i>
+                    <div>
+                        <div
+                            class="font-weight-600"
+                            data-speech-synthesis-target="status"
+                            data-pwa--speech-synthesis-target="status"
+                        >Checking speech synthesis support…</div>
+                        <p class="no-margin-bottom margin-top-half text-color-gray" data-speech-synthesis-target="message">
+                            Loading the voices installed in this browser and operating system.
+                        </p>
+                    </div>
+                </div>
+            </div>
 
+            <h2 class="block-title block-title-medium">Speech composer</h2>
+            <form data-action="submit->speech-synthesis#speak">
+                <div class="list media-list list-strong list-outline-ios list-dividers-ios inset">
+                    <ul>
+                    <li>
+                        <div class="item-content item-input item-input-outline">
+                            <div class="item-inner">
+                                <div class="item-title item-label">Text to speak</div>
+                                <div class="item-input-wrap">
+                                    <textarea
+                                        class="resizable"
+                                        rows="4"
+                                        maxlength="1000"
+                                        required
+                                        data-speech-synthesis-target="text"
+                                    >Welcome to Symphone.
+
+Symphone demonstrates how pwa-bundle and fw-bundle can be used to build Progressive Web Apps with Symfony.
+
+Explore the demos to discover modern web capabilities and practical ways to use them.</textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <a
+                            class="item-link smart-select"
+                            data-speech-synthesis-target="smartSelect"
+                        >
+                            <select
+                                name="voice"
+                                data-speech-synthesis-target="voice"
+                                data-pwa--speech-synthesis-target="voiceSelect"
+                                data-action="change->speech-synthesis#voiceChanged"
+                            >
+                                <option value="">Loading system voices…</option>
+                            </select>
+                            <div class="item-content">
+                                <div class="item-inner">
+                                    <div class="item-title">Voice</div>
+                                    <div class="item-after">Select a voice</div>
+                                    <div class="item-footer" data-speech-synthesis-target="voiceSummary">Voices vary by browser and operating system.</div>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-inner">
+                                <div class="item-title-row">
+                                    <div class="item-title">Queue speech requests</div>
+                                    <div class="item-after">
+                                        <label class="toggle toggle-init">
+                                            <input type="checkbox" checked data-speech-synthesis-target="queue" data-action="change->speech-synthesis#queueChanged" />
+                                            <span class="toggle-icon"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="item-text">When enabled, pressing Speak while audio is playing adds the new text to the queue.</div>
+                            </div>
+                        </div>
+                    </li>
+                    </ul>
+                </div>
+
+                <div class="block-title">Speech parameters</div>
+                <div class="list media-list list-strong list-outline-ios list-dividers-ios inset">
+                    <ul>
+                    <li class="item-content">
+                        <div class="item-inner">
+                            <div class="item-title">Speaking rate</div>
+                            <div class="item-text">Current value: <span data-speech-synthesis-target="rateValue">1.0×</span></div>
+                            <div class="range-slider range-slider-init margin-top-half">
+                                <input type="range" min="0.5" max="2" step="0.1" value="1" data-speech-synthesis-target="rate" data-action="input->speech-synthesis#settingsChanged" />
+                            </div>
+                            <div class="display-flex justify-content-space-between text-color-gray">
+                                <span>0.5×</span>
+                                <span>2×</span>
+                            </div>
+                            <div class="item-footer">Controls how quickly the utterance is spoken.</div>
+                        </div>
+                    </li>
+                    <li class="item-content">
+                        <div class="item-inner">
+                            <div class="item-title">Voice pitch</div>
+                            <div class="item-text">Current value: <span data-speech-synthesis-target="pitchValue">1.0</span></div>
+                            <div class="range-slider range-slider-init margin-top-half">
+                                <input type="range" min="0" max="2" step="0.1" value="1" data-speech-synthesis-target="pitch" data-action="input->speech-synthesis#settingsChanged" />
+                            </div>
+                            <div class="display-flex justify-content-space-between text-color-gray">
+                                <span>0</span>
+                                <span>2</span>
+                            </div>
+                            <div class="item-footer">Controls how high or low the synthesized voice sounds.</div>
+                        </div>
+                    </li>
+                    <li class="item-content">
+                        <div class="item-inner">
+                            <div class="item-title">Speech volume</div>
+                            <div class="item-text">Current value: <span data-speech-synthesis-target="volumeValue">100%</span></div>
+                            <div class="range-slider range-slider-init margin-top-half">
+                                <input type="range" min="0" max="1" step="0.05" value="1" data-speech-synthesis-target="volume" data-action="input->speech-synthesis#settingsChanged" />
+                            </div>
+                            <div class="display-flex justify-content-space-between text-color-gray">
+                                <span>0%</span>
+                                <span>100%</span>
+                            </div>
+                            <div class="item-footer">Controls the utterance volume independently of the device volume.</div>
+                        </div>
+                    </li>
+                    </ul>
+                </div>
+
+                <div class="block">
+                    <button type="submit" class="button button-fill button-large" data-speech-synthesis-target="speakButton">
+                        <i class="icon f7-icons">speaker_2_fill</i>
+                        <span>Speak</span>
+                    </button>
+                    <div class="grid grid-cols-3 grid-gap margin-top">
+                        <button type="button" class="button button-tonal" data-action="click->speech-synthesis#pause" data-speech-synthesis-target="pauseButton" disabled>
+                            <i class="icon f7-icons">pause_fill</i>
+                            <span>Pause</span>
+                        </button>
+                        <button type="button" class="button button-tonal" data-action="click->speech-synthesis#resume" data-speech-synthesis-target="resumeButton" disabled>
+                            <i class="icon f7-icons">play_fill</i>
+                            <span>Resume</span>
+                        </button>
+                        <button type="button" class="button button-outline color-red" data-action="click->speech-synthesis#cancel" data-speech-synthesis-target="cancelButton" disabled>
+                            <i class="icon f7-icons">stop_fill</i>
+                            <span>Stop</span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+            <div class="block block-strong inset">
+                <div class="display-flex align-items-center justify-content-space-between">
+                    <div>
+                        <div class="font-weight-600">Queued utterances</div>
+                        <div class="text-color-gray">Waiting behind the currently spoken text</div>
+                    </div>
+                    <div class="badge color-primary" data-speech-synthesis-target="queueSize">0</div>
+                </div>
+            </div>
+
+            <h2 class="block-title block-title-medium">How to test it</h2>
+            <div class="list media-list list-strong list-outline-ios list-dividers-ios inset">
+                <ul>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon f7-icons color-primary">text_cursor</i></div>
+                            <div class="item-inner">
+                                <div class="item-title-row"><div class="item-title">1. Compose an utterance</div></div>
+                                <div class="item-text">Enter text and select one of the voices exposed by <code>speechSynthesis.getVoices()</code>.</div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon f7-icons color-primary">slider_horizontal_3</i></div>
+                            <div class="item-inner">
+                                <div class="item-title-row"><div class="item-title">2. Adjust the utterance</div></div>
+                                <div class="item-text">Change rate, pitch, and volume, then tap Speak to hear how the selected voice interprets them.</div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon f7-icons color-primary">pause_circle</i></div>
+                            <div class="item-inner">
+                                <div class="item-title-row"><div class="item-title">3. Control playback</div></div>
+                                <div class="item-text">Pause, resume, or stop the active utterance and observe the lifecycle status above.</div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon f7-icons color-primary">rectangle_stack</i></div>
+                            <div class="item-inner">
+                                <div class="item-title-row"><div class="item-title">4. Test the queue</div></div>
+                                <div class="item-text">Keep queueing enabled, change the text, and tap Speak several times while audio is playing.</div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="block-footer margin-bottom">
+                Voice names and availability are platform-specific. PWA Bundle builds each <code>SpeechSynthesisUtterance</code>, manages its queue, and exposes speech lifecycle events to this Framework7 interface.
+            </div>
+        </div>
     </div>
 </template>
 
