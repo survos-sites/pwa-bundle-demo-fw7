@@ -1,13 +1,23 @@
 <template>
-    <div class="page" data-controller="pwa--capture">
-
+    <div
+        class="page"
+        data-controller="media-capture pwa--capture"
+        data-action="
+            pwa--capture:devices->media-capture#devices
+            pwa--capture:recorder:start->media-capture#recorderStarted
+            pwa--capture:recorder:data->media-capture#recorderData
+            pwa--capture:recorder:stop->media-capture#recorderStopped
+            pwa--capture:track:ended->media-capture#trackEnded
+            pwa--capture:error->media-capture#error
+        "
+    >
         <div class="navbar">
             <div class="navbar-bg"></div>
             <div class="navbar-inner">
                 <div class="left">
                     <a href="#" class="link back">
                         <i class="icon icon-back"></i>
-                        <span class="ios-only">Back</span>
+                        <span class="if-not-md">Back</span>
                     </a>
                 </div>
                 <div class="title">Media capture</div>
@@ -15,48 +25,138 @@
         </div>
 
         <div class="page-content">
-
-            <div class="block-title block-title-large">Media capture</div>
-
-            <div class="block-title block-title-large">Demo</div>
-            <div class="block">
-                <p>
-                    Media capture allows apps to use the camera and microphone of a device.<br/>
-                    After recording a video you can play it, download it or record another one.
-                </p>
-                <button
-                    class="button button-fill margin-right"
-                    data-action="click->pwa--capture#media"
-                >
-                    <twig:ux:icon name="ix:video-camera-record-filled" class="icon size-20 margin-right-half" fill="currentColor" />
-                    Capture now!
-                </button>
-                <button
-                    class="button button-fill color-red margin-right"
-                    data-action="click->pwa--capture#stop"
-                >
-                    <twig:ux:icon name="material-symbols:stop-circle-outline-rounded" class="icon size-20 margin-right-half" fill="currentColor" />
-                    Stop!
-                </button>
-                <a
-                    hidden="hidden"
-                    class="button button-fill color-purple margin-right"
-                    data-pwa--capture-target="download"
-                    href="#" download="capture.mp4"
-                >
-                    <twig:ux:icon name="fa6-solid:download" class="icon size-20 margin-right-half" fill="currentColor" />
-                    Download
-                </a>
-                <video
-                    hidden="hidden"
-                    data-pwa--capture-target="destination"
-                    autoplay playsinline
-                >
-                </video>
+            <div class="block block-strong inset text-align-center">
+                <twig:ux:icon name="material-symbols:videocam" class="icon color-primary" width="80" height="80" alt="Media capture" />
+                <h1>Media Capture</h1>
+                <p>Media capture allows web apps to use the camera and microphone of a device.</p>
             </div>
 
-        </div>
+            <div class="block block-strong inset">
+                <div class="display-flex align-items-center">
+                    <i class="icon material-icons size-32 color-primary margin-right" data-media-capture-target="statusIcon">perm_camera_mic</i>
+                    <div>
+                        <div class="font-weight-600" data-media-capture-target="status">Checking media capture support…</div>
+                        <p class="no-margin-bottom margin-top-half text-color-gray" data-media-capture-target="message">Choose which local media sources you want to capture.</p>
+                    </div>
+                </div>
+            </div>
 
+            <h2 class="block-title block-title-medium">Choose capture sources</h2>
+            <div class="block">
+                <div class="segmented segmented-strong">
+                    <button type="button" class="button button-active" data-media-capture-target="modeButton" data-mode="both" data-action="click->media-capture#selectMode">
+                        <i class="icon material-icons">video_call</i>
+                        Camera + mic
+                    </button>
+                    <button type="button" class="button" data-media-capture-target="modeButton" data-mode="video" data-action="click->media-capture#selectMode">
+                        <i class="icon material-icons">videocam</i>
+                        Camera
+                    </button>
+                    <button type="button" class="button" data-media-capture-target="modeButton" data-mode="audio" data-action="click->media-capture#selectMode">
+                        <i class="icon material-icons">mic</i>
+                        Microphone
+                    </button>
+                    <span class="segmented-highlight"></span>
+                </div>
+            </div>
+
+            <div class="list media-list list-strong list-outline-ios list-dividers-ios inset">
+                <ul>
+                    <li data-media-capture-target="cameraItem">
+                        <a class="item-link smart-select" data-media-capture-target="cameraSmartSelect">
+                            <select name="camera" data-media-capture-target="camera">
+                                <option value="">Default camera</option>
+                            </select>
+                            <div class="item-content">
+                                <div class="item-media"><i class="icon material-icons color-primary">videocam</i></div>
+                                <div class="item-inner">
+                                    <div class="item-title-row">
+                                        <div class="item-title">Camera source</div>
+                                        <div class="item-after">Default camera</div>
+                                    </div>
+                                    <div class="item-text">Select any camera exposed by the device.</div>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                    <li data-media-capture-target="microphoneItem">
+                        <a class="item-link smart-select" data-media-capture-target="microphoneSmartSelect">
+                            <select name="microphone" data-media-capture-target="microphone">
+                                <option value="">Default microphone</option>
+                            </select>
+                            <div class="item-content">
+                                <div class="item-media"><i class="icon material-icons color-primary">mic</i></div>
+                                <div class="item-inner">
+                                    <div class="item-title-row">
+                                        <div class="item-title">Microphone source</div>
+                                        <div class="item-after">Default microphone</div>
+                                    </div>
+                                    <div class="item-text">Select any microphone exposed by the device.</div>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="block">
+                <button type="button" class="button button-fill button-large" data-media-capture-target="startButton" data-action="click->media-capture#start">
+                    <i class="icon material-icons">sensors</i>
+                    <span>Start capture</span>
+                </button>
+            </div>
+
+            <div data-media-capture-target="session" hidden>
+                <div class="card card-outline card-footer-divider">
+                    <div class="card-header">
+                        <span>Live capture</span>
+                        <span class="badge color-red">LIVE</span>
+                    </div>
+                    <div class="card-content">
+                        <video autoplay muted playsinline data-media-capture-target="preview" style="display: block; width: 100%; height: auto;"></video>
+                        <div class="card-content-padding text-align-center" data-media-capture-target="audioPreview" hidden>
+                            <twig:ux:icon name="material-symbols:mic" class="icon color-primary" width="72" height="72" alt="" />
+                            <p>Microphone capture is active.</p>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <span data-media-capture-target="duration">Capturing · 00:00</span>
+                        <button type="button" class="button button-small button-outline color-red" data-media-capture-target="stopButton" data-action="click->media-capture#stop">
+                            <i class="icon material-icons">stop_circle</i>
+                            <span>Stop capture</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div data-media-capture-target="result" hidden>
+                <div class="card card-outline card-footer-divider">
+                    <div class="card-header" data-media-capture-target="resultTitle">Captured media</div>
+                    <div class="card-content">
+                        <video controls playsinline data-media-capture-target="recordingVideo" style="display: block; width: 100%; height: auto;"></video>
+                        <audio controls data-media-capture-target="recordingAudio" style="width: 100%;" hidden></audio>
+                    </div>
+                    <div class="card-footer">
+                        <span data-media-capture-target="resultSummary">Capture ready</span>
+                        <a class="link external" data-media-capture-target="download" download="symphone-media-capture.webm">Download</a>
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="block-title block-title-medium">How to test it</h2>
+            <div class="list media-list list-strong list-outline-ios list-dividers-ios inset">
+                <ul>
+                    <li><div class="item-content"><div class="item-media"><i class="icon material-icons color-primary">devices</i></div><div class="item-inner"><div class="item-title-row"><div class="item-title">1. Choose the sources</div></div><div class="item-text">Capture camera and microphone together, or test either source independently.</div></div></div></li>
+                    <li><div class="item-content"><div class="item-media"><i class="icon material-icons color-primary">lock_open</i></div><div class="item-inner"><div class="item-title-row"><div class="item-title">2. Grant access</div></div><div class="item-text">Start capture and approve the browser permission prompt. Device names may appear only after access is granted.</div></div></div></li>
+                    <li><div class="item-content"><div class="item-media"><i class="icon material-icons color-primary">visibility</i></div><div class="item-inner"><div class="item-title-row"><div class="item-title">3. Check the live stream</div></div><div class="item-text">Confirm that the selected sources are represented in the live preview.</div></div></div></li>
+                    <li><div class="item-content"><div class="item-media"><i class="icon material-icons color-primary">download</i></div><div class="item-inner"><div class="item-title-row"><div class="item-title">4. Stop and review</div></div><div class="item-text">Stop capture to release the devices, then play or download the captured media.</div></div></div></li>
+                </ul>
+            </div>
+
+            <div class="block-footer margin-bottom">
+                Camera and microphone access requires a secure context. Symphone releases active media tracks when capture stops or you leave this page.
+            </div>
+        </div>
     </div>
 </template>
 

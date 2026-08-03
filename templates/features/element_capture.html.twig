@@ -1,105 +1,213 @@
 <template>
-    <div class="page">
-
+    <div
+        class="page"
+        data-controller="element-capture pwa--capture"
+        data-action="
+            pwa--capture:recorder:start->element-capture#captureStarted
+            pwa--capture:recorder:data->element-capture#recorderData
+            pwa--capture:recorder:stop->element-capture#captureStopped
+            pwa--capture:track:ended->element-capture#trackEnded
+            pwa--capture:error->element-capture#error
+        "
+    >
         <div class="navbar">
             <div class="navbar-bg"></div>
             <div class="navbar-inner">
                 <div class="left">
                     <a href="#" class="link back">
                         <i class="icon icon-back"></i>
-                        <span class="ios-only">Back</span>
+                        <span class="if-not-md">Back</span>
                     </a>
                 </div>
                 <div class="title">Element capture</div>
             </div>
         </div>
 
-        <div class="page-content" data-controller="pwa--capture">
-
-            <div class="block-title block-title-large">Element capture</div>
-            <div class="block">
-                <p>
-                    The Element Capture is very similar to the <twig:Link href="{{ path('app_feature_screen_capture') }}">Screen Capture feature</twig:Link>.<br/>
-                    The difference is that you can capture a specific DOM element on a tab instead of the tab or the entire screen.
-                </p>
-                <p>
-                    It is important to note that the Element Capture feature is only available when sharing the current screen
-                    and with a unique target region or element.
-                </p>
+        <div class="page-content">
+            <div class="block block-strong inset text-align-center">
+                <twig:ux:icon name="material-symbols:select-window" class="icon color-primary" width="80" height="80" alt="Element capture" />
+                <h1>Element Capture API</h1>
+                <p>The Element Capture API restricts a captured browser-tab video track to a specific DOM element and its descendants.</p>
             </div>
 
-            <div class="block-title block-title-large">Demo</div>
-            <div class="block">
-                <p>
-                    <button
-                        class="button button-fill color-blue"
-                        data-action="click->pwa--capture#capture"
-                        data-pwa--capture-video-constraints-param="{&quot;width&quot;:{&quot;ideal&quot;:3440,&quot;max&quot;:3440},&quot;height&quot;:{&quot;ideal&quot;:1440},&quot;frameRate&quot;:{&quot;max&quot;:60}}"
-                        data-pwa--capture-audio-constraints-param="true"
-                        data-pwa--capture-prefer-current-tab-param="true"
-                    >
-                        <twig:ux:icon name="ix:video-camera-record-filled" class="icon size-20 margin-right-half" fill="currentColor" />
-                        Capture now!
-                    </button>
-                    <button
-                        class="button button-fill color-red"
-                        data-action="click->pwa--capture#stop"
-                    >
-                        <twig:ux:icon name="material-symbols:stop-circle-outline-rounded" class="icon size-20 margin-right-half" fill="currentColor" />
-                        Stop!
-                    </button>
-                </p>
-                <a
-                    hidden="hidden"
-                    class="button button-fill color-purple"
-                    data-pwa--capture-target="download"
-                    href="#" download="capture.mp4"
-                >
-                    <twig:ux:icon name="fa6-solid:download" class="icon size-20 margin-right-half" fill="currentColor" />
-                    Download
-                </a>
-                <video
-                    hidden="hidden"
-                    data-pwa--capture-target="destination"
-                    autoplay playsinline
-                >
-                </video>
-                <div class="capture" data-pwa--capture-target="region">
-                    <label for="element-capture" class="item-title">Captured area</label>
-                    <textarea
-                        id="element-capture"
-                        placeholder="Write your thoughts here..."
-                        rows="15"
-                    ></textarea>
+            <div class="block block-strong inset">
+                <div class="display-flex align-items-center">
+                    <i class="icon material-icons size-32 color-primary margin-right" data-element-capture-target="statusIcon">select_all</i>
+                    <div>
+                        <div class="font-weight-600" data-element-capture-target="status">Checking Element Capture support…</div>
+                        <p class="no-margin-bottom margin-top-half text-color-gray" data-element-capture-target="message">This experimental API currently requires a compatible desktop Chromium browser.</p>
+                    </div>
                 </div>
             </div>
 
-            <div class="block-title block-title-large">Code example</div>
-            <div class="block">
-                {% set button = '<button
-    data-action="click->pwa--capture#capture"
-    data-pwa--capture-prefer-current-tab-param="true"
->
-    Start the capture
-</button>
-<section data-pwa--capture-target="region">
-    <label for="element-capture" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Captured area</label>
-    <textarea
-        id="element-capture"
-        class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-        placeholder="Write your thoughts here..."
-        rows="15"
-    ></textarea>
-</section>' %}
-                <pre><code class="language-twig" data-controller="code">{{ button|escape('html')|raw }}</code></pre>
-                <p>
-                    On compatible browsers, when the button is clicked the user will be asked to select the screen to capture. <br/>
-                    It can be a browser tab, a specific application or an entire screen.
-                </p>
+            <div class="block block-strong inset">
+                <div class="display-flex align-items-center">
+                    <i class="icon f7-icons size-32 color-primary margin-right">info_circle</i>
+                    <div>
+                        <div class="font-weight-600">Select this Symphone tab</div>
+                        <p class="no-margin-bottom margin-top-half text-color-gray">
+                            Element restriction works only when you choose the current browser tab in the sharing dialog. Selecting another tab, a window, or an entire screen will fail.
+                        </p>
+                    </div>
+                </div>
             </div>
 
-        </div>
+            <h2 class="block-title block-title-medium">Element to capture</h2>
+            <div
+                class="card card-outline card-footer-divider"
+                data-pwa--capture-target="element"
+                style="isolation: isolate; transform-style: flat; background: var(--f7-card-bg-color);"
+            >
+                <div class="card-header">
+                    <span>Symphone product tour</span>
+                    <span class="badge color-primary">Live presentation</span>
+                </div>
+                <div class="card-content">
+                    <swiper-container pagination="true" speed="500" data-element-capture-target="swiper">
+                        <swiper-slide class="bg-color-blue text-color-white">
+                            <img
+                                src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+                                alt="A team collaborating around a table"
+                                style="display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover;"
+                            />
+                            <div class="card-content-padding">
+                                <div class="chip color-primary"><div class="chip-label">Slide 1</div></div>
+                                <h3>Build together</h3>
+                                <p class="text-color-white padding-bottom">Use Symfony, PWA Bundle, and Framework7 to create progressive experiences with a familiar development workflow.</p>
+                            </div>
+                        </swiper-slide>
+                        <swiper-slide class="bg-color-green text-color-white">
+                            <img
+                                src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+                                alt="A product team discussing ideas at a whiteboard"
+                                style="display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover;"
+                            />
+                            <div class="card-content-padding">
+                                <div class="chip color-primary"><div class="chip-label">Slide 2</div></div>
+                                <h3>Demonstrate real capabilities</h3>
+                                <p class="text-color-white padding-bottom">Turn modern Web APIs into focused examples that developers can understand, test, and adapt.</p>
+                            </div>
+                        </swiper-slide>
+                        <swiper-slide class="bg-color-purple text-color-white">
+                            <img
+                                src="https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+                                alt="Colleagues reviewing a presentation"
+                                style="display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover;"
+                            />
+                            <div class="card-content-padding">
+                                <div class="chip color-primary"><div class="chip-label">Slide 3</div></div>
+                                <h3>Share only what matters</h3>
+                                <p class="text-color-white padding-bottom">Element Capture keeps this presentation visible while excluding presenter controls and surrounding application UI.</p>
+                            </div>
+                        </swiper-slide>
+                    </swiper-container>
+                </div>
+                <div class="card-footer">
+                    <span>Symphone</span>
+                    <span>Element Capture demo</span>
+                </div>
+            </div>
 
+            <h2 class="block-title">Presentation controls</h2>
+            <div class="block">
+                <div class="grid grid-cols-2 grid-gap">
+                    <button type="button" class="button button-outline" data-action="click->element-capture#previousSlide">
+                        <i class="icon f7-icons">chevron_left</i>
+                        Previous slide
+                    </button>
+                    <button type="button" class="button button-fill" data-action="click->element-capture#nextSlide">
+                        Next slide
+                        <i class="icon f7-icons">chevron_right</i>
+                    </button>
+                </div>
+                <p class="text-align-center text-color-gray" data-element-capture-target="slideStatus">Slide 1 of 3</p>
+            </div>
+
+            <div class="block">
+                <button type="button" class="button button-fill button-large" data-element-capture-target="startButton" data-action="click->element-capture#start">
+                    <i class="icon material-icons">select_all</i>
+                    <span>Capture this element</span>
+                </button>
+            </div>
+
+            <div data-element-capture-target="session" hidden>
+                <div class="card card-outline card-footer-divider">
+                    <div class="card-header">
+                        <span>Restricted live capture</span>
+                        <span class="badge color-red">LIVE</span>
+                    </div>
+                    <div class="card-content">
+                        <video autoplay muted playsinline data-element-capture-target="preview" style="display: block; width: 100%; height: auto;"></video>
+                    </div>
+                    <div class="card-footer display-block">
+                        <div data-element-capture-target="duration">Capturing · 00:00</div>
+                        <div class="grid grid-cols-2 grid-gap margin-top-half">
+                            <button type="button" class="button button-small button-outline" data-element-capture-target="pipButton" data-action="click->element-capture#togglePictureInPicture">
+                                <i class="icon material-icons" data-element-capture-target="pipIcon">picture_in_picture</i>
+                                <span data-element-capture-target="pipLabel">Open in PiP</span>
+                            </button>
+                            <button type="button" class="button button-small button-outline color-red" data-element-capture-target="stopButton" data-action="click->element-capture#stop">
+                                <i class="icon material-icons">stop_screen_share</i>
+                                <span>Stop capture</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div data-element-capture-target="result" hidden>
+                <div class="card card-outline card-footer-divider">
+                    <div class="card-header">Recorded element capture</div>
+                    <div class="card-content">
+                        <video controls playsinline data-element-capture-target="recording" style="display: block; width: 100%; height: auto;"></video>
+                    </div>
+                    <div class="card-footer">
+                        <span data-element-capture-target="resultSummary">Recording ready</span>
+                        <a class="link external" data-element-capture-target="download" download="symphone-element-capture.webm">Download</a>
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="block-title block-title-medium">How to test it</h2>
+            <div class="list media-list list-strong list-outline-ios list-dividers-ios inset">
+                <ul>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon material-icons color-primary">desktop_windows</i></div>
+                            <div class="item-inner"><div class="item-title-row"><div class="item-title">1. Use a supported desktop browser</div></div><div class="item-text">Open this page in a current desktop Chromium browser. Element Capture is experimental and unavailable on most mobile and non-Chromium browsers.</div></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon material-icons color-primary">tab</i></div>
+                            <div class="item-inner"><div class="item-title-row"><div class="item-title">2. Share this tab</div></div><div class="item-text">Tap Capture this element, choose the browser-tab category, select the current Symphone tab, and confirm sharing.</div></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><twig:ux:icon name="material-symbols:select-window" class="icon color-primary" width="24" height="24" alt="" /></div>
+                            <div class="item-inner"><div class="item-title-row"><div class="item-title">3. Verify or float the restriction</div></div><div class="item-text">The preview should contain only the presentation. Open it in Picture-in-Picture to keep the restricted stream visible outside this tab.</div></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon material-icons color-primary">published_with_changes</i></div>
+                            <div class="item-inner"><div class="item-title-row"><div class="item-title">4. Present the slides</div></div><div class="item-text">Use Previous slide and Next slide. The restricted stream follows each Swiper transition while excluding these presenter controls.</div></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon material-icons color-primary">stop_screen_share</i></div>
+                            <div class="item-inner"><div class="item-title-row"><div class="item-title">5. Stop capture</div></div><div class="item-text">Stop from Symphone or the browser sharing indicator, then review the recording produced by PWA Bundle.</div></div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="block-footer margin-bottom">
+                The target uses an isolated stacking context and a flat transform, which are eligibility requirements for <code>RestrictionTarget.fromElement()</code>.
+            </div>
+        </div>
     </div>
 </template>
 

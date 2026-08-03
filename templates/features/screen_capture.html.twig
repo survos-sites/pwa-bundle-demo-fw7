@@ -1,13 +1,22 @@
 <template>
-    <div class="page" data-controller="pwa--capture">
-
+    <div
+        class="page"
+        data-controller="screen-capture pwa--capture"
+        data-action="
+            pwa--capture:recorder:start->screen-capture#captureStarted
+            pwa--capture:recorder:data->screen-capture#recorderData
+            pwa--capture:recorder:stop->screen-capture#captureStopped
+            pwa--capture:track:ended->screen-capture#trackEnded
+            pwa--capture:error->screen-capture#error
+        "
+    >
         <div class="navbar">
             <div class="navbar-bg"></div>
             <div class="navbar-inner">
                 <div class="left">
                     <a href="#" class="link back">
                         <i class="icon icon-back"></i>
-                        <span class="ios-only">Back</span>
+                        <span class="if-not-md">Back</span>
                     </a>
                 </div>
                 <div class="title">Screen capture</div>
@@ -15,89 +24,193 @@
         </div>
 
         <div class="page-content">
-
-            <div class="block-title block-title-large">Screen capture</div>
-            <div class="block">
-                <p>
-                    With the Screen Capture API, you can capture the screen, stream it to a video element, and download it. <br/>
-                    The PWA Screen Capture controller provides a simple way to do this.
-                </p>
+            <div class="block block-strong inset text-align-center">
+                <twig:ux:icon name="material-symbols:screen-share" class="icon color-primary" width="80" height="80" alt="Screen capture" />
+                <h1>Screen Capture API</h1>
+                <p>The Screen Capture API allows web apps to capture a screen, application window, or browser tab selected by the user.</p>
             </div>
 
-            <div class="block-title block-title-large">Demo</div>
+            <div class="block block-strong inset">
+                <div class="display-flex align-items-center">
+                    <i class="icon material-icons size-32 color-primary margin-right" data-screen-capture-target="statusIcon">screen_share</i>
+                    <div>
+                        <div class="font-weight-600" data-screen-capture-target="status">Checking screen capture support…</div>
+                        <p class="no-margin-bottom margin-top-half text-color-gray" data-screen-capture-target="message">The browser will always ask you which surface to share.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="block block-strong inset">
+                <div class="display-flex align-items-center">
+                    <i class="icon f7-icons size-32 color-primary margin-right">info_circle</i>
+                    <div>
+                        <div class="font-weight-600">Keep this demo page open</div>
+                        <p class="no-margin-bottom margin-top-half text-color-gray">
+                            Using Framework7 navigation to leave this page disconnects its capture controller and intentionally stops screen sharing. To test Picture-in-Picture, keep this page open and switch to another browser tab or application.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="block-title block-title-medium">Capture options</h2>
+            <div class="list media-list list-strong list-outline-ios list-dividers-ios inset">
+                <ul>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon material-icons color-primary">volume_up</i></div>
+                            <div class="item-inner">
+                                <div class="item-title-row">
+                                    <div class="item-title">Request shared audio</div>
+                                    <div class="item-after">
+                                        <label class="toggle toggle-init">
+                                            <input type="checkbox" checked data-screen-capture-target="audio" />
+                                            <span class="toggle-icon"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="item-text">Ask for audio from the selected tab or screen. Availability depends on the browser, platform, and selected source.</div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon material-icons color-primary">tab</i></div>
+                            <div class="item-inner">
+                                <div class="item-title-row">
+                                    <div class="item-title">Prefer the current tab</div>
+                                    <div class="item-after">
+                                        <label class="toggle toggle-init">
+                                            <input type="checkbox" data-screen-capture-target="preferCurrentTab" />
+                                            <span class="toggle-icon"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="item-text">Hint that the browser should present this tab prominently in its source picker.</div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><twig:ux:icon name="material-symbols:tab-move" class="icon color-primary" width="24" height="24" alt="" /></div>
+                            <div class="item-inner">
+                                <div class="item-title-row">
+                                    <div class="item-title">Allow tab switching</div>
+                                    <div class="item-after">
+                                        <label class="toggle toggle-init">
+                                            <input type="checkbox" checked data-screen-capture-target="surfaceSwitching" />
+                                            <span class="toggle-icon"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="item-text">Ask compatible browsers to let you switch the shared tab without starting a new capture.</div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
             <div class="block">
-                <button
-                    class="button button-fill"
-                    data-action="click->pwa--capture#capture"
-                    data-pwa--capture-video-constraints-param="{&quot;width&quot;:{&quot;ideal&quot;:3440,&quot;max&quot;:3440},&quot;height&quot;:{&quot;ideal&quot;:1440},&quot;frameRate&quot;:{&quot;max&quot;:60}}"
-                    data-pwa--capture-audio-constraints-param="true"
-                >
-                    <twig:ux:icon name="ix:video-camera-record-filled" class="icon size-20 margin-right-half" fill="currentColor" />
-                    Capture now!
+                <button type="button" class="button button-fill button-large" data-screen-capture-target="startButton" data-action="click->screen-capture#start">
+                    <i class="icon material-icons">screen_share</i>
+                    <span>Choose a screen to capture</span>
                 </button>
-                <button
-                    class="button button-fill color-red"
-                    data-action="click->pwa--capture#stop"
-                >
-                    <twig:ux:icon name="material-symbols:stop-circle-outline-rounded" class="icon size-20 margin-right-half" fill="currentColor" />
-                    Stop!
-                </button>
-                <a
-                    hidden="hidden"
-                    class="button button-fill color-purple"
-                    data-pwa--capture-target="download"
-                    href="#" download="capture.mp4"
-                >
-                    <twig:ux:icon name="fa6-solid:download" class="icon size-20 margin-right-half" fill="currentColor" />
-                    Download
-                </a>
-                <video
-                    hidden="hidden"
-                    data-pwa--capture-target="destination"
-                    autoplay playsinline
-                >
-                </video>
             </div>
 
-            <div class="block-title block-title-large">Code example</div>
-            <div class="block">
-                {% set button = '<button
-    data-action="click->pwa--capture#capture"
->
-    Start the capture
-</button>' %}
-                <pre><code class="language-twig" data-controller="code">{{ button|escape('html')|raw }}</code></pre>
-                <p>
-                    On compatible browsers, when the button is clicked the user will be asked to select the screen to capture. <br/>
-                    It can be a browser tab, a specific application or an entire screen.
-                </p>
-                {% set button = '<video
-    data-pwa--capture-target="destination"
-    width="800" height="600" class="mx-auto"
-    autoplay playsinline
->
-</video>' %}
-                <pre><code class="language-twig" data-controller="code">{{ button|escape('html')|raw }}</code></pre>
-                <p>
-                    To show the captured screen, you can use the code above. <br/>
-                    The video element will be automatically displayed and updated with the captured screen.
-                </p>
-                {% set button = '<a
-    hidden="hidden"
-    data-pwa--capture-target="download"
-    href="#" download="capture.mp4"
->
-    Download the capture
-</a>' %}
-                <pre><code class="language-twig" data-controller="code">{{ button|escape('html')|raw }}</code></pre>
-                <p>
-                    To download the captured screen, you can use the code above. <br/>
-                    The download link will be automatically displayed and updated with the captured screen.
-                </p>
+            <div data-screen-capture-target="session" hidden>
+                <div class="card card-outline card-footer-divider">
+                    <div class="card-header">
+                        <span>Live screen capture</span>
+                        <span class="badge color-red">LIVE</span>
+                    </div>
+                    <div class="card-content">
+                        <video autoplay muted playsinline data-screen-capture-target="preview" style="display: block; width: 100%; height: auto;"></video>
+                    </div>
+                    <div class="card-footer display-block">
+                        <div data-screen-capture-target="duration">Capturing · 00:00</div>
+                        <div class="grid grid-cols-2 grid-gap margin-top-half">
+                            <button type="button" class="button button-small button-outline" data-screen-capture-target="pipButton" data-action="click->screen-capture#togglePictureInPicture">
+                                <i class="icon material-icons" data-screen-capture-target="pipIcon">picture_in_picture</i>
+                                <span data-screen-capture-target="pipLabel">Open in PiP</span>
+                            </button>
+                            <button type="button" class="button button-small button-outline color-red" data-screen-capture-target="stopButton" data-action="click->screen-capture#stop">
+                                <i class="icon material-icons">stop_screen_share</i>
+                                <span>Stop sharing</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="list media-list list-strong list-outline-ios list-dividers-ios inset">
+                    <ul>
+                        <li>
+                            <div class="item-content">
+                                <div class="item-media"><i class="icon material-icons color-primary">monitor</i></div>
+                                <div class="item-inner">
+                                    <div class="item-title-row"><div class="item-title">Selected surface</div></div>
+                                    <div class="item-text" data-screen-capture-target="surfaceInfo">Reading the captured track settings…</div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="item-content">
+                                <div class="item-media"><i class="icon material-icons color-primary">volume_up</i></div>
+                                <div class="item-inner">
+                                    <div class="item-title-row"><div class="item-title">Shared audio</div></div>
+                                    <div class="item-text" data-screen-capture-target="audioInfo">Checking whether the selected source supplied an audio track…</div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
             </div>
 
+            <div data-screen-capture-target="result" hidden>
+                <div class="card card-outline card-footer-divider">
+                    <div class="card-header">Captured screen recording</div>
+                    <div class="card-content">
+                        <video controls playsinline data-screen-capture-target="recording" style="display: block; width: 100%; height: auto;"></video>
+                    </div>
+                    <div class="card-footer">
+                        <span data-screen-capture-target="resultSummary">Recording ready</span>
+                        <a class="link external" data-screen-capture-target="download" download="symphone-screen-capture.webm">Download</a>
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="block-title block-title-medium">How to test it</h2>
+            <div class="list media-list list-strong list-outline-ios list-dividers-ios inset">
+                <ul>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon material-icons color-primary">tune</i></div>
+                            <div class="item-inner"><div class="item-title-row"><div class="item-title">1. Configure the request</div></div><div class="item-text">Choose whether to request shared audio, prefer this tab, or allow switching between shared tabs.</div></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><twig:ux:icon name="material-symbols:select-window" class="icon color-primary" width="24" height="24" alt="" /></div>
+                            <div class="item-inner"><div class="item-title-row"><div class="item-title">2. Select a surface</div></div><div class="item-text">Tap Choose a screen to capture. In the browser dialog, select a tab, window, or entire screen and confirm sharing.</div></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon material-icons color-primary">preview</i></div>
+                            <div class="item-inner"><div class="item-title-row"><div class="item-title">3. Preview or float the capture</div></div><div class="item-text">Check the live preview, inspect its track information, or open it in Picture-in-Picture while continuing to use another tab or app.</div></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon material-icons color-primary">stop_screen_share</i></div>
+                            <div class="item-inner"><div class="item-title-row"><div class="item-title">4. Stop sharing</div></div><div class="item-text">Use Stop sharing here or the browser’s native sharing indicator. The captured recording will then be available to review and download.</div></div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="block-footer margin-bottom">
+                Screen capture requires a secure context and a direct user action. Browsers do not allow a site to silently choose or permanently authorize a capture source.
+            </div>
         </div>
-
     </div>
 </template>
 
