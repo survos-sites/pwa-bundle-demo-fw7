@@ -1,13 +1,20 @@
 <template>
-    <div class="page">
-
+    <div
+        class="page"
+        data-controller="barcode-detection pwa--barcode-detection"
+        data-action="
+            pwa--barcode-detection:detected->barcode-detection#detected
+            pwa--barcode-detection:unsupported->barcode-detection#unsupported
+            pwa--barcode-detection:error->barcode-detection#error
+        "
+    >
         <div class="navbar">
             <div class="navbar-bg"></div>
             <div class="navbar-inner">
                 <div class="left">
                     <a href="#" class="link back">
                         <i class="icon icon-back"></i>
-                        <span class="ios-only">Back</span>
+                        <span class="if-not-md">Back</span>
                     </a>
                 </div>
                 <div class="title">Barcode detection</div>
@@ -15,16 +22,130 @@
         </div>
 
         <div class="page-content">
-
-            <div class="block-title block-title-large">Barcode detection</div>
-            <div class="block">
-                <p>
-                    TO BE COMPLETED
-                </p>
+            <div class="block block-strong inset text-align-center">
+                <twig:ux:icon name="material-symbols:qr-code-scanner" class="icon color-primary" width="80" height="80" alt="Barcode detection" />
+                <h1>Barcode Detection API</h1>
+                <p>The Barcode Detection API detects linear and two-dimensional barcodes in images.</p>
             </div>
 
-        </div>
+            <div class="block block-strong inset">
+                <div class="display-flex align-items-center">
+                    <i class="icon material-icons size-32 color-primary margin-right" data-barcode-detection-target="statusIcon">qr_code_scanner</i>
+                    <div>
+                        <div class="font-weight-600" data-barcode-detection-target="status">Checking barcode detection support…</div>
+                        <p class="no-margin-bottom margin-top-half text-color-gray" data-barcode-detection-target="message">Use a camera or an existing image to find supported barcode formats.</p>
+                    </div>
+                </div>
+            </div>
 
+            <h2 class="block-title block-title-medium">Scan with the camera</h2>
+            <div class="card card-outline card-footer-divider">
+                <div class="card-header">
+                    <span>Live scanner</span>
+                    <span class="badge color-gray" data-barcode-detection-target="cameraBadge">Stopped</span>
+                </div>
+                <div class="card-content">
+                    <div class="card-content-padding text-align-center" data-barcode-detection-target="cameraPlaceholder">
+                        <twig:ux:icon name="material-symbols:photo-camera" class="icon color-primary" width="72" height="72" alt="" />
+                        <p>Start the camera and point it steadily at a barcode.</p>
+                    </div>
+                    <video autoplay muted playsinline data-barcode-detection-target="video" style="display: block; width: 100%; height: auto;" hidden></video>
+                </div>
+                <div class="card-footer display-block" data-barcode-detection-target="cameraFooter" hidden>
+                    <div data-barcode-detection-target="cameraHint">Searching for a barcode…</div>
+                    <div class="grid grid-cols-2 grid-gap margin-top-half">
+                        <button type="button" class="button button-small button-outline" data-barcode-detection-target="scanAgainButton" data-action="click->barcode-detection#scanAgain" hidden>
+                            Scan again
+                        </button>
+                        <button type="button" class="button button-small button-outline color-red" data-action="click->barcode-detection#stopCamera">
+                            Stop camera
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="block">
+                <button type="button" class="button button-fill button-large" data-barcode-detection-target="cameraButton" data-action="click->barcode-detection#startCamera">
+                    <i class="icon material-icons">photo_camera</i>
+                    <span>Start camera scanner</span>
+                </button>
+            </div>
+
+            <h2 class="block-title block-title-medium">Scan an image</h2>
+            <div class="list list-strong list-outline-ios list-dividers-ios inset">
+                <ul>
+                    <li class="item-content item-input item-input-outline">
+                        <div class="item-inner">
+                            <div class="item-title item-label">Barcode image</div>
+                            <div class="item-input-wrap">
+                                <input type="file" accept="image/*" capture="environment" data-barcode-detection-target="file" data-action="change->barcode-detection#imageSelected" />
+                            </div>
+                            <div class="item-footer">Choose an existing image or take a photo on a supported mobile device.</div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="card card-outline" data-barcode-detection-target="imageCard" hidden>
+                <div class="card-header">Selected image</div>
+                <div class="card-content">
+                    <img data-barcode-detection-target="image" alt="Selected image to scan for barcodes" style="display: block; width: 100%; height: auto;" />
+                </div>
+            </div>
+            <div class="block">
+                <button type="button" class="button button-fill button-large" data-barcode-detection-target="imageButton" data-action="click->barcode-detection#scanImage" disabled>
+                    <i class="icon material-icons">image_search</i>
+                    <span>Scan selected image</span>
+                </button>
+            </div>
+
+            <div data-barcode-detection-target="results" hidden>
+                <h2 class="block-title block-title-medium">Detected barcodes</h2>
+                <div class="list media-list list-strong list-outline-ios list-dividers-ios inset">
+                    <ul data-barcode-detection-target="resultList"></ul>
+                </div>
+            </div>
+
+            <h2 class="block-title block-title-medium">Formats available in this browser</h2>
+            <div class="block block-strong inset">
+                <p class="margin-top-none">Reported by <code>BarcodeDetector.getSupportedFormats()</code>.</p>
+                <div class="display-flex flex-wrap" data-barcode-detection-target="formats">
+                    <span class="chip"><span class="chip-label">Checking…</span></span>
+                </div>
+            </div>
+
+            <h2 class="block-title block-title-medium">How to test it</h2>
+            <div class="list media-list list-strong list-outline-ios list-dividers-ios inset">
+                <ul>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon material-icons color-primary">qr_code</i></div>
+                            <div class="item-inner"><div class="item-title-row"><div class="item-title">1. Find a barcode</div></div><div class="item-text">Use a clearly printed QR code, product barcode, or an image containing one of the formats listed above.</div></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon material-icons color-primary">center_focus_strong</i></div>
+                            <div class="item-inner"><div class="item-title-row"><div class="item-title">2. Keep it visible</div></div><div class="item-text">For camera scanning, hold the code inside the preview with good lighting and wait for detection to pause automatically.</div></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon material-icons color-primary">image</i></div>
+                            <div class="item-inner"><div class="item-title-row"><div class="item-title">3. Try an image</div></div><div class="item-text">Choose a saved image or take a photo, then scan it with the same PWA Bundle detector.</div></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon material-icons color-primary">content_copy</i></div>
+                            <div class="item-inner"><div class="item-title-row"><div class="item-title">4. Use the result</div></div><div class="item-text">Copy the decoded value or open it directly when the detected content is an HTTP or HTTPS URL.</div></div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="block-footer margin-bottom">
+                Barcode detection is performed locally by the browser. Camera access requires a secure context and is released when you stop scanning or leave this page.
+            </div>
+        </div>
     </div>
 </template>
 

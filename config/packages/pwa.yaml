@@ -117,6 +117,12 @@ pwa:
         skip_waiting: true
         workbox:
             enabled: true
+            background_sync:
+                - queue_name: 'symphone-message-outbox'
+                  match_callback: 'route: app_background_sync_message'
+                  method: 'POST'
+                  broadcast_channel: 'symphone-background-sync'
+                  max_retention_time: 1440
             resource_caches:
                 - match_callback: 'startsWith: /en_US/partials/'
                   cache_name: 'framework7_partials_en'
@@ -136,7 +142,8 @@ pwa:
                   network_timeout: 2
                   preload_urls:
                       - '@pages'
-#        background_fetch:
-#            enabled: true
-#            success_message: 'Your download is ready!'
-#            failure_message: 'Your download failed! Please try again.'
+            background_fetch:
+                enabled: true
+                db_name: 'symphone-downloads'
+                success_message: '{title} is ready for offline use.'
+                failure_message: '{title} could not be downloaded.'

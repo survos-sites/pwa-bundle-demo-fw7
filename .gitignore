@@ -25,6 +25,7 @@
 ###< symfony/asset-mapper ###
 
 /public/workbox
+/public/idb
 /public/pwa
 /public/favicon.ico
 /public/sw.js

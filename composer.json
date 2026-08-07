@@ -27,6 +27,7 @@
         "phpdocumentor/reflection-docblock": "^5.3",
         "phpstan/phpdoc-parser": "^2.0",
         "spomky-labs/pwa-bundle": "^1.5",
+        "spomky-labs/web-push-bundle": "^3.2",
         "survos/core-bundle": "*",
         "survos/deployment-bundle": "^2.15",
         "survos/fw-bundle": "*",
@@ -65,7 +66,8 @@
         "symfony/web-link": "^8.1",
         "symfony/yaml": "^8.1",
         "twig/extra-bundle": "^2.12|^3.0",
-        "twig/twig": "^2.12|^3.0"
+        "twig/twig": "^2.12|^3.0",
+        "web-token/jwt-library": "^4.1"
     },
     "config": {
         "allow-plugins": {

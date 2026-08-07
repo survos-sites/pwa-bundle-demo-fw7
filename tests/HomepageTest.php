@@ -34,4 +34,22 @@ class HomepageTest extends WebTestCase
         //Then
         self::assertGreaterThan(0, $crawler->filter('html:contains("Symphone")')->count());
     }
+
+    #[Test]
+    public function aWebPushSubscriptionCanBeStoredForTheDemoSession(): void
+    {
+        $client = static::createClient();
+
+        $client->jsonRequest('POST', '/web-push/subscription', [
+            'endpoint' => 'https://push.example.test/subscription',
+            'keys' => ['auth' => 'auth-key', 'p256dh' => 'public-key'],
+            'supportedContentEncodings' => ['aes128gcm'],
+        ]);
+
+        self::assertResponseIsSuccessful();
+        self::assertJsonStringEqualsJsonString(
+            '{"ok":true,"message":"This browser is subscribed."}',
+            (string) $client->getResponse()->getContent(),
+        );
+    }
 }

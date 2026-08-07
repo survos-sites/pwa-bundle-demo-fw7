@@ -1,0 +1,14 @@
+webpush:
+    logger: 'logger'
+    vapid:
+        enabled: true
+        subject: '%env(WEBPUSH_SUBJECT)%'
+        web_token:
+            enabled: true
+            public_key: '%env(WEBPUSH_PUBLIC_KEY)%'
+            private_key: '%env(WEBPUSH_PRIVATE_KEY)%'
+    payload:
+        aes128gcm:
+            padding: 'recommended'
+        aesgcm:
+            padding: 'recommended'

@@ -1,13 +1,16 @@
 <template>
-    <div class="page">
-
+    <div
+        class="page"
+        data-controller="background-sync pwa--backgroundsync-queue"
+        data-pwa--backgroundsync-queue-channel-value="symphone-background-sync"
+    >
         <div class="navbar">
             <div class="navbar-bg"></div>
             <div class="navbar-inner">
                 <div class="left">
                     <a href="#" class="link back">
                         <i class="icon icon-back"></i>
-                        <span class="ios-only">Back</span>
+                        <span class="if-not-md">Back</span>
                     </a>
                 </div>
                 <div class="title">Background Sync API</div>
@@ -15,16 +18,153 @@
         </div>
 
         <div class="page-content">
-
-            <div class="block-title block-title-large">Background Sync API</div>
-            <div class="block">
-                <p>
-                    TO BE COMPLETED
-                </p>
+            <div class="block block-strong inset text-align-center">
+                <twig:ux:icon
+                    name="material-symbols:sync"
+                    class="icon color-primary"
+                    width="80"
+                    height="80"
+                    alt="Background Sync API"
+                />
+                <h1>Background Sync API</h1>
+                <p>The Background Sync API enables web apps to defer server requests until the device has a stable network connection.</p>
             </div>
 
-        </div>
+            <h2 class="block-title block-title-medium">Message outbox</h2>
+            <div class="block-header">
+                Compose a message with an unreliable connection. If delivery fails, the service worker keeps the request in the outbox and retries it in the background.
+            </div>
+            <form
+                action="{{ path('app_background_sync_message') }}"
+                method="post"
+                enctype="application/x-www-form-urlencoded"
+                data-controller="pwa--backgroundsync-form"
+                data-background-sync-target="form"
+            >
+                <input type="hidden" name="id" data-background-sync-target="messageId" />
+                <div class="list list-strong list-outline-ios list-dividers-ios inset">
+                    <ul>
+                        <li>
+                            <div class="item-content item-input">
+                                <div class="item-media"><i class="icon f7-icons color-primary">person_crop_circle</i></div>
+                                <div class="item-inner">
+                                    <div class="item-title item-label">Recipient</div>
+                                    <div class="item-input-wrap">
+                                        <input type="text" name="recipient" value="Project team" required maxlength="80" />
+                                        <span class="input-clear-button"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="item-content item-input">
+                                <div class="item-media"><i class="icon f7-icons color-primary">textformat</i></div>
+                                <div class="item-inner">
+                                    <div class="item-title item-label">Subject</div>
+                                    <div class="item-input-wrap">
+                                        <input type="text" name="subject" value="Deployment update" required maxlength="120" />
+                                        <span class="input-clear-button"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="align-items-flex-start">
+                            <div class="item-content item-input">
+                                <div class="item-media"><i class="icon f7-icons color-primary">doc_text</i></div>
+                                <div class="item-inner">
+                                    <div class="item-title item-label">Message</div>
+                                    <div class="item-input-wrap">
+                                        <textarea name="message" class="resizable" required maxlength="500">The latest build is ready for review. I will share the test results when my connection is restored.</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
 
+                <div class="block">
+                    <button type="submit" class="button button-fill button-large" data-background-sync-target="submitButton">
+                        <i class="icon f7-icons">paperplane_fill</i>
+                        <span>Send message</span>
+                    </button>
+                </div>
+            </form>
+
+            <h2 class="block-title block-title-medium">Delivery status</h2>
+            <div class="card card-outline">
+                <div class="card-content card-content-padding">
+                    <div class="display-flex align-items-center">
+                        <i class="icon f7-icons size-48 color-primary margin-right" data-background-sync-target="statusIcon">antenna_radiowaves_left_right</i>
+                        <div>
+                            <div class="font-weight-600" data-background-sync-target="status">Checking background sync…</div>
+                            <p class="no-margin-bottom margin-top-half text-color-gray" data-background-sync-target="message">
+                                Waiting for the service worker queue status.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="display-flex align-items-center justify-content-space-between margin-top padding-top hairline-top">
+                        <span>Connection</span>
+                        <span class="badge color-gray" data-background-sync-target="connection">Checking</span>
+                    </div>
+                    <div class="display-flex align-items-center justify-content-space-between margin-top">
+                        <span>Messages in outbox</span>
+                        <strong data-background-sync-target="queueCount">0</strong>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <span data-background-sync-target="receipt">No message sent in this session</span>
+                    <button type="button" class="button button-small button-outline" data-action="click->background-sync#retry" data-background-sync-target="retryButton" hidden>
+                        Retry now
+                    </button>
+                </div>
+            </div>
+
+            <h2 class="block-title block-title-medium">How to test it</h2>
+            <div class="list media-list list-strong list-outline-ios list-dividers-ios inset">
+                <ul>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon f7-icons color-primary">wifi</i></div>
+                            <div class="item-inner">
+                                <div class="item-title-row"><div class="item-title">1. Load the demo online</div></div>
+                                <div class="item-text">Keep this page open so its service worker and queue controller are active.</div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon f7-icons color-primary">wifi_slash</i></div>
+                            <div class="item-inner">
+                                <div class="item-title-row"><div class="item-title">2. Simulate a failed connection</div></div>
+                                <div class="item-text">Disable Wi-Fi and mobile data, or select Offline in your browser's developer tools.</div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon f7-icons color-primary">tray_arrow_up</i></div>
+                            <div class="item-inner">
+                                <div class="item-title-row"><div class="item-title">3. Send the message</div></div>
+                                <div class="item-text">The failed POST request is stored in the PWA Bundle Workbox outbox instead of being discarded.</div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon f7-icons color-primary">arrow_2_circlepath</i></div>
+                            <div class="item-inner">
+                                <div class="item-title-row"><div class="item-title">4. Restore the connection</div></div>
+                                <div class="item-text">The browser should send the outbox automatically. Use Retry now if you want to request an immediate replay while this page is open.</div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="block-footer margin-bottom">
+                Background Sync requires a service worker and a secure context. Browser and operating-system scheduling can delay automatic replay; the app does not need to remain in the foreground in browsers with native Background Sync support.
+            </div>
+        </div>
     </div>
 </template>
 

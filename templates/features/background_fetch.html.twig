@@ -1,13 +1,16 @@
 <template>
-    <div class="page">
-
+    <div
+        class="page"
+        data-controller="background-fetch pwa--background-fetch"
+        data-pwa--background-fetch-db-name-value="symphone-downloads"
+    >
         <div class="navbar">
             <div class="navbar-bg"></div>
             <div class="navbar-inner">
                 <div class="left">
                     <a href="#" class="link back">
                         <i class="icon icon-back"></i>
-                        <span class="ios-only">Back</span>
+                        <span class="if-not-md">Back</span>
                     </a>
                 </div>
                 <div class="title">Background Fetch API</div>
@@ -15,16 +18,178 @@
         </div>
 
         <div class="page-content">
+            <div class="block block-strong inset text-align-center">
+                <twig:ux:icon
+                    name="material-symbols:downloading"
+                    class="icon color-primary"
+                    width="80"
+                    height="80"
+                    alt="Background Fetch API"
+                />
+                <h1>Background Fetch API</h1>
+                <p>The Background Fetch API enables web apps to download large files in the background, even when the app is no longer in the foreground.</p>
+            </div>
 
-            <div class="block-title block-title-large">Background Fetch API</div>
-            <div class="block">
-                <p>
-                    TO BE COMPLETED
+            <h2 class="block-title block-title-medium">Background downloader</h2>
+            <div class="block-header">
+                Enter a direct file URL or use the 88.9 MB open movie sample. The browser manages the transfer outside the page and Symphone stores the completed file for offline access.
+            </div>
+            <form data-background-fetch-target="form">
+                <div class="list list-strong list-outline-ios list-dividers-ios inset">
+                    <ul>
+                        <li class="display-none" data-background-fetch-target="sizeItem">
+                            <div class="item-content item-input">
+                                <div class="item-media"><i class="icon f7-icons color-primary">link</i></div>
+                                <div class="item-inner">
+                                    <div class="item-title item-label">File URL</div>
+                                    <div class="item-input-wrap">
+                                        <input
+                                            type="url"
+                                            name="url"
+                                            value="https://upload.wikimedia.org/wikipedia/commons/8/88/Big_Buck_Bunny_alt.webm"
+                                            placeholder="https://example.com/file.zip"
+                                            required
+                                            data-background-fetch-target="url"
+                                        />
+                                        <span class="input-clear-button"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="item-content item-input">
+                                <div class="item-media"><i class="icon f7-icons color-primary">number</i></div>
+                                <div class="item-inner">
+                                    <div class="item-title item-label">File size in bytes</div>
+                                    <div class="item-input-wrap">
+                                        <input
+                                            type="number"
+                                            name="downloadTotal"
+                                            min="1"
+                                            step="1"
+                                            inputmode="numeric"
+                                            data-background-fetch-target="size"
+                                        />
+                                        <div class="item-input-info">The server did not expose Content-Length. Enter the exact size to continue.</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="block">
+                    <button type="submit" class="button button-fill button-large" data-background-fetch-target="startButton">
+                        <i class="icon f7-icons">arrow_down_circle_fill</i>
+                        <span>Start background download</span>
+                    </button>
+                </div>
+                <div class="block-footer">
+                    The sample is <a href="https://commons.wikimedia.org/wiki/File:Big_Buck_Bunny_alt.webm" class="external" target="_blank">Big Buck Bunny</a> by the Blender Foundation, licensed under CC BY 3.0 and served by Wikimedia Commons.
+                </div>
+            </form>
+
+            <div class="card card-outline" data-background-fetch-target="activeCard" hidden>
+                <div class="card-header">
+                    <div>
+                        <div class="font-weight-600" data-background-fetch-target="activeName">Preparing download…</div>
+                        <div class="text-color-gray font-size-12" data-background-fetch-target="activeUrl"></div>
+                    </div>
+                    <span class="badge color-blue" data-background-fetch-target="activeBadge">Starting</span>
+                </div>
+                <div class="card-content card-content-padding">
+                    <div class="progressbar" data-progress="0" data-background-fetch-target="progressContainer">
+                        <span data-background-fetch-target="progressBar"></span>
+                    </div>
+                    <div class="display-flex justify-content-space-between margin-top-half">
+                        <span class="text-color-gray" data-background-fetch-target="transferred">Waiting for progress…</span>
+                        <strong data-background-fetch-target="percentage">0%</strong>
+                    </div>
+                    <p class="no-margin-bottom text-color-gray" data-background-fetch-target="activeMessage">
+                        The browser is registering the background fetch.
+                    </p>
+                </div>
+                <div class="card-footer">
+                    <span>The transfer may continue after you leave this page.</span>
+                    <button type="button" class="button button-small button-outline color-red" data-background-fetch-target="cancelButton">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+
+            <div class="block block-strong inset" data-background-fetch-target="notice" hidden>
+                <div class="display-flex align-items-center">
+                    <i class="icon f7-icons size-32 color-primary margin-right" data-background-fetch-target="noticeIcon">info_circle</i>
+                    <div>
+                        <div class="font-weight-600" data-background-fetch-target="noticeTitle"></div>
+                        <div class="text-color-gray" data-background-fetch-target="noticeMessage"></div>
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="block-title block-title-medium">Downloaded files</h2>
+            <div class="list media-list list-strong list-outline-ios list-dividers-ios inset">
+                <ul data-background-fetch-target="fileList"></ul>
+                <div class="block-footer" data-background-fetch-target="emptyState">
+                    Completed background downloads will appear here and remain available offline.
+                </div>
+            </div>
+
+            <div class="block block-strong inset">
+                <div class="display-flex align-items-center margin-bottom-half">
+                    <i class="icon f7-icons size-32 color-primary margin-right">pause_circle</i>
+                    <div class="font-weight-600">Pause and resume</div>
+                </div>
+                <p class="no-margin-bottom">
+                    Background Fetch does not expose manual pause or resume methods. The browser may pause a transfer while offline and continue when connectivity returns; the app can otherwise let it continue or cancel it.
                 </p>
             </div>
 
-        </div>
+            <h2 class="block-title block-title-medium">How to test it</h2>
+            <div class="list media-list list-strong list-outline-ios list-dividers-ios inset">
+                <ul>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon f7-icons color-primary">link</i></div>
+                            <div class="item-inner">
+                                <div class="item-title-row"><div class="item-title">1. Choose a direct file URL</div></div>
+                                <div class="item-text">Use the sample or enter an HTTPS URL whose server permits the browser to fetch it. Symphone reads the file size before registering the download.</div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon f7-icons color-primary">arrow_down_circle</i></div>
+                            <div class="item-inner">
+                                <div class="item-title-row"><div class="item-title">2. Start the download</div></div>
+                                <div class="item-text">Your browser may display its own background-download notification and progress UI.</div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon f7-icons color-primary">square_arrow_right</i></div>
+                            <div class="item-inner">
+                                <div class="item-title-row"><div class="item-title">3. Leave Symphone</div></div>
+                                <div class="item-text">Switch apps, minimize the installed PWA, or navigate elsewhere while the browser continues the transfer.</div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon f7-icons color-primary">tray_full</i></div>
+                            <div class="item-inner">
+                                <div class="item-title-row"><div class="item-title">4. Return to the downloader</div></div>
+                                <div class="item-text">Open the completed file from Downloaded files, save a copy, or remove it from offline storage.</div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
 
+            <div class="block-footer margin-bottom">
+                Background Fetch requires a secure context, a service worker, and browser support. Cross-origin servers must allow the request; authentication-protected URLs and temporary download links may fail.
+            </div>
+        </div>
     </div>
 </template>
 

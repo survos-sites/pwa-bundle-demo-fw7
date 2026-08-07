@@ -1,30 +1,398 @@
 <template>
-    <div class="page">
-
+    <div
+        class="page"
+        data-controller="web-push pwa--web-push"
+        data-pwa--web-push-application-server-key-value="{{ webpush_public_key }}"
+        data-web-push-subscription-url-value="{{ path('app_web_push_subscribe') }}"
+        data-web-push-send-url-value="{{ path('app_web_push_send') }}"
+    >
         <div class="navbar">
             <div class="navbar-bg"></div>
             <div class="navbar-inner">
                 <div class="left">
                     <a href="#" class="link back">
                         <i class="icon icon-back"></i>
-                        <span class="ios-only">Back</span>
+                        <span class="if-not-md">Back</span>
                     </a>
                 </div>
-                <div class="title">Notifications</div>
+                <div class="title">Web Push</div>
             </div>
         </div>
 
         <div class="page-content">
+            <div class="block block-strong inset text-align-center">
+                <twig:ux:icon
+                    name="material-symbols:notifications-outline"
+                    class="icon color-primary"
+                    width="80"
+                    height="80"
+                    alt="Web Push"
+                />
+                <h1>Web Push</h1>
+                <p>The Push API enables web applications to receive messages pushed from a server, even when the application is not in the foreground.</p>
+            </div>
 
-            <div class="block-title block-title-large">Notifications</div>
-            <div class="block">
-                <p>
-                    TO BE COMPLETED
+            <h2 class="block-title block-title-medium">This browser</h2>
+            <div class="list media-list list-strong list-outline-ios list-dividers-ios inset">
+                <ul>
+                    <li data-web-push-target="status">
+                        <div class="item-content">
+                            <div class="item-media">
+                                <i class="icon f7-icons color-gray" data-web-push-target="statusIcon">bell_slash_fill</i>
+                            </div>
+                            <div class="item-inner">
+                                <div class="item-title-row">
+                                    <div class="item-title">Checking subscription…</div>
+                                    <div class="item-after" data-web-push-target="permission">Checking</div>
+                                </div>
+                                <div class="item-text">Waiting for the service worker and browser push manager.</div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="block grid grid-cols-1 medium-grid-cols-2 grid-gap">
+                <button
+                    type="button"
+                    class="button button-fill button-large"
+                    data-web-push-target="subscribeButton"
+                    data-action="click->pwa--web-push#subscribe"
+                >
+                    <i class="icon f7-icons">bell_fill</i>
+                    <span>Enable push notifications</span>
+                </button>
+                <button
+                    type="button"
+                    class="button button-outline button-large color-red display-none"
+                    data-web-push-target="unsubscribeButton"
+                    data-action="click->pwa--web-push#unsubscribe"
+                >
+                    <i class="icon f7-icons">bell_slash_fill</i>
+                    <span>Unsubscribe this browser</span>
+                </button>
+            </div>
+
+            <form data-web-push-target="composer">
+                <h2 class="block-title block-title-medium">Notification composer</h2>
+                <div class="block-header">
+                    Compose a structured notification, encrypt it on the Symphone server, and deliver it to this browser through its push service.
+                </div>
+
+                <div class="list media-list list-strong list-outline-ios list-dividers-ios inset">
+                    <ul>
+                        <li>
+                            <div class="item-content item-input">
+                                <div class="item-media"><i class="icon f7-icons color-primary">textformat</i></div>
+                                <div class="item-inner">
+                                    <div class="item-title item-label">Title</div>
+                                    <div class="item-input-wrap">
+                                        <input type="text" name="title" value="Symphone update" maxlength="100" required />
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="item-content item-input">
+                                <div class="item-media"><i class="icon f7-icons color-primary">text_bubble</i></div>
+                                <div class="item-inner">
+                                    <div class="item-title item-label">Body</div>
+                                    <div class="item-input-wrap">
+                                        <textarea name="body" maxlength="300" rows="3" required>Symphone demonstrates real PWA Bundle capabilities with a Framework7 interface.</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="item-content item-input">
+                                <div class="item-media"><i class="icon f7-icons color-primary">link</i></div>
+                                <div class="item-inner">
+                                    <div class="item-title item-label">Open when clicked</div>
+                                    <div class="item-input-wrap">
+                                        <input type="text" name="url" value="/" required />
+                                        <div class="item-input-info">Use a root-relative path or HTTPS URL.</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <h3 class="block-title">Rich media</h3>
+                <div class="list media-list list-strong list-outline-ios list-dividers-ios inset">
+                    <ul>
+                        <li>
+                            <div class="item-content item-input">
+                                <div class="item-media"><i class="icon f7-icons color-primary">app_badge</i></div>
+                                <div class="item-inner">
+                                    <div class="item-title item-label">Icon URL</div>
+                                    <div class="item-input-wrap">
+                                        <input type="text" name="icon" value="{{ absolute_url(asset('images/pwabundlelogo.svg')) }}" />
+                                        <div class="item-input-info">The primary notification icon.</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="item-content item-input">
+                                <div class="item-media"><i class="icon f7-icons color-primary">photo</i></div>
+                                <div class="item-inner">
+                                    <div class="item-title item-label">Image URL</div>
+                                    <div class="item-input-wrap">
+                                        <input type="text" name="image" placeholder="https://example.com/notification-image.jpg" />
+                                        <div class="item-input-info">A large preview image where supported.</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="item-content item-input">
+                                <div class="item-media"><i class="icon f7-icons color-primary">smallcircle_fill_circle</i></div>
+                                <div class="item-inner">
+                                    <div class="item-title item-label">Badge URL</div>
+                                    <div class="item-input-wrap">
+                                        <input type="text" name="badge" placeholder="/path/to/monochrome-badge.png" />
+                                        <div class="item-input-info">A small monochrome status-bar image on supporting devices.</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <h3 class="block-title">Behaviour</h3>
+                <div class="list media-list list-strong list-outline-ios list-dividers-ios inset">
+                    <ul>
+                        <li>
+                            <a class="item-link smart-select smart-select-init" data-open-in="popup" data-close-on-select="true">
+                                <select name="dir">
+                                    <option value="auto" selected>Automatic</option>
+                                    <option value="ltr">Left to right</option>
+                                    <option value="rtl">Right to left</option>
+                                </select>
+                                <div class="item-content">
+                                    <div class="item-media"><i class="icon f7-icons color-primary">text_alignleft</i></div>
+                                    <div class="item-inner">
+                                        <div class="item-title-row"><div class="item-title">Text direction</div></div>
+                                        <div class="item-text">Controls notification text direction.</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <div class="item-content item-input">
+                                <div class="item-media"><i class="icon f7-icons color-primary">globe</i></div>
+                                <div class="item-inner">
+                                    <div class="item-title item-label">Language</div>
+                                    <div class="item-input-wrap">
+                                        <input type="text" name="lang" value="{{ app.request.locale|replace({'_': '-'}) }}" maxlength="35" />
+                                        <div class="item-input-info">A BCP 47 language tag such as en-US or fr-FR.</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="item-content item-input">
+                                <div class="item-media"><i class="icon f7-icons color-primary">waveform</i></div>
+                                <div class="item-inner">
+                                    <div class="item-title item-label">Vibration pattern</div>
+                                    <div class="item-input-wrap">
+                                        <input type="text" name="vibrate" value="200, 100, 200" />
+                                        <div class="item-input-info">Comma-separated vibration and pause durations in milliseconds.</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <label class="item-content">
+                                <div class="item-media"><i class="icon f7-icons color-primary">pin</i></div>
+                                <div class="item-inner">
+                                    <div class="item-title-row"><div class="item-title">Require interaction</div></div>
+                                    <div class="item-text">Request that the notification remain visible until the user interacts with it.</div>
+                                </div>
+                                <div class="item-after">
+                                    <div class="toggle toggle-init"><input type="checkbox" name="requireInteraction" /><span class="toggle-icon"></span></div>
+                                </div>
+                            </label>
+                        </li>
+                        <li>
+                            <label class="item-content">
+                                <div class="item-media"><i class="icon f7-icons color-primary">speaker_slash_fill</i></div>
+                                <div class="item-inner">
+                                    <div class="item-title-row"><div class="item-title">Silent</div></div>
+                                    <div class="item-text">Suppress sound and vibration where the platform supports this option.</div>
+                                </div>
+                                <div class="item-after">
+                                    <div class="toggle toggle-init"><input type="checkbox" name="silent" /><span class="toggle-icon"></span></div>
+                                </div>
+                            </label>
+                        </li>
+                    </ul>
+                </div>
+
+                <h3 class="block-title">Replacement and delivery</h3>
+                <div class="list media-list list-strong list-outline-ios list-dividers-ios inset">
+                    <ul>
+                        <li>
+                            <div class="item-content item-input">
+                                <div class="item-media"><i class="icon f7-icons color-primary">tag</i></div>
+                                <div class="item-inner">
+                                    <div class="item-title item-label">Notification tag</div>
+                                    <div class="item-input-wrap">
+                                        <input type="text" name="tag" value="symphone-demo" maxlength="100" />
+                                        <div class="item-input-info">Notifications with the same tag can replace one another.</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <label class="item-content">
+                                <div class="item-media"><i class="icon f7-icons color-primary">bell_circle</i></div>
+                                <div class="item-inner">
+                                    <div class="item-title-row"><div class="item-title">Notify again</div></div>
+                                    <div class="item-text">Alert again when replacing a notification with the same tag.</div>
+                                </div>
+                                <div class="item-after">
+                                    <div class="toggle toggle-init"><input type="checkbox" name="renotify" /><span class="toggle-icon"></span></div>
+                                </div>
+                            </label>
+                        </li>
+                        <li>
+                            <a class="item-link smart-select smart-select-init" data-open-in="popup" data-close-on-select="true">
+                                <select name="urgency">
+                                    <option value="very-low">Very low</option>
+                                    <option value="low">Low</option>
+                                    <option value="normal" selected>Normal</option>
+                                    <option value="high">High</option>
+                                </select>
+                                <div class="item-content">
+                                    <div class="item-media"><i class="icon f7-icons color-primary">speedometer</i></div>
+                                    <div class="item-inner">
+                                        <div class="item-title-row"><div class="item-title">Push urgency</div></div>
+                                        <div class="item-text">Hints how urgently the push service should deliver the message.</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <div class="item-content item-input">
+                                <div class="item-media"><i class="icon f7-icons color-primary">timer</i></div>
+                                <div class="item-inner">
+                                    <div class="item-title item-label">Time to live in seconds</div>
+                                    <div class="item-input-wrap">
+                                        <input type="number" name="ttl" value="86400" min="0" max="2419200" step="1" required />
+                                        <div class="item-input-info">How long the push service may retain an undelivered message.</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="item-content item-input">
+                                <div class="item-media"><i class="icon f7-icons color-primary">rectangle_stack</i></div>
+                                <div class="item-inner">
+                                    <div class="item-title item-label">Push topic</div>
+                                    <div class="item-input-wrap">
+                                        <input type="text" name="topic" value="symphone-demo" maxlength="32" pattern="[A-Za-z0-9._~-]+" />
+                                        <div class="item-input-info">The push service may replace pending messages sharing this topic.</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <h3 class="block-title">Action buttons</h3>
+                <div class="block-header">Platforms decide how many actions they display. Empty action titles are omitted.</div>
+                <div class="list media-list list-strong list-outline-ios list-dividers-ios inset">
+                    <ul>
+                        <li>
+                            <div class="item-content item-input">
+                                <div class="item-media"><i class="icon f7-icons color-primary">1_circle</i></div>
+                                <div class="item-inner">
+                                    <div class="item-title item-label">First action</div>
+                                    <div class="item-input-wrap"><input type="text" name="action1Title" value="Open Symphone" maxlength="40" /></div>
+                                    <div class="item-title item-label margin-top-half">Destination</div>
+                                    <div class="item-input-wrap"><input type="text" name="action1Url" value="/" /></div>
+                                    <div class="item-title item-label margin-top-half">Icon URL</div>
+                                    <div class="item-input-wrap"><input type="text" name="action1Icon" placeholder="Optional HTTPS or root-relative URL" /></div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="item-content item-input">
+                                <div class="item-media"><i class="icon f7-icons color-primary">2_circle</i></div>
+                                <div class="item-inner">
+                                    <div class="item-title item-label">Second action</div>
+                                    <div class="item-input-wrap"><input type="text" name="action2Title" value="View demos" maxlength="40" /></div>
+                                    <div class="item-title item-label margin-top-half">Destination</div>
+                                    <div class="item-input-wrap"><input type="text" name="action2Url" value="/" /></div>
+                                    <div class="item-title item-label margin-top-half">Icon URL</div>
+                                    <div class="item-input-wrap"><input type="text" name="action2Icon" placeholder="Optional HTTPS or root-relative URL" /></div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="block">
+                    <button type="submit" class="button button-fill button-large" data-web-push-target="sendButton" disabled>
+                        <i class="icon f7-icons">paperplane_fill</i>
+                        <span>Send to this browser</span>
+                    </button>
+                </div>
+            </form>
+
+            <div class="block block-strong inset">
+                <div class="display-flex align-items-center margin-bottom-half">
+                    <i class="icon f7-icons size-32 color-primary margin-right">info_circle_fill</i>
+                    <div class="font-weight-600">Platform-controlled features</div>
+                </div>
+                <p class="no-margin-bottom">
+                    Web Notifications do not provide a portable custom sound or text-input action. The browser and operating system control notification sounds, action-button visibility, image presentation, and whether persistent interaction requests are honoured.
                 </p>
             </div>
 
+            <h2 class="block-title block-title-medium">How to test it</h2>
+            <div class="list media-list list-strong list-outline-ios list-dividers-ios inset margin-bottom">
+                <ul>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon f7-icons color-primary">bell_fill</i></div>
+                            <div class="item-inner">
+                                <div class="item-title-row"><div class="item-title">1. Enable notifications</div></div>
+                                <div class="item-text">Use the button above and approve the browser permission prompt. PWA Bundle creates the push subscription.</div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon f7-icons color-primary">slider_horizontal_3</i></div>
+                            <div class="item-inner">
+                                <div class="item-title-row"><div class="item-title">2. Compose the payload</div></div>
+                                <div class="item-text">Change presentation, replacement, delivery, and action options to compare platform behaviour.</div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon f7-icons color-primary">rectangle_arrow_up_right_arrow_down_left</i></div>
+                            <div class="item-inner">
+                                <div class="item-title-row"><div class="item-title">3. Put Symphone in the background</div></div>
+                                <div class="item-text">Minimize the installed PWA or switch tabs, then send the encrypted notification.</div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon f7-icons color-primary">cursor_rays</i></div>
+                            <div class="item-inner">
+                                <div class="item-title-row"><div class="item-title">4. Test clicks and actions</div></div>
+                                <div class="item-text">Click the notification body and each visible action to verify its configured destination.</div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
         </div>
-
     </div>
 </template>
 

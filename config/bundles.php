@@ -29,4 +29,5 @@ return [
     Knp\Bundle\MenuBundle\KnpMenuBundle::class => ['all' => true],
     Survos\FwBundle\SurvosFwBundle::class => ['all' => true],
     Survos\Kit\SurvosKitBundle::class => ['all' => true],
+    WebPush\Bundle\WebPushBundle::class => ['all' => true],
 ];

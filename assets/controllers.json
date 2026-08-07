@@ -1,11 +1,23 @@
 {
     "controllers": {
         "@spomky-labs/pwa-bundle": {
+            "background-fetch": {
+                "enabled": true,
+                "fetch": "eager"
+            },
             "backgroundsync-form": {
                 "enabled": true,
                 "fetch": "eager"
             },
+            "backgroundsync-queue": {
+                "enabled": true,
+                "fetch": "eager"
+            },
             "badge": {
+                "enabled": true,
+                "fetch": "eager"
+            },
+            "barcode-detection": {
                 "enabled": true,
                 "fetch": "eager"
             },
@@ -45,10 +57,6 @@
                 "enabled": true,
                 "fetch": "eager"
             },
-            "service-worker": {
-                "enabled": true,
-                "fetch": "eager"
-            },
             "network-information": {
                 "enabled": true,
                 "fetch": "eager"
@@ -69,11 +77,11 @@
                 "enabled": true,
                 "fetch": "eager"
             },
-            "web-share": {
+            "capture": {
                 "enabled": true,
                 "fetch": "eager"
             },
-            "capture": {
+            "service-worker": {
                 "enabled": true,
                 "fetch": "eager"
             },
@@ -90,6 +98,14 @@
                 "fetch": "eager"
             },
             "wake-lock": {
+                "enabled": true,
+                "fetch": "eager"
+            },
+            "web-push": {
+                "enabled": true,
+                "fetch": "eager"
+            },
+            "web-share": {
                 "enabled": true,
                 "fetch": "eager"
             }

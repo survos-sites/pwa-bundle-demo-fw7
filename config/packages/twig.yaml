@@ -1,5 +1,7 @@
 twig:
     file_name_pattern: '*.twig'
+    globals:
+        webpush_public_key: '%env(WEBPUSH_PUBLIC_KEY)%'
 
 when@test:
     twig:
